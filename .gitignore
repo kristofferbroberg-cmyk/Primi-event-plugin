@@ -1,0 +1,9 @@
+# Ignore everything
+*
+
+# Except our plugins
+!events-speakers/
+!events-speakers/**
+!events-speakers-dummy-data/
+!events-speakers-dummy-data/**
+!.gitignore
