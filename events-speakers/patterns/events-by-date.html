@@ -1,0 +1,37 @@
+<!-- wp:query {"queryId":10,"query":{"postType":"event","perPage":50,"pages":0,"offset":0,"order":"asc","orderBy":"meta_value","meta_key":"event_date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"layout":{"type":"default"}} -->
+<div class="wp-block-query">
+
+<!-- wp:post-template {"layout":{"type":"default"}} -->
+
+<!-- wp:group {"layout":{"type":"constrained"}} -->
+<div class="wp-block-group">
+
+<!-- wp:post-title {"level":3,"isLink":true} /-->
+
+<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"left"}} -->
+<div class="wp-block-group">
+<!-- wp:paragraph {"metadata":{"name":"Date","bindings":{"content":{"source":"events-speakers/event-field","args":{"key":"date"}}}}} -->
+<p></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>&nbsp;·&nbsp;</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"metadata":{"name":"Start time","bindings":{"content":{"source":"events-speakers/event-field","args":{"key":"start_time"}}}}} -->
+<p></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>–</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"metadata":{"name":"End time","bindings":{"content":{"source":"events-speakers/event-field","args":{"key":"end_time"}}}}} -->
+<p></p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:paragraph {"metadata":{"name":"Speakers","bindings":{"content":{"source":"events-speakers/event-field","args":{"key":"speakers_links"}}}}} -->
+<p></p>
+<!-- /wp:paragraph -->
+
+</div>
+<!-- /wp:group -->
+
+<!-- /wp:post-template -->
+
+</div>
+<!-- /wp:query -->
