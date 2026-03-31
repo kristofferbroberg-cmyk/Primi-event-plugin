@@ -54,11 +54,18 @@ class Events_Speakers_Meta_Fields {
 			'event',
 			'event_speakers',
 			array(
-				'type'         => 'string',
-				'single'       => true,
-				'show_in_rest' => true,
-				'default'      => '[]',
-				'auth_callback' => function () {
+				'type'              => 'string',
+				'single'            => true,
+				'show_in_rest'      => true,
+				'default'           => '[]',
+				'sanitize_callback' => function ( $value ) {
+					$decoded = json_decode( $value, true );
+					if ( ! is_array( $decoded ) ) {
+						return '[]';
+					}
+					return wp_json_encode( array_values( array_map( 'absint', array_filter( $decoded ) ) ) );
+				},
+				'auth_callback'     => function () {
 					return current_user_can( 'edit_posts' );
 				},
 			)
