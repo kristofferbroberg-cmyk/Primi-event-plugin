@@ -1,0 +1,40 @@
+<!-- wp:template-part {"slug":"header","area":"header"} /-->
+
+<!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->
+<main class="wp-block-group">
+
+	<!-- wp:post-featured-image {"align":"wide"} /-->
+
+	<!-- wp:group {"layout":{"type":"constrained"}} -->
+	<div class="wp-block-group">
+
+		<!-- wp:post-title {"level":1} /-->
+
+		<!-- wp:paragraph {"metadata":{"name":"Title / Position","bindings":{"content":{"source":"events-speakers/speaker-field","args":{"key":"title"}}}}} -->
+		<p></p>
+		<!-- /wp:paragraph -->
+
+		<!-- wp:post-content /-->
+
+		<!-- wp:heading {"level":3} -->
+		<h3 class="wp-block-heading">Speaking at</h3>
+		<!-- /wp:heading -->
+
+		<!-- wp:query {"query":{"postType":"event","perPage":10,"pages":0,"offset":0,"order":"asc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"filterBySpeaker":true},"queryId":2,"layout":{"type":"default"}} -->
+		<div class="wp-block-query">
+		<!-- wp:post-template {"layout":{"type":"default"}} -->
+		<!-- wp:post-title {"level":4,"isLink":true} /-->
+		<!-- wp:paragraph {"metadata":{"name":"Date","bindings":{"content":{"source":"events-speakers/event-field","args":{"key":"date"}}}}} -->
+		<p></p>
+		<!-- /wp:paragraph -->
+		<!-- /wp:post-template -->
+		</div>
+		<!-- /wp:query -->
+
+	</div>
+	<!-- /wp:group -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","area":"footer"} /-->

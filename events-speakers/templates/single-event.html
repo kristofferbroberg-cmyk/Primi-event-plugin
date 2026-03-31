@@ -1,0 +1,53 @@
+<!-- wp:template-part {"slug":"header","area":"header"} /-->
+
+<!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->
+<main class="wp-block-group">
+
+	<!-- wp:post-featured-image {"align":"wide"} /-->
+
+	<!-- wp:group {"layout":{"type":"constrained"}} -->
+	<div class="wp-block-group">
+
+		<!-- wp:post-title {"level":1} /-->
+
+		<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"left"}} -->
+		<div class="wp-block-group">
+			<!-- wp:paragraph {"metadata":{"name":"Date","bindings":{"content":{"source":"events-speakers/event-field","args":{"key":"date"}}}}} -->
+			<p></p>
+			<!-- /wp:paragraph -->
+
+			<!-- wp:paragraph --><p>&nbsp;·&nbsp;</p><!-- /wp:paragraph -->
+
+			<!-- wp:paragraph {"metadata":{"name":"Start time","bindings":{"content":{"source":"events-speakers/event-field","args":{"key":"start_time"}}}}} -->
+			<p></p>
+			<!-- /wp:paragraph -->
+
+			<!-- wp:paragraph --><p>–</p><!-- /wp:paragraph -->
+
+			<!-- wp:paragraph {"metadata":{"name":"End time","bindings":{"content":{"source":"events-speakers/event-field","args":{"key":"end_time"}}}}} -->
+			<p></p>
+			<!-- /wp:paragraph -->
+		</div>
+		<!-- /wp:group -->
+
+		<!-- wp:post-content /-->
+
+		<!-- wp:heading {"level":3} -->
+		<h3 class="wp-block-heading">Speakers</h3>
+		<!-- /wp:heading -->
+
+		<!-- wp:query {"query":{"postType":"speaker","perPage":10,"pages":0,"offset":0,"order":"asc","orderBy":"title","author":"","search":"","exclude":[],"sticky":"","inherit":false,"filterByEvent":true},"queryId":1,"layout":{"type":"default"}} -->
+		<div class="wp-block-query">
+		<!-- wp:post-template {"layout":{"type":"default"}} -->
+		<!-- wp:post-title {"level":4,"isLink":true} /-->
+		<!-- /wp:post-template -->
+		</div>
+		<!-- /wp:query -->
+
+	</div>
+	<!-- /wp:group -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","area":"footer"} /-->

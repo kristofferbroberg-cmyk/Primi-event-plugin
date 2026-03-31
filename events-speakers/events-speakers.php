@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: Events & Speakers
+ * Plugin Name: Events and Speakers
  * Description: Registers Events and Speakers custom post types with block bindings support for the Query Loop block.
  * Version: 1.0.0
- * Requires at least: 6.5
+ * Requires at least: 6.9
  * Requires PHP: 7.4
  * Text Domain: events-speakers
  */
@@ -14,7 +14,6 @@ define( 'EVENTS_SPEAKERS_DIR', plugin_dir_path( __FILE__ ) );
 
 require_once EVENTS_SPEAKERS_DIR . 'includes/class-post-types.php';
 require_once EVENTS_SPEAKERS_DIR . 'includes/class-meta-fields.php';
-require_once EVENTS_SPEAKERS_DIR . 'includes/class-admin-ui.php';
 require_once EVENTS_SPEAKERS_DIR . 'includes/class-block-bindings.php';
 require_once EVENTS_SPEAKERS_DIR . 'includes/class-blocks.php';
 
@@ -31,12 +30,74 @@ function events_speakers_deactivate(): void {
 }
 
 add_action( 'init', array( 'Events_Speakers_Post_Types', 'register' ) );
+add_action( 'init', 'events_speakers_register_templates' );
+add_filter( 'use_block_editor_for_post_type', 'events_speakers_force_block_editor', 10, 2 );
+
+function events_speakers_register_templates(): void {
+	register_block_template(
+		'events-speakers//single-event',
+		array(
+			'title'       => __( 'Single Event', 'events-speakers' ),
+			'description' => __( 'Displays a single event with date, time, and speakers.', 'events-speakers' ),
+			'post_types'  => array( 'event' ),
+			'plugin'      => 'events-speakers',
+			'content'     => file_get_contents( EVENTS_SPEAKERS_DIR . 'templates/single-event.html' ),
+		)
+	);
+	register_block_template(
+		'events-speakers//single-speaker',
+		array(
+			'title'       => __( 'Single Speaker', 'events-speakers' ),
+			'description' => __( 'Displays a speaker with bio and list of events.', 'events-speakers' ),
+			'post_types'  => array( 'speaker' ),
+			'plugin'      => 'events-speakers',
+			'content'     => file_get_contents( EVENTS_SPEAKERS_DIR . 'templates/single-speaker.html' ),
+		)
+	);
+}
+
+function events_speakers_force_block_editor( bool $use_block_editor, string $post_type ): bool {
+	if ( in_array( $post_type, array( 'event', 'speaker' ), true ) ) {
+		return true;
+	}
+	return $use_block_editor;
+}
 add_action( 'init', array( 'Events_Speakers_Meta_Fields', 'register' ) );
 add_action( 'init', array( 'Events_Speakers_Block_Bindings', 'register' ) );
-add_filter( 'query_loop_block_query_vars',       array( 'Events_Speakers_Blocks', 'apply_date_filter' ), 10, 3 );
-add_filter( 'rest_event_collection_params',      array( 'Events_Speakers_Blocks', 'register_rest_params' ) );
-add_filter( 'rest_event_query',                  array( 'Events_Speakers_Blocks', 'apply_rest_date_filter' ), 10, 2 );
-add_action( 'enqueue_block_editor_assets',       array( 'Events_Speakers_Blocks', 'enqueue_editor_assets' ) );
-add_action( 'add_meta_boxes', array( 'Events_Speakers_Admin_UI', 'add_meta_boxes' ) );
-add_action( 'save_post_event', array( 'Events_Speakers_Admin_UI', 'save_event_meta' ), 10, 2 );
-add_action( 'save_post_speaker', array( 'Events_Speakers_Admin_UI', 'save_speaker_meta' ), 10, 2 );
+add_filter( 'get_post_metadata', 'events_speakers_speakers_display_value', 10, 4 );
+
+/**
+ * When event_speakers is read as a single value during frontend/editor block rendering
+ * (e.g. via core/post-meta block binding), return formatted names instead of raw JSON.
+ * Bails out for REST requests so the sidebar JS keeps working with raw IDs.
+ */
+function events_speakers_speakers_display_value( $value, int $post_id, string $meta_key, bool $single ) {
+	if ( $meta_key !== 'event_speakers' || ! $single || 'event' !== get_post_type( $post_id ) ) {
+		return $value;
+	}
+
+	// Let REST API reads pass through unmodified so the editor sidebar works.
+	if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+		return $value;
+	}
+
+	// Remove ourselves to avoid infinite recursion when we call get_post_meta below.
+	remove_filter( 'get_post_metadata', 'events_speakers_speakers_display_value', 10 );
+	$json = get_post_meta( $post_id, 'event_speakers', true );
+	add_filter( 'get_post_metadata', 'events_speakers_speakers_display_value', 10, 4 );
+
+	$ids = json_decode( $json ?: '[]', true );
+	if ( ! is_array( $ids ) || empty( $ids ) ) {
+		return '';
+	}
+
+	$names = array_filter( array_map( 'get_the_title', array_map( 'absint', $ids ) ) );
+	return implode( ', ', $names );
+}
+add_filter( 'query_loop_block_query_vars',        array( 'Events_Speakers_Blocks', 'apply_date_filter' ), 10, 3 );
+add_filter( 'rest_event_collection_params',       array( 'Events_Speakers_Blocks', 'register_rest_params' ) );
+add_filter( 'rest_event_query',                   array( 'Events_Speakers_Blocks', 'apply_rest_date_filter' ), 10, 2 );
+add_filter( 'rest_speaker_collection_params',     array( 'Events_Speakers_Blocks', 'register_speaker_rest_params' ) );
+add_filter( 'rest_speaker_query',                 array( 'Events_Speakers_Blocks', 'apply_rest_event_filter' ), 10, 2 );
+add_action( 'enqueue_block_editor_assets',        array( 'Events_Speakers_Blocks', 'enqueue_editor_assets' ) );
+add_filter( 'block_editor_settings_all',          array( 'Events_Speakers_Blocks', 'editor_placeholders' ), 10, 2 );
