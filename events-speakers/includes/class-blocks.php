@@ -77,11 +77,23 @@ class Events_Speakers_Blocks {
 			'sanitize_callback' => 'absint',
 		);
 
+		// Allow ordering by meta_value so Query Loop blocks can sort by event_date.
+		if ( isset( $params['orderby']['enum'] ) && ! in_array( 'meta_value', $params['orderby']['enum'], true ) ) {
+			$params['orderby']['enum'][] = 'meta_value';
+		}
+
+		$params['meta_key'] = array(
+			'description'       => __( 'Meta key to order by when orderby=meta_value.', 'events-speakers' ),
+			'type'              => 'string',
+			'sanitize_callback' => 'sanitize_key',
+		);
+
 		return $params;
 	}
 
 	/**
 	 * When the REST API receives `event_date_filter`, add a meta_query clause.
+	 * Also handles meta_value ordering when meta_key is supplied.
 	 */
 	public static function apply_rest_date_filter( array $args, WP_REST_Request $request ): array {
 		$date = $request->get_param( 'event_date_filter' );
@@ -97,6 +109,12 @@ class Events_Speakers_Blocks {
 			}
 			$existing[] = self::speaker_meta_query( $speaker_id );
 			$args['meta_query'] = $existing;
+		}
+
+		// Support orderby=meta_value with meta_key param.
+		$meta_key = $request->get_param( 'meta_key' );
+		if ( ! empty( $meta_key ) && ( $args['orderby'] ?? '' ) === 'meta_value' ) {
+			$args['meta_key'] = $meta_key;
 		}
 
 		return $args;
@@ -283,6 +301,14 @@ class Events_Speakers_Blocks {
 			if ( filterDate && options.path.indexOf( 'event_date_filter' ) === -1 ) {
 				var sep = options.path.indexOf( '?' ) !== -1 ? '&' : '?';
 				options.path += sep + 'event_date_filter=' + encodeURIComponent( filterDate );
+			}
+			// Inject meta_key when orderby=meta_value is present in the request.
+			if (
+				options.path.indexOf( 'orderby=meta_value' ) !== -1 &&
+				options.path.indexOf( 'meta_key=' ) === -1
+			) {
+				var sep4 = options.path.indexOf( '?' ) !== -1 ? '&' : '?';
+				options.path += sep4 + 'meta_key=event_date';
 			}
 			if ( filterSpeaker && options.path.indexOf( 'speaker_filter' ) === -1 ) {
 				var currentPostId = window.wp.data.select( 'core/editor' ).getCurrentPostId();

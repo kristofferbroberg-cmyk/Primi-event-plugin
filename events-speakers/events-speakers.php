@@ -64,7 +64,58 @@ function events_speakers_force_block_editor( bool $use_block_editor, string $pos
 }
 add_action( 'init', array( 'Events_Speakers_Meta_Fields', 'register' ) );
 add_action( 'init', array( 'Events_Speakers_Block_Bindings', 'register' ) );
+add_action( 'init', 'events_speakers_register_patterns' );
 add_filter( 'get_post_metadata', 'events_speakers_speakers_display_value', 10, 4 );
+add_filter( 'render_block',      'events_speakers_allow_links_in_bindings', 10, 2 );
+
+function events_speakers_register_patterns(): void {
+	register_block_pattern_category(
+		'events-speakers',
+		array( 'label' => __( 'Events & Speakers', 'events-speakers' ) )
+	);
+
+	register_block_pattern(
+		'events-speakers/events-by-date',
+		array(
+			'title'       => __( 'Events by date', 'events-speakers' ),
+			'description' => __( 'A filterable list of events for a chosen date, with time and clickable speaker links.', 'events-speakers' ),
+			'categories'  => array( 'events-speakers' ),
+			'content'     => file_get_contents( EVENTS_SPEAKERS_DIR . 'patterns/events-by-date.html' ),
+		)
+	);
+}
+
+/**
+ * Block bindings escape bound content as plain text. For our HTML-producing
+ * keys (speakers_links, events_links) we unescape the <a> tags that core
+ * escaped. Only touches paragraphs that carry our specific binding metadata.
+ */
+function events_speakers_allow_links_in_bindings( string $block_content, array $block ): string {
+	if ( ( $block['blockName'] ?? '' ) !== 'core/paragraph' ) {
+		return $block_content;
+	}
+
+	$bindings = $block['attrs']['metadata']['bindings']['content'] ?? null;
+	if ( ! $bindings ) {
+		return $block_content;
+	}
+
+	$source = $bindings['source'] ?? '';
+	$key    = $bindings['args']['key'] ?? '';
+
+	if (
+		! in_array( $source, array( 'events-speakers/event-field', 'events-speakers/speaker-field' ), true ) ||
+		! in_array( $key, array( 'speakers_links', 'events_links' ), true )
+	) {
+		return $block_content;
+	}
+
+	return str_replace(
+		array( '&lt;a href=&quot;', '&quot;&gt;', '&lt;/a&gt;' ),
+		array( '<a href="',         '">',          '</a>' ),
+		$block_content
+	);
+}
 
 /**
  * When event_speakers is read as a single value during frontend/editor block rendering
