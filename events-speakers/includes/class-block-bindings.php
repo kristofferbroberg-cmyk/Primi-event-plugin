@@ -65,15 +65,13 @@ class Events_Speakers_Block_Bindings {
 	 * @param string   $attribute_name  The block attribute being bound.
 	 */
 	public static function get_event_field( array $source_args, WP_Block $block_instance, string $attribute_name ): ?string {
-		$post_id = isset( $block_instance->context['postId'] )
-			? absint( $block_instance->context['postId'] )
-			: get_the_ID();
+		$post_id = absint( $block_instance->context['postId'] ?? get_the_ID() );
 
 		if ( ! $post_id || 'event' !== get_post_type( $post_id ) ) {
 			return null;
 		}
 
-		$key = isset( $source_args['key'] ) ? sanitize_key( $source_args['key'] ) : '';
+		$key = sanitize_key( $source_args['key'] ?? '' );
 
 		switch ( $key ) {
 			case 'date':
@@ -111,15 +109,13 @@ class Events_Speakers_Block_Bindings {
 	}
 
 	public static function get_speaker_field( array $source_args, WP_Block $block_instance, string $attribute_name ): ?string {
-		$post_id = isset( $block_instance->context['postId'] )
-			? absint( $block_instance->context['postId'] )
-			: get_the_ID();
+		$post_id = absint( $block_instance->context['postId'] ?? get_the_ID() );
 
 		if ( ! $post_id || 'speaker' !== get_post_type( $post_id ) ) {
 			return null;
 		}
 
-		$key = isset( $source_args['key'] ) ? sanitize_key( $source_args['key'] ) : '';
+		$key = sanitize_key( $source_args['key'] ?? '' );
 
 		switch ( $key ) {
 			case 'title':

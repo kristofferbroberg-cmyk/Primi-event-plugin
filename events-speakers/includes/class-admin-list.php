@@ -33,7 +33,7 @@ class Events_Speakers_Admin_List {
 	 * Hooked on load-edit.php so it fires before any output.
 	 */
 	public static function redirect_list_tables(): void {
-		$post_type = $_GET['post_type'] ?? '';
+		$post_type = isset( $_GET['post_type'] ) ? sanitize_key( $_GET['post_type'] ) : '';
 
 		if ( 'event' === $post_type ) {
 			wp_safe_redirect( admin_url( 'admin.php?page=es-events-list' ) );

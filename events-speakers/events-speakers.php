@@ -29,31 +29,75 @@ function events_speakers_deactivate(): void {
 	flush_rewrite_rules();
 }
 
+/**
+ * Safe wrapper around file_get_contents() — logs a warning and returns false
+ * if the file does not exist or cannot be read.
+ */
+function events_speakers_read_file( string $path ) {
+	if ( ! is_readable( $path ) ) {
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+		trigger_error(
+			sprintf( 'Events and Speakers: could not read file %s', esc_html( $path ) ),
+			E_USER_WARNING
+		);
+		return false;
+	}
+	return file_get_contents( $path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+}
+
 add_action( 'init', array( 'Events_Speakers_Post_Types', 'register' ) );
 add_action( 'init', 'events_speakers_register_templates' );
+add_action( 'init', 'events_speakers_register_patterns' );
 add_filter( 'use_block_editor_for_post_type', 'events_speakers_force_block_editor', 10, 2 );
 
 function events_speakers_register_templates(): void {
-	register_block_template(
-		'events-speakers//single-event',
-		array(
-			'title'       => __( 'Single Event', 'events-speakers' ),
-			'description' => __( 'Displays a single event with date, time, and speakers.', 'events-speakers' ),
-			'post_types'  => array( 'event' ),
-			'plugin'      => 'events-speakers',
-			'content'     => file_get_contents( EVENTS_SPEAKERS_DIR . 'templates/single-event.html' ),
-		)
+	$single_event = events_speakers_read_file( EVENTS_SPEAKERS_DIR . 'templates/single-event.html' );
+	if ( false !== $single_event ) {
+		register_block_template(
+			'events-speakers//single-event',
+			array(
+				'title'       => __( 'Single Event', 'events-speakers' ),
+				'description' => __( 'Displays a single event with date, time, and speakers.', 'events-speakers' ),
+				'post_types'  => array( 'event' ),
+				'plugin'      => 'events-speakers',
+				'content'     => $single_event,
+			)
+		);
+	}
+
+	$single_speaker = events_speakers_read_file( EVENTS_SPEAKERS_DIR . 'templates/single-speaker.html' );
+	if ( false !== $single_speaker ) {
+		register_block_template(
+			'events-speakers//single-speaker',
+			array(
+				'title'       => __( 'Single Speaker', 'events-speakers' ),
+				'description' => __( 'Displays a speaker with bio and list of events.', 'events-speakers' ),
+				'post_types'  => array( 'speaker' ),
+				'plugin'      => 'events-speakers',
+				'content'     => $single_speaker,
+			)
+		);
+	}
+}
+
+function events_speakers_register_patterns(): void {
+	register_block_pattern_category(
+		'events-speakers',
+		array( 'label' => __( 'Events & Speakers', 'events-speakers' ) )
 	);
-	register_block_template(
-		'events-speakers//single-speaker',
-		array(
-			'title'       => __( 'Single Speaker', 'events-speakers' ),
-			'description' => __( 'Displays a speaker with bio and list of events.', 'events-speakers' ),
-			'post_types'  => array( 'speaker' ),
-			'plugin'      => 'events-speakers',
-			'content'     => file_get_contents( EVENTS_SPEAKERS_DIR . 'templates/single-speaker.html' ),
-		)
-	);
+
+	$events_by_date = events_speakers_read_file( EVENTS_SPEAKERS_DIR . 'patterns/events-by-date.html' );
+	if ( false !== $events_by_date ) {
+		register_block_pattern(
+			'events-speakers/events-by-date',
+			array(
+				'title'       => __( 'Events by date', 'events-speakers' ),
+				'description' => __( 'A filterable list of events for a chosen date, with time and clickable speaker links.', 'events-speakers' ),
+				'categories'  => array( 'events-speakers' ),
+				'content'     => $events_by_date,
+			)
+		);
+	}
 }
 
 function events_speakers_force_block_editor( bool $use_block_editor, string $post_type ): bool {
@@ -62,28 +106,11 @@ function events_speakers_force_block_editor( bool $use_block_editor, string $pos
 	}
 	return $use_block_editor;
 }
+
 add_action( 'init', array( 'Events_Speakers_Meta_Fields', 'register' ) );
 add_action( 'init', array( 'Events_Speakers_Block_Bindings', 'register' ) );
-add_action( 'init', 'events_speakers_register_patterns' );
 add_filter( 'get_post_metadata', 'events_speakers_speakers_display_value', 10, 4 );
 add_filter( 'render_block',      'events_speakers_allow_links_in_bindings', 10, 2 );
-
-function events_speakers_register_patterns(): void {
-	register_block_pattern_category(
-		'events-speakers',
-		array( 'label' => __( 'Events & Speakers', 'events-speakers' ) )
-	);
-
-	register_block_pattern(
-		'events-speakers/events-by-date',
-		array(
-			'title'       => __( 'Events by date', 'events-speakers' ),
-			'description' => __( 'A filterable list of events for a chosen date, with time and clickable speaker links.', 'events-speakers' ),
-			'categories'  => array( 'events-speakers' ),
-			'content'     => file_get_contents( EVENTS_SPEAKERS_DIR . 'patterns/events-by-date.html' ),
-		)
-	);
-}
 
 /**
  * Block bindings escape bound content as plain text. For our HTML-producing
@@ -145,6 +172,7 @@ function events_speakers_speakers_display_value( $value, int $post_id, string $m
 	$names = array_filter( array_map( 'get_the_title', array_map( 'absint', $ids ) ) );
 	return implode( ', ', $names );
 }
+
 add_filter( 'query_loop_block_query_vars',        array( 'Events_Speakers_Blocks', 'apply_date_filter' ), 10, 3 );
 add_filter( 'rest_event_collection_params',       array( 'Events_Speakers_Blocks', 'register_rest_params' ) );
 add_filter( 'rest_event_query',                   array( 'Events_Speakers_Blocks', 'apply_rest_date_filter' ), 10, 2 );

@@ -14,6 +14,7 @@ $event_ids = get_posts(
 	)
 );
 foreach ( $event_ids as $id ) {
+	delete_post_meta( $id, 'event_date' );
 	delete_post_meta( $id, 'event_start_time' );
 	delete_post_meta( $id, 'event_end_time' );
 	delete_post_meta( $id, 'event_speakers' );
