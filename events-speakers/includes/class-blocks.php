@@ -246,6 +246,15 @@ class Events_Speakers_Blocks {
 			 .es-event-details-panel,
 			 .es-speaker-details-panel {
 			     order: -1;
+			 }
+			 /* Remove built-in padding from DatePicker inside our panel */
+			 .es-event-details-panel .components-datetime,
+			 .es-event-details-panel .components-datetime__date {
+			     padding: 0 !important;
+			 }
+			 /* Remove extra bottom margin on the calendar day grid */
+			 .es-event-details-panel .components-datetime__date .rdp {
+			     margin: 0;
 			 }'
 		);
 	}
@@ -558,12 +567,10 @@ JS;
 	var registerPlugin              = plugins.registerPlugin;
 	var PluginDocumentSettingPanel  = editPost.PluginDocumentSettingPanel;
 	var el                          = element.createElement;
-	var useState                    = element.useState;
 	var useSelect                   = data.useSelect;
 	var useDispatch                 = data.useDispatch;
 	var DatePicker                  = components.DatePicker;
-	var CheckboxControl             = components.CheckboxControl;
-	var SearchControl               = components.SearchControl;
+	var FormTokenField              = components.FormTokenField;
 	var TextControl                 = components.TextControl;
 	var VStack                      = components.VStack || components.__experimentalVStack;
 	var Text                        = components.__experimentalText;
@@ -595,79 +602,61 @@ JS;
 				} );
 			} );
 
-			var srchArr    = useState( '' );
-			var search     = srchArr[0]; var setSearch = srchArr[1];
-
 			if ( postType !== 'event' ) return null;
 
-			var date       = meta.event_date || '';
-			var startTime  = meta.event_start_time || '';
-			var endTime    = meta.event_end_time || '';
-			var selectedSpeakers;
-			try { selectedSpeakers = JSON.parse( meta.event_speakers || '[]' ); } catch(e) { selectedSpeakers = []; }
-			if ( ! Array.isArray( selectedSpeakers ) ) selectedSpeakers = [];
+			var date      = meta.event_date || '';
+			var startTime = meta.event_start_time || '';
+			var endTime   = meta.event_end_time || '';
+
+			var selectedIds;
+			try { selectedIds = JSON.parse( meta.event_speakers || '[]' ); } catch(e) { selectedIds = []; }
+			if ( ! Array.isArray( selectedIds ) ) selectedIds = [];
 
 			function setMeta( key, value ) {
 				var patch = {}; patch[ key ] = value;
 				editPost( { meta: patch } );
 			}
 
-			function toggleSpeaker( id, checked ) {
-				var updated = checked
-					? selectedSpeakers.concat( [ id ] )
-					: selectedSpeakers.filter( function( i ) { return i !== id; } );
-				setMeta( 'event_speakers', JSON.stringify( updated ) );
-			}
-
-			var filteredSpeakers = ( speakers || [] ).filter( function( s ) {
+			// Build lookup maps for FormTokenField.
+			var speakerList  = speakers || [];
+			var nameToId     = {};
+			var idToName     = {};
+			speakerList.forEach( function( s ) {
 				var name = s.title && s.title.rendered ? s.title.rendered : '';
-				return ! search || name.toLowerCase().indexOf( search.toLowerCase() ) !== -1;
+				nameToId[ name ] = s.id;
+				idToName[ s.id ] = name;
 			} );
 
-			// Build speaker list children
-			var speakerItems = [];
-			if ( speakers === null ) {
-				speakerItems.push( el( Text, { key: 'loading', variant: 'muted' }, 'Loading\u2026' ) );
-			} else if ( speakers.length === 0 ) {
-				speakerItems.push( el( Text, { key: 'empty', variant: 'muted' }, 'No published speakers found.' ) );
-			} else {
-				if ( speakers.length > 5 ) {
-					speakerItems.push( el( SearchControl, {
-						key: 'search',
-						value: search,
-						onChange: setSearch,
-						placeholder: 'Filter speakers\u2026',
-						__nextHasNoMarginBottom: true,
-					} ) );
-				}
-				filteredSpeakers.forEach( function( s ) {
-					var name = s.title && s.title.rendered ? s.title.rendered : '';
-					speakerItems.push( el( CheckboxControl, {
-						key: s.id,
-						label: name,
-						checked: selectedSpeakers.indexOf( s.id ) !== -1,
-						onChange: function( checked ) { toggleSpeaker( s.id, checked ); },
-						__nextHasNoMarginBottom: true,
-					} ) );
-				} );
+			// Tokens are display names of currently selected speakers.
+			var tokens = selectedIds.map( function( id ) {
+				return idToName[ id ] || String( id );
+			} );
+
+			// Suggestions are names of all speakers.
+			var suggestions = speakerList.map( function( s ) {
+				return s.title && s.title.rendered ? s.title.rendered : '';
+			} );
+
+			function onChangeTokens( newTokens ) {
+				var newIds = newTokens.map( function( token ) {
+					var name = typeof token === 'object' ? token.value : token;
+					return nameToId[ name ] || null;
+				} ).filter( Boolean );
+				setMeta( 'event_speakers', JSON.stringify( newIds ) );
 			}
 
 			return el(
 				PluginDocumentSettingPanel,
 				{ name: 'es-event-details', title: 'Event Details', icon: 'calendar-alt', className: 'es-event-details-panel' },
-				el( VStack, { spacing: 4 },
-					// Date
-					el( VStack, { spacing: 2 },
-						el( Text, { weight: 600 }, 'Date' ),
-						el( DatePicker, {
-							currentDate: date ? date + 'T12:00:00' : null,
-							onChange: function( v ) { setMeta( 'event_date', v ? v.slice( 0, 10 ) : '' ); },
-						} )
-					),
-					el( Divider ),
-					// Time — start and end in one compact row
-					el( VStack, { spacing: 2 },
-						el( Text, { weight: 600 }, 'Time' ),
+				el( VStack, { spacing: 2 },
+					// Date — no label needed, calendar is self-explanatory
+					el( DatePicker, {
+						currentDate: date ? date + 'T12:00:00' : null,
+						onChange: function( v ) { setMeta( 'event_date', v ? v.slice( 0, 10 ) : '' ); },
+					} ),
+					// Time — compact start/end row
+					el( VStack, { spacing: 1 },
+						el( Text, { weight: 600, upperCase: true, size: 11, style: { letterSpacing: '0.06em', color: '#757575' } }, 'Time' ),
 						el( 'div', { style: { display: 'flex', alignItems: 'center', gap: '8px' } },
 							el( 'input', {
 								type: 'time',
@@ -704,11 +693,16 @@ JS;
 							} )
 						)
 					),
-					el( Divider ),
-					// Speakers
-					el.apply( null, [ VStack, { spacing: 2 },
-						el( Text, { weight: 600 }, 'Speakers' )
-					].concat( speakerItems ) )
+					// Speakers — FormTokenField (chip + autocomplete)
+					el( FormTokenField, {
+						label: 'Speakers',
+						value: tokens,
+						suggestions: suggestions,
+						onChange: onChangeTokens,
+						placeholder: speakers === null ? 'Loading\u2026' : 'Add speaker\u2026',
+						__experimentalShowHowTo: false,
+						__nextHasNoMarginBottom: true,
+					} )
 				)
 			);
 		},
