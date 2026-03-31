@@ -246,6 +246,15 @@ class Events_Speakers_Blocks {
 			 .es-event-details-panel,
 			 .es-speaker-details-panel {
 			     order: -1;
+			 }
+			 /* Remove built-in padding from DatePicker inside our panel */
+			 .es-event-details-panel .components-datetime,
+			 .es-event-details-panel .components-datetime__date {
+			     padding: 0 !important;
+			 }
+			 /* Remove extra bottom margin on the calendar day grid */
+			 .es-event-details-panel .components-datetime__date .rdp {
+			     margin: 0;
 			 }'
 		);
 	}
@@ -639,13 +648,12 @@ JS;
 			return el(
 				PluginDocumentSettingPanel,
 				{ name: 'es-event-details', title: 'Event Details', icon: 'calendar-alt', className: 'es-event-details-panel' },
-				el( VStack, { spacing: 3 },
+				el( VStack, { spacing: 2 },
 					// Date — no label needed, calendar is self-explanatory
 					el( DatePicker, {
 						currentDate: date ? date + 'T12:00:00' : null,
 						onChange: function( v ) { setMeta( 'event_date', v ? v.slice( 0, 10 ) : '' ); },
 					} ),
-					el( Divider ),
 					// Time — compact start/end row
 					el( VStack, { spacing: 1 },
 						el( Text, { weight: 600, upperCase: true, size: 11, style: { letterSpacing: '0.06em', color: '#757575' } }, 'Time' ),
@@ -685,7 +693,6 @@ JS;
 							} )
 						)
 					),
-					el( Divider ),
 					// Speakers — FormTokenField (chip + autocomplete)
 					el( FormTokenField, {
 						label: 'Speakers',
