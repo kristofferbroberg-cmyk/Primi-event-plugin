@@ -193,7 +193,7 @@ class Events_Speakers_Admin_Edit {
 		// Load existing post data.
 		useEffect( function() {
 			if ( ! postId ) { setLoading( false ); return; }
-			apiFetch( { path: '/wp/v2/event/' + postId + '?_fields=id,title,content,status,featured_media,meta' } )
+			apiFetch( { path: '/wp/v2/event/' + postId + '?context=edit&_fields=id,title,content,status,featured_media,meta' } )
 				.then( function( post ) {
 					setTitle( post.title && post.title.raw ? post.title.raw : '' );
 					setContent( post.content && post.content.raw ? post.content.raw : '' );
@@ -380,7 +380,7 @@ class Events_Speakers_Admin_Edit {
 
 		useEffect( function() {
 			if ( ! postId ) { setLoading( false ); return; }
-			apiFetch( { path: '/wp/v2/speaker/' + postId + '?_fields=id,title,content,status,featured_media,meta' } )
+			apiFetch( { path: '/wp/v2/speaker/' + postId + '?context=edit&_fields=id,title,content,status,featured_media,meta' } )
 				.then( function( post ) {
 					setName( post.title && post.title.raw ? post.title.raw : '' );
 					setBio( post.content && post.content.raw ? post.content.raw : '' );
