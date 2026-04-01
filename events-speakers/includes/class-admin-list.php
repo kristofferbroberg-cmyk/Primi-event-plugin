@@ -80,10 +80,12 @@ class Events_Speakers_Admin_List {
 			$is_events ? self::events_script() : self::speakers_script()
 		);
 
+		$edit_page = $is_events ? 'es-edit-event' : 'es-edit-speaker';
 		wp_localize_script( 'es-admin-list', 'esAdminList', array(
 			'postType' => $post_type,
-			'editBase' => admin_url( 'post.php' ),
-			'newUrl'   => admin_url( 'post-new.php?post_type=' . $post_type ),
+			'editBase' => admin_url( 'admin.php' ),
+			'editPage' => $edit_page,
+			'newUrl'   => admin_url( 'admin.php?page=' . $edit_page ),
 			'nonce'    => wp_create_nonce( 'wp_rest' ),
 		) );
 	}
@@ -116,7 +118,7 @@ class Events_Speakers_Admin_List {
 			enableHiding: false,
 			render: function( ref ) {
 				var item = ref.item;
-				var url = esAdminList.editBase + '?post=' + item.id + '&action=edit';
+				var url = esAdminList.editBase + '?page=' + esAdminList.editPage + '&post=' + item.id;
 				return el( 'a', { href: url, style: { fontWeight: 600 } }, item.title.rendered );
 			},
 		},
@@ -237,7 +239,7 @@ class Events_Speakers_Admin_List {
 							label: 'Edit',
 							isPrimary: true,
 							callback: function( items ) {
-								window.location.href = esAdminList.editBase + '?post=' + items[0].id + '&action=edit';
+								window.location.href = esAdminList.editBase + '?page=' + esAdminList.editPage + '&post=' + items[0].id;
 							},
 						},
 						{
@@ -296,7 +298,7 @@ JS;
 			enableHiding: false,
 			render: function( ref ) {
 				var item = ref.item;
-				var url = esAdminList.editBase + '?post=' + item.id + '&action=edit';
+				var url = esAdminList.editBase + '?page=' + esAdminList.editPage + '&post=' + item.id;
 				return el( 'a', { href: url, style: { fontWeight: 600 } }, item.title.rendered );
 			},
 		},
@@ -385,7 +387,7 @@ JS;
 							label: 'Edit',
 							isPrimary: true,
 							callback: function( items ) {
-								window.location.href = esAdminList.editBase + '?post=' + items[0].id + '&action=edit';
+								window.location.href = esAdminList.editBase + '?page=' + esAdminList.editPage + '&post=' + items[0].id;
 							},
 						},
 						{
