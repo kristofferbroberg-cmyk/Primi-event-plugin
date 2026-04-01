@@ -29,7 +29,7 @@ class Events_Speakers_Admin_List {
 	}
 
 	/**
-	 * Redirect the default list table URLs to our custom DataViews pages.
+	 * Redirect the default list table URLs to our custom list pages.
 	 * Hooked on load-edit.php so it fires before any output.
 	 */
 	public static function redirect_list_tables(): void {
@@ -47,7 +47,7 @@ class Events_Speakers_Admin_List {
 	}
 
 	public static function render_page(): void {
-		echo '<div id="es-admin-list-root" style="margin-top:24px;"></div>';
+		echo '<div id="es-admin-list-root"></div>';
 	}
 
 	public static function enqueue( string $hook ): void {
@@ -58,196 +58,241 @@ class Events_Speakers_Admin_List {
 			return;
 		}
 
-		// DataViews not available (Gutenberg not active) — nothing to enqueue.
-		if ( ! wp_script_is( 'wp-dataviews', 'registered' ) ) {
-			return;
-		}
-
 		wp_enqueue_style( 'wp-components' );
 
 		wp_register_script(
 			'es-admin-list',
 			'',
-			array( 'wp-element', 'wp-components', 'wp-dataviews', 'wp-api-fetch', 'wp-i18n', 'wp-url' ),
+			array( 'wp-element', 'wp-components', 'wp-api-fetch' ),
 			null,
 			true
 		);
 		wp_enqueue_script( 'es-admin-list' );
-
-		$post_type = $is_events ? 'event' : 'speaker';
+		wp_add_inline_script( 'es-admin-list', self::list_styles() );
 		wp_add_inline_script(
 			'es-admin-list',
 			$is_events ? self::events_script() : self::speakers_script()
 		);
 
+		$edit_page = $is_events ? 'es-edit-event' : 'es-edit-speaker';
 		wp_localize_script( 'es-admin-list', 'esAdminList', array(
-			'postType' => $post_type,
-			'editBase' => admin_url( 'post.php' ),
-			'newUrl'   => admin_url( 'post-new.php?post_type=' . $post_type ),
+			'postType' => $is_events ? 'event' : 'speaker',
+			'editBase' => admin_url( 'admin.php' ),
+			'editPage' => $edit_page,
+			'newUrl'   => admin_url( 'admin.php?page=' . $edit_page ),
 			'nonce'    => wp_create_nonce( 'wp_rest' ),
 		) );
 	}
 
+	// Inject table styles via a tiny inline script that adds a <style> tag.
+	private static function list_styles(): string {
+		return <<<'JS'
+( function() {
+	var style = document.createElement( 'style' );
+	style.textContent = [
+		'#es-admin-list-root { margin-top: 20px; }',
+		'.es-list-wrap { background: #fff; border: 1px solid #c3c4c7; border-radius: 4px; }',
+		'.es-list-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid #c3c4c7; gap: 12px; }',
+		'.es-list-toolbar input[type=search] { padding: 6px 10px; border: 1px solid #8c8f94; border-radius: 4px; font-size: 13px; width: 240px; }',
+		'.es-list-table { width: 100%; border-collapse: collapse; font-size: 13px; }',
+		'.es-list-table th { text-align: left; padding: 10px 16px; border-bottom: 1px solid #c3c4c7; font-weight: 600; white-space: nowrap; background: #f6f7f7; }',
+		'.es-list-table th.sortable { cursor: pointer; user-select: none; }',
+		'.es-list-table th.sortable:hover { color: #2271b1; }',
+		'.es-list-table td { padding: 10px 16px; border-bottom: 1px solid #f0f0f1; vertical-align: top; }',
+		'.es-list-table tr:last-child td { border-bottom: none; }',
+		'.es-list-table tr:hover td { background: #f6f7f7; }',
+		'.es-list-table .col-title a { font-weight: 600; color: #2271b1; text-decoration: none; }',
+		'.es-list-table .col-title a:hover { text-decoration: underline; }',
+		'.es-list-table .row-actions { display: none; font-size: 12px; margin-top: 3px; color: #646970; }',
+		'.es-list-table tr:hover .row-actions { display: block; }',
+		'.es-list-table .row-actions a { color: #2271b1; text-decoration: none; margin-right: 8px; }',
+		'.es-list-table .row-actions a:hover { text-decoration: underline; }',
+		'.es-list-table .muted { color: #757575; }',
+		'.es-list-table .status-draft { color: #646970; font-style: italic; font-size: 12px; }',
+		'.es-list-pagination { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-top: 1px solid #c3c4c7; font-size: 13px; color: #646970; }',
+		'.es-list-pagination .page-buttons { display: flex; gap: 4px; align-items: center; }',
+		'.es-list-spinner { padding: 48px; text-align: center; }',
+		'.es-list-empty { padding: 32px 16px; text-align: center; color: #646970; }',
+	].join( '\n' );
+	document.head.appendChild( style );
+} )();
+JS;
+	}
+
 	private static function events_script(): string {
 		return <<<'JS'
-( function( element, components, dataViews, apiFetch ) {
+( function( element, components, apiFetch ) {
 	var el         = element.createElement;
 	var useState   = element.useState;
 	var useEffect  = element.useEffect;
-	var DataViews  = dataViews.DataViews;
+	var useRef     = element.useRef;
 	var Button     = components.Button;
 	var Spinner    = components.Spinner;
 
-	var DEFAULT_VIEW = {
-		type: 'list',
-		page: 1,
-		perPage: 20,
-		sort: { field: 'event_date', direction: 'asc' },
-		filters: [],
-		search: '',
-		fields: [ 'event_date', 'event_time', 'event_speakers' ],
-	};
+	var PER_PAGE = 20;
 
-	var FIELDS = [
-		{
-			id: 'title',
-			label: 'Title',
-			enableSorting: true,
-			enableHiding: false,
-			render: function( ref ) {
-				var item = ref.item;
-				var url = esAdminList.editBase + '?post=' + item.id + '&action=edit';
-				return el( 'a', { href: url, style: { fontWeight: 600 } }, item.title.rendered );
-			},
-		},
-		{
-			id: 'event_date',
-			label: 'Date',
-			enableSorting: true,
-			getValue: function( ref ) { return ref.item.meta && ref.item.meta.event_date || ''; },
-			render: function( ref ) {
-				var val = ref.item.meta && ref.item.meta.event_date;
-				if ( ! val ) return el( 'span', { style: { color: '#757575' } }, '—' );
-				var d = new Date( val + 'T12:00:00' );
-				return d.toLocaleDateString( undefined, { year: 'numeric', month: 'short', day: 'numeric' } );
-			},
-		},
-		{
-			id: 'event_time',
-			label: 'Time',
-			enableSorting: false,
-			render: function( ref ) {
-				var meta  = ref.item.meta || {};
-				var start = meta.event_start_time;
-				var end   = meta.event_end_time;
-				if ( ! start ) return el( 'span', { style: { color: '#757575' } }, '—' );
-				return ( start + ( end ? '–' + end : '' ) );
-			},
-		},
-		{
-			id: 'event_speakers',
-			label: 'Speakers',
-			enableSorting: false,
-			render: function( ref ) {
-				var meta = ref.item.meta || {};
-				var raw  = meta.event_speakers;
-				var ids;
-				try { ids = JSON.parse( raw || '[]' ); } catch(e) { ids = []; }
-				var names = ref.item._speakerNames;
-				if ( ! names ) return el( 'span', { style: { color: '#757575' } }, ids.length ? '…' : '—' );
-				return names || el( 'span', { style: { color: '#757575' } }, '—' );
-			},
-		},
-	];
+	function useDebounce( value, delay ) {
+		var state = useState( value );
+		var debounced = state[0]; var setDebounced = state[1];
+		useEffect( function() {
+			var t = setTimeout( function() { setDebounced( value ); }, delay );
+			return function() { clearTimeout( t ); };
+		}, [ value, delay ] );
+		return debounced;
+	}
 
 	function EventsList() {
-		var viewState   = useState( DEFAULT_VIEW );
-		var view        = viewState[0]; var setView = viewState[1];
-		var dataState   = useState( null );
-		var data        = dataState[0]; var setData = dataState[1];
-		var totalState  = useState( 0 );
-		var total       = totalState[0]; var setTotal = totalState[1];
+		var searchState  = useState( '' );
+		var search = searchState[0]; var setSearch = searchState[1];
+		var pageState    = useState( 1 );
+		var page = pageState[0]; var setPage = pageState[1];
+		var sortState    = useState( { field: 'event_date', dir: 'asc' } );
+		var sort = sortState[0]; var setSort = sortState[1];
+		var dataState    = useState( null );
+		var data = dataState[0]; var setData = dataState[1];
+		var totalState   = useState( 0 );
+		var total = totalState[0]; var setTotal = totalState[1];
 		var loadingState = useState( true );
-		var loading     = loadingState[0]; var setLoading = loadingState[1];
+		var loading = loadingState[0]; var setLoading = loadingState[1];
+
+		var debouncedSearch = useDebounce( search, 300 );
+
+		useEffect( function() {
+			setPage( 1 );
+		}, [ debouncedSearch ] );
 
 		useEffect( function() {
 			setLoading( true );
 			var params = [
 				'status=publish,draft,pending,private',
-				'per_page=' + view.perPage,
-				'page=' + view.page,
+				'per_page=' + PER_PAGE,
+				'page=' + page,
 				'_fields=id,title,meta,link,status',
 			];
-			if ( view.search ) params.push( 'search=' + encodeURIComponent( view.search ) );
-			if ( view.sort && view.sort.field === 'event_date' ) {
+			if ( debouncedSearch ) params.push( 'search=' + encodeURIComponent( debouncedSearch ) );
+			if ( sort.field === 'event_date' ) {
 				params.push( 'orderby=meta_value' );
 				params.push( 'meta_key=event_date' );
-				params.push( 'order=' + ( view.sort.direction === 'desc' ? 'desc' : 'asc' ) );
+				params.push( 'order=' + sort.dir );
+			} else if ( sort.field === 'title' ) {
+				params.push( 'orderby=title' );
+				params.push( 'order=' + sort.dir );
 			}
-			apiFetch( {
-				path: '/wp/v2/event?' + params.join( '&' ),
-				parse: false,
-			} ).then( function( response ) {
-				setTotal( parseInt( response.headers.get( 'X-WP-Total' ) || '0', 10 ) );
-				return response.json();
-			} ).then( function( events ) {
-				// Resolve speaker names for each event.
-				var speakerIds = [];
-				events.forEach( function( ev ) {
-					var ids;
-					try { ids = JSON.parse( ( ev.meta && ev.meta.event_speakers ) || '[]' ); } catch(e) { ids = []; }
-					ids.forEach( function( id ) { if ( speakerIds.indexOf( id ) === -1 ) speakerIds.push( id ); } );
-				} );
-				if ( speakerIds.length === 0 ) {
-					events.forEach( function( ev ) { ev._speakerNames = ''; } );
-					setData( events );
-					setLoading( false );
-					return;
-				}
-				apiFetch( { path: '/wp/v2/speaker?include=' + speakerIds.join( ',' ) + '&per_page=100&_fields=id,title' } )
-					.then( function( speakers ) {
-						var nameMap = {};
-						speakers.forEach( function( s ) { nameMap[ s.id ] = s.title && s.title.rendered ? s.title.rendered : ''; } );
-						events.forEach( function( ev ) {
-							var ids;
-							try { ids = JSON.parse( ( ev.meta && ev.meta.event_speakers ) || '[]' ); } catch(e) { ids = []; }
-							ev._speakerNames = ids.map( function( id ) { return nameMap[ id ] || ''; } ).filter( Boolean ).join( ', ' );
-						} );
+
+			apiFetch( { path: '/wp/v2/event?' + params.join( '&' ), parse: false } )
+				.then( function( response ) {
+					setTotal( parseInt( response.headers.get( 'X-WP-Total' ) || '0', 10 ) );
+					return response.json();
+				} )
+				.then( function( events ) {
+					var speakerIds = [];
+					events.forEach( function( ev ) {
+						var ids;
+						try { ids = JSON.parse( ( ev.meta && ev.meta.event_speakers ) || '[]' ); } catch(e) { ids = []; }
+						ids.forEach( function( id ) { if ( speakerIds.indexOf( id ) === -1 ) speakerIds.push( id ); } );
+					} );
+					if ( speakerIds.length === 0 ) {
+						events.forEach( function( ev ) { ev._speakerNames = ''; } );
 						setData( events );
 						setLoading( false );
-					} );
-			} ).catch( function() { setLoading( false ); } );
-		}, [ view.page, view.perPage, view.sort, view.search ] );
-
-		return el( 'div', { style: { padding: '0 16px' } },
-			el( 'div', { style: { display: 'flex', justifyContent: 'flex-end', marginBottom: '16px' } },
-				el( Button, { variant: 'primary', href: esAdminList.newUrl }, 'Add New Event' )
-			),
-			loading
-				? el( 'div', { style: { padding: '48px', textAlign: 'center' } }, el( Spinner ) )
-				: el( DataViews, {
-					data: data || [],
-					fields: FIELDS,
-					view: view,
-					onChangeView: setView,
-					paginationInfo: { totalItems: total, totalPages: Math.ceil( total / view.perPage ) },
-					actions: [
-						{
-							id: 'edit',
-							label: 'Edit',
-							isPrimary: true,
-							callback: function( items ) {
-								window.location.href = esAdminList.editBase + '?post=' + items[0].id + '&action=edit';
-							},
-						},
-						{
-							id: 'view',
-							label: 'View',
-							callback: function( items ) { window.open( items[0].link, '_blank' ); },
-						},
-					],
-					getItemId: function( item ) { return String( item.id ); },
+						return;
+					}
+					apiFetch( { path: '/wp/v2/speaker?include=' + speakerIds.join( ',' ) + '&per_page=100&_fields=id,title' } )
+						.then( function( speakers ) {
+							var nameMap = {};
+							speakers.forEach( function( s ) { nameMap[ s.id ] = s.title && s.title.rendered ? s.title.rendered : ''; } );
+							events.forEach( function( ev ) {
+								var ids;
+								try { ids = JSON.parse( ( ev.meta && ev.meta.event_speakers ) || '[]' ); } catch(e) { ids = []; }
+								ev._speakerNames = ids.map( function( id ) { return nameMap[ id ] || ''; } ).filter( Boolean ).join( ', ' );
+							} );
+							setData( events );
+							setLoading( false );
+						} );
 				} )
+				.catch( function() { setLoading( false ); } );
+		}, [ page, sort, debouncedSearch ] );
+
+		function toggleSort( field ) {
+			setSort( function( prev ) {
+				if ( prev.field === field ) {
+					return { field: field, dir: prev.dir === 'asc' ? 'desc' : 'asc' };
+				}
+				return { field: field, dir: 'asc' };
+			} );
+		}
+
+		function sortIndicator( field ) {
+			if ( sort.field !== field ) return ' ↕';
+			return sort.dir === 'asc' ? ' ↑' : ' ↓';
+		}
+
+		var totalPages = Math.ceil( total / PER_PAGE );
+
+		return el( 'div', null,
+			el( 'div', { className: 'es-list-wrap' },
+				el( 'div', { className: 'es-list-toolbar' },
+					el( 'input', {
+						type: 'search',
+						placeholder: 'Search events…',
+						value: search,
+						onChange: function( e ) { setSearch( e.target.value ); },
+					} ),
+					el( Button, { variant: 'primary', href: esAdminList.newUrl }, 'Add New Event' )
+				),
+				loading
+					? el( 'div', { className: 'es-list-spinner' }, el( Spinner ) )
+					: ( ! data || data.length === 0
+						? el( 'div', { className: 'es-list-empty' }, 'No events found.' )
+						: el( 'table', { className: 'es-list-table' },
+							el( 'thead', null,
+								el( 'tr', null,
+									el( 'th', { className: 'col-title sortable', onClick: function() { toggleSort( 'title' ); } }, 'Title' + sortIndicator( 'title' ) ),
+									el( 'th', { className: 'sortable', onClick: function() { toggleSort( 'event_date' ); } }, 'Date' + sortIndicator( 'event_date' ) ),
+									el( 'th', null, 'Time' ),
+									el( 'th', null, 'Speakers' )
+								)
+							),
+							el( 'tbody', null,
+								data.map( function( ev ) {
+									var editUrl = esAdminList.editBase + '?page=' + esAdminList.editPage + '&post=' + ev.id;
+									var meta    = ev.meta || {};
+									var date    = meta.event_date;
+									var start   = meta.event_start_time;
+									var end     = meta.event_end_time;
+									var dateStr = date ? new Date( date + 'T12:00:00' ).toLocaleDateString( undefined, { year: 'numeric', month: 'short', day: 'numeric' } ) : null;
+									var timeStr = start ? ( start + ( end ? '–' + end : '' ) ) : null;
+
+									return el( 'tr', { key: String( ev.id ) },
+										el( 'td', { className: 'col-title' },
+											el( 'a', { href: editUrl }, ev.title && ev.title.rendered ? ev.title.rendered : '(no title)' ),
+											ev.status === 'draft' ? el( 'span', { className: 'status-draft' }, ' — Draft' ) : null,
+											el( 'div', { className: 'row-actions' },
+												el( 'a', { href: editUrl }, 'Edit' ),
+												el( 'a', { href: ev.link, target: '_blank' }, 'View' )
+											)
+										),
+										el( 'td', null, dateStr || el( 'span', { className: 'muted' }, '—' ) ),
+										el( 'td', null, timeStr || el( 'span', { className: 'muted' }, '—' ) ),
+										el( 'td', null, ev._speakerNames || el( 'span', { className: 'muted' }, '—' ) )
+									);
+								} )
+							)
+						)
+					),
+				totalPages > 1 && ! loading
+					? el( 'div', { className: 'es-list-pagination' },
+						el( 'span', null, total + ' items' ),
+						el( 'div', { className: 'page-buttons' },
+							el( Button, { variant: 'secondary', isSmall: true, disabled: page <= 1, onClick: function() { setPage( 1 ); } }, '«' ),
+							el( Button, { variant: 'secondary', isSmall: true, disabled: page <= 1, onClick: function() { setPage( function(p) { return p - 1; } ); } }, '‹' ),
+							el( 'span', null, 'Page ' + page + ' of ' + totalPages ),
+							el( Button, { variant: 'secondary', isSmall: true, disabled: page >= totalPages, onClick: function() { setPage( function(p) { return p + 1; } ); } }, '›' ),
+							el( Button, { variant: 'secondary', isSmall: true, disabled: page >= totalPages, onClick: function() { setPage( totalPages ); } }, '»' )
+						)
+					)
+					: null
+			)
 		);
 	}
 
@@ -262,7 +307,6 @@ class Events_Speakers_Admin_List {
 } )(
 	window.wp.element,
 	window.wp.components,
-	window.wp.dataViews,
 	window.wp.apiFetch
 );
 JS;
@@ -270,132 +314,155 @@ JS;
 
 	private static function speakers_script(): string {
 		return <<<'JS'
-( function( element, components, dataViews, apiFetch ) {
+( function( element, components, apiFetch ) {
 	var el         = element.createElement;
 	var useState   = element.useState;
 	var useEffect  = element.useEffect;
-	var DataViews  = dataViews.DataViews;
 	var Button     = components.Button;
 	var Spinner    = components.Spinner;
 
-	var DEFAULT_VIEW = {
-		type: 'list',
-		page: 1,
-		perPage: 20,
-		sort: { field: 'title', direction: 'asc' },
-		filters: [],
-		search: '',
-		fields: [ 'speaker_title', 'speaker_events' ],
-	};
+	var PER_PAGE = 20;
 
-	var FIELDS = [
-		{
-			id: 'title',
-			label: 'Name',
-			enableSorting: true,
-			enableHiding: false,
-			render: function( ref ) {
-				var item = ref.item;
-				var url = esAdminList.editBase + '?post=' + item.id + '&action=edit';
-				return el( 'a', { href: url, style: { fontWeight: 600 } }, item.title.rendered );
-			},
-		},
-		{
-			id: 'speaker_title',
-			label: 'Position',
-			enableSorting: false,
-			render: function( ref ) {
-				var val = ref.item.meta && ref.item.meta.speaker_title;
-				return val || el( 'span', { style: { color: '#757575' } }, '—' );
-			},
-		},
-		{
-			id: 'speaker_events',
-			label: 'Events',
-			enableSorting: false,
-			render: function( ref ) {
-				var names = ref.item._eventNames;
-				if ( names === undefined ) return el( 'span', { style: { color: '#757575' } }, '…' );
-				return names || el( 'span', { style: { color: '#757575' } }, '—' );
-			},
-		},
-	];
+	function useDebounce( value, delay ) {
+		var state = useState( value );
+		var debounced = state[0]; var setDebounced = state[1];
+		useEffect( function() {
+			var t = setTimeout( function() { setDebounced( value ); }, delay );
+			return function() { clearTimeout( t ); };
+		}, [ value, delay ] );
+		return debounced;
+	}
 
 	function SpeakersList() {
-		var viewState    = useState( DEFAULT_VIEW );
-		var view         = viewState[0]; var setView = viewState[1];
+		var searchState  = useState( '' );
+		var search = searchState[0]; var setSearch = searchState[1];
+		var pageState    = useState( 1 );
+		var page = pageState[0]; var setPage = pageState[1];
+		var sortState    = useState( { field: 'title', dir: 'asc' } );
+		var sort = sortState[0]; var setSort = sortState[1];
 		var dataState    = useState( null );
-		var data         = dataState[0]; var setData = dataState[1];
+		var data = dataState[0]; var setData = dataState[1];
 		var totalState   = useState( 0 );
-		var total        = totalState[0]; var setTotal = totalState[1];
+		var total = totalState[0]; var setTotal = totalState[1];
 		var loadingState = useState( true );
-		var loading      = loadingState[0]; var setLoading = loadingState[1];
+		var loading = loadingState[0]; var setLoading = loadingState[1];
+
+		var debouncedSearch = useDebounce( search, 300 );
+
+		useEffect( function() {
+			setPage( 1 );
+		}, [ debouncedSearch ] );
 
 		useEffect( function() {
 			setLoading( true );
 			var params = [
 				'status=publish,draft,pending,private',
-				'per_page=' + view.perPage,
-				'page=' + view.page,
-				'_fields=id,title,meta,link',
+				'per_page=' + PER_PAGE,
+				'page=' + page,
+				'_fields=id,title,meta,link,status',
 			];
-			if ( view.search ) params.push( 'search=' + encodeURIComponent( view.search ) );
-			if ( view.sort && view.sort.field === 'title' ) {
+			if ( debouncedSearch ) params.push( 'search=' + encodeURIComponent( debouncedSearch ) );
+			if ( sort.field === 'title' ) {
 				params.push( 'orderby=title' );
-				params.push( 'order=' + ( view.sort.direction === 'desc' ? 'desc' : 'asc' ) );
+				params.push( 'order=' + sort.dir );
 			}
-			apiFetch( {
-				path: '/wp/v2/speaker?' + params.join( '&' ),
-				parse: false,
-			} ).then( function( response ) {
-				setTotal( parseInt( response.headers.get( 'X-WP-Total' ) || '0', 10 ) );
-				return response.json();
-			} ).then( function( speakers ) {
-				// For each speaker, fetch their events via speaker_filter param.
-				var fetches = speakers.map( function( sp ) {
-					return apiFetch( { path: '/wp/v2/event?speaker_filter=' + sp.id + '&per_page=100&_fields=id,title' } )
-						.then( function( events ) {
-							sp._eventNames = events.map( function( ev ) {
-								return ev.title && ev.title.rendered ? ev.title.rendered : '';
-							} ).filter( Boolean ).join( ', ' );
-						} ).catch( function() { sp._eventNames = ''; } );
-				} );
-				Promise.all( fetches ).then( function() {
-					setData( speakers );
-					setLoading( false );
-				} );
-			} ).catch( function() { setLoading( false ); } );
-		}, [ view.page, view.perPage, view.sort, view.search ] );
 
-		return el( 'div', { style: { padding: '0 16px' } },
-			el( 'div', { style: { display: 'flex', justifyContent: 'flex-end', marginBottom: '16px' } },
-				el( Button, { variant: 'primary', href: esAdminList.newUrl }, 'Add New Speaker' )
-			),
-			loading
-				? el( 'div', { style: { padding: '48px', textAlign: 'center' } }, el( Spinner ) )
-				: el( DataViews, {
-					data: data || [],
-					fields: FIELDS,
-					view: view,
-					onChangeView: setView,
-					paginationInfo: { totalItems: total, totalPages: Math.ceil( total / view.perPage ) },
-					actions: [
-						{
-							id: 'edit',
-							label: 'Edit',
-							isPrimary: true,
-							callback: function( items ) {
-								window.location.href = esAdminList.editBase + '?post=' + items[0].id + '&action=edit';
-							},
-						},
-						{
-							id: 'view',
-							label: 'View',
-							callback: function( items ) { window.open( items[0].link, '_blank' ); },
-						},
-					],
-					getItemId: function( item ) { return String( item.id ); },
+			apiFetch( { path: '/wp/v2/speaker?' + params.join( '&' ), parse: false } )
+				.then( function( response ) {
+					setTotal( parseInt( response.headers.get( 'X-WP-Total' ) || '0', 10 ) );
+					return response.json();
 				} )
+				.then( function( speakers ) {
+					var fetches = speakers.map( function( sp ) {
+						return apiFetch( { path: '/wp/v2/event?speaker_filter=' + sp.id + '&per_page=100&_fields=id,title' } )
+							.then( function( events ) {
+								sp._eventNames = events.map( function( ev ) {
+									return ev.title && ev.title.rendered ? ev.title.rendered : '';
+								} ).filter( Boolean ).join( ', ' );
+							} )
+							.catch( function() { sp._eventNames = ''; } );
+					} );
+					Promise.all( fetches ).then( function() {
+						setData( speakers );
+						setLoading( false );
+					} );
+				} )
+				.catch( function() { setLoading( false ); } );
+		}, [ page, sort, debouncedSearch ] );
+
+		function toggleSort( field ) {
+			setSort( function( prev ) {
+				if ( prev.field === field ) {
+					return { field: field, dir: prev.dir === 'asc' ? 'desc' : 'asc' };
+				}
+				return { field: field, dir: 'asc' };
+			} );
+		}
+
+		function sortIndicator( field ) {
+			if ( sort.field !== field ) return ' ↕';
+			return sort.dir === 'asc' ? ' ↑' : ' ↓';
+		}
+
+		var totalPages = Math.ceil( total / PER_PAGE );
+
+		return el( 'div', null,
+			el( 'div', { className: 'es-list-wrap' },
+				el( 'div', { className: 'es-list-toolbar' },
+					el( 'input', {
+						type: 'search',
+						placeholder: 'Search speakers…',
+						value: search,
+						onChange: function( e ) { setSearch( e.target.value ); },
+					} ),
+					el( Button, { variant: 'primary', href: esAdminList.newUrl }, 'Add New Speaker' )
+				),
+				loading
+					? el( 'div', { className: 'es-list-spinner' }, el( Spinner ) )
+					: ( ! data || data.length === 0
+						? el( 'div', { className: 'es-list-empty' }, 'No speakers found.' )
+						: el( 'table', { className: 'es-list-table' },
+							el( 'thead', null,
+								el( 'tr', null,
+									el( 'th', { className: 'col-title sortable', onClick: function() { toggleSort( 'title' ); } }, 'Name' + sortIndicator( 'title' ) ),
+									el( 'th', null, 'Position' ),
+									el( 'th', null, 'Events' )
+								)
+							),
+							el( 'tbody', null,
+								data.map( function( sp ) {
+									var editUrl = esAdminList.editBase + '?page=' + esAdminList.editPage + '&post=' + sp.id;
+									var meta    = sp.meta || {};
+
+									return el( 'tr', { key: String( sp.id ) },
+										el( 'td', { className: 'col-title' },
+											el( 'a', { href: editUrl }, sp.title && sp.title.rendered ? sp.title.rendered : '(no name)' ),
+											sp.status === 'draft' ? el( 'span', { className: 'status-draft' }, ' — Draft' ) : null,
+											el( 'div', { className: 'row-actions' },
+												el( 'a', { href: editUrl }, 'Edit' ),
+												el( 'a', { href: sp.link, target: '_blank' }, 'View' )
+											)
+										),
+										el( 'td', null, meta.speaker_title || el( 'span', { className: 'muted' }, '—' ) ),
+										el( 'td', null, sp._eventNames || el( 'span', { className: 'muted' }, '—' ) )
+									);
+								} )
+							)
+						)
+					),
+				totalPages > 1 && ! loading
+					? el( 'div', { className: 'es-list-pagination' },
+						el( 'span', null, total + ' items' ),
+						el( 'div', { className: 'page-buttons' },
+							el( Button, { variant: 'secondary', isSmall: true, disabled: page <= 1, onClick: function() { setPage( 1 ); } }, '«' ),
+							el( Button, { variant: 'secondary', isSmall: true, disabled: page <= 1, onClick: function() { setPage( function(p) { return p - 1; } ); } }, '‹' ),
+							el( 'span', null, 'Page ' + page + ' of ' + totalPages ),
+							el( Button, { variant: 'secondary', isSmall: true, disabled: page >= totalPages, onClick: function() { setPage( function(p) { return p + 1; } ); } }, '›' ),
+							el( Button, { variant: 'secondary', isSmall: true, disabled: page >= totalPages, onClick: function() { setPage( totalPages ); } }, '»' )
+						)
+					)
+					: null
+			)
 		);
 	}
 
@@ -410,7 +477,6 @@ JS;
 } )(
 	window.wp.element,
 	window.wp.components,
-	window.wp.dataViews,
 	window.wp.apiFetch
 );
 JS;
