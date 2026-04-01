@@ -41,7 +41,7 @@ class Events_Speakers_Admin_Edit {
 		wp_register_script(
 			'es-admin-edit',
 			'',
-			array( 'wp-element', 'wp-components', 'wp-api-fetch', 'wp-media-utils', 'wp-i18n' ),
+			array( 'wp-element', 'wp-components', 'wp-api-fetch' ),
 			null,
 			true
 		);
@@ -78,8 +78,6 @@ class Events_Speakers_Admin_Edit {
 	var el              = element.createElement;
 	var useState        = element.useState;
 	var useEffect       = element.useEffect;
-	var useCallback     = element.useCallback;
-	var Fragment        = element.Fragment;
 	var Button          = components.Button;
 	var TextControl     = components.TextControl;
 	var TextareaControl = components.TextareaControl;
@@ -87,8 +85,6 @@ class Events_Speakers_Admin_Edit {
 	var DatePicker      = components.DatePicker;
 	var FormTokenField  = components.FormTokenField;
 	var Spinner         = components.Spinner;
-	var VStack          = components.VStack || components.__experimentalVStack;
-	var Text            = components.__experimentalText;
 
 	var root    = document.getElementById( 'es-edit-root' );
 	if ( ! root ) return;
@@ -189,7 +185,7 @@ class Events_Speakers_Admin_Edit {
 
 		// Load all speakers for token field.
 		useEffect( function() {
-			apiFetch( { path: '/wp/v2/speaker?status=publish&per_page=-1&orderby=title&order=asc&_fields=id,title' } )
+			apiFetch( { path: '/wp/v2/speaker?status=publish&per_page=100&orderby=title&order=asc&_fields=id,title' } )
 				.then( function( data ) { setSpeakers( data ); } )
 				.catch( function() { setSpeakers( [] ); } );
 		}, [] );
@@ -322,19 +318,19 @@ class Events_Speakers_Admin_Edit {
 
 			// Featured image
 			el( 'div', { className: 'es-edit-section' },
-				el( Text, { weight: 600, size: 13 }, 'Featured image' ),
+				el( 'label', { style: { fontWeight: 600, fontSize: 13 } }, 'Featured image' ),
 				el( ImagePicker, { mediaId: mediaId, onChange: setMediaId } )
 			),
 
 			// Date & time
 			el( 'div', { className: 'es-edit-section' },
-				el( Text, { weight: 600, size: 13 }, 'Date' ),
+				el( 'label', { style: { fontWeight: 600, fontSize: 13 } }, 'Date' ),
 				el( DatePicker, {
 					currentDate: eventDate ? eventDate + 'T12:00:00' : null,
 					onChange: function( v ) { setEventDate( v ? v.slice( 0, 10 ) : '' ); },
 				} ),
-				el( VStack, { spacing: 1 },
-					el( Text, { weight: 600, upperCase: true, size: 11, style: { letterSpacing: '0.06em', color: '#757575' } }, 'Time' ),
+				el( 'div', null,
+					el( 'label', { style: { fontWeight: 600, textTransform: 'uppercase', fontSize: 11, letterSpacing: '0.06em', color: '#757575', display: 'block', marginBottom: 4 } }, 'Time' ),
 					el( 'div', { className: 'es-edit-time-row' },
 						el( 'input', { type: 'time', value: startTime, placeholder: '--:--', onChange: function(e) { setStartTime( e.target.value ); } } ),
 						el( 'span', { style: { color: '#757575' } }, '\u2013' ),
@@ -489,7 +485,7 @@ class Events_Speakers_Admin_Edit {
 
 			// Featured image
 			el( 'div', { className: 'es-edit-section' },
-				el( Text, { weight: 600, size: 13 }, 'Photo' ),
+				el( 'label', { style: { fontWeight: 600, fontSize: 13 } }, 'Photo' ),
 				el( ImagePicker, { mediaId: mediaId, onChange: setMediaId } )
 			)
 		);
