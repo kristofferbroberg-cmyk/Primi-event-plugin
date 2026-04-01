@@ -16,6 +16,8 @@ require_once EVENTS_SPEAKERS_DIR . 'includes/class-post-types.php';
 require_once EVENTS_SPEAKERS_DIR . 'includes/class-meta-fields.php';
 require_once EVENTS_SPEAKERS_DIR . 'includes/class-block-bindings.php';
 require_once EVENTS_SPEAKERS_DIR . 'includes/class-blocks.php';
+require_once EVENTS_SPEAKERS_DIR . 'includes/class-admin-list.php';
+require_once EVENTS_SPEAKERS_DIR . 'includes/class-admin-edit.php';
 
 register_activation_hook( __FILE__, 'events_speakers_activate' );
 register_deactivation_hook( __FILE__, 'events_speakers_deactivate' );
@@ -101,8 +103,9 @@ function events_speakers_register_patterns(): void {
 }
 
 function events_speakers_force_block_editor( bool $use_block_editor, string $post_type ): bool {
+	// Data entry for Events and Speakers uses custom React forms, not the block editor.
 	if ( in_array( $post_type, array( 'event', 'speaker' ), true ) ) {
-		return true;
+		return false;
 	}
 	return $use_block_editor;
 }
@@ -178,5 +181,13 @@ add_filter( 'rest_event_collection_params',       array( 'Events_Speakers_Blocks
 add_filter( 'rest_event_query',                   array( 'Events_Speakers_Blocks', 'apply_rest_date_filter' ), 10, 2 );
 add_filter( 'rest_speaker_collection_params',     array( 'Events_Speakers_Blocks', 'register_speaker_rest_params' ) );
 add_filter( 'rest_speaker_query',                 array( 'Events_Speakers_Blocks', 'apply_rest_event_filter' ), 10, 2 );
+// Editor assets only needed for the page editor (Query Loop inspector HOCs — used when
+// inserting the "Events by date" pattern on pages/posts). Not loaded for CPT edit screens.
 add_action( 'enqueue_block_editor_assets',        array( 'Events_Speakers_Blocks', 'enqueue_editor_assets' ) );
-add_filter( 'block_editor_settings_all',          array( 'Events_Speakers_Blocks', 'editor_placeholders' ), 10, 2 );
+
+// Admin list + edit pages.
+add_action( 'admin_menu',            array( 'Events_Speakers_Admin_List', 'register_pages' ) );
+add_action( 'load-edit.php',         array( 'Events_Speakers_Admin_List', 'redirect_list_tables' ) );
+add_action( 'admin_enqueue_scripts', array( 'Events_Speakers_Admin_List', 'enqueue' ) );
+add_action( 'admin_menu',            array( 'Events_Speakers_Admin_Edit', 'register_pages' ) );
+add_action( 'admin_enqueue_scripts', array( 'Events_Speakers_Admin_Edit', 'enqueue' ) );

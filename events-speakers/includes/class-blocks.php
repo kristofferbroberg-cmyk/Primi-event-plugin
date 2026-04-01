@@ -234,29 +234,6 @@ class Events_Speakers_Blocks {
 		);
 		wp_enqueue_script( 'events-speakers-blocks' );
 		wp_add_inline_script( 'events-speakers-blocks', self::editor_script() );
-		wp_add_inline_script( 'events-speakers-blocks', self::sidebar_script() );
-
-		wp_add_inline_style(
-			'wp-components',
-			'.editor-sidebar .components-panel,
-			 .edit-post-sidebar .components-panel {
-			     display: flex;
-			     flex-direction: column;
-			 }
-			 .es-event-details-panel,
-			 .es-speaker-details-panel {
-			     order: -1;
-			 }
-			 /* Remove built-in padding from DatePicker inside our panel */
-			 .es-event-details-panel .components-datetime,
-			 .es-event-details-panel .components-datetime__date {
-			     padding: 0 !important;
-			 }
-			 /* Remove extra bottom margin on the calendar day grid */
-			 .es-event-details-panel .components-datetime__date .rdp {
-			     margin: 0;
-			 }'
-		);
 	}
 
 	private static function editor_script(): string {
