@@ -282,6 +282,7 @@ class Events_Speakers_Admin_Edit {
 						],
 						onChange: setStatus,
 						__nextHasNoMarginBottom: true,
+						__next40pxDefaultSize: true,
 						style: { margin: 0 },
 					} ),
 					el( Button, {
@@ -349,6 +350,7 @@ class Events_Speakers_Admin_Edit {
 					placeholder: speakers === null ? 'Loading\u2026' : 'Add speaker\u2026',
 					__experimentalShowHowTo: false,
 					__nextHasNoMarginBottom: true,
+					__next40pxDefaultSize: true,
 				} )
 			)
 		);
@@ -441,6 +443,7 @@ class Events_Speakers_Admin_Edit {
 						],
 						onChange: setStatus,
 						__nextHasNoMarginBottom: true,
+						__next40pxDefaultSize: true,
 						style: { margin: 0 },
 					} ),
 					el( Button, {
