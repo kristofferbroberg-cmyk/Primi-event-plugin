@@ -58,11 +58,6 @@ class Events_Speakers_Admin_List {
 			return;
 		}
 
-		// DataViews not available (Gutenberg not active) — nothing to enqueue.
-		if ( ! wp_script_is( 'wp-dataviews', 'registered' ) ) {
-			return;
-		}
-
 		wp_enqueue_style( 'wp-components' );
 
 		wp_register_script(
