@@ -1,16 +1,23 @@
 import { DataViews } from '@wordpress/dataviews';
 import { useState, useEffect, useCallback } from '@wordpress/element';
+import { Button } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 
 import '@wordpress/dataviews/build-style/style.css';
 
-const { postType, editBase, editPage } = window.esAdminList;
+const { postType, editBase, editPage, newUrl } = window.esAdminList;
 
 const PER_PAGE = 20;
 
-const EVENT_FIELD_IDS    = [ 'title', 'event_date', 'event_time', 'speakers' ];
-const SPEAKER_FIELD_IDS  = [ 'title', 'speaker_title' ];
+const isEvent = postType === 'event';
+
+const TITLE     = isEvent ? __( 'Events', 'events-speakers' ) : __( 'Speakers', 'events-speakers' );
+const ADD_LABEL = isEvent ? __( 'Add New Event', 'events-speakers' ) : __( 'Add New Speaker', 'events-speakers' );
+
+// Visible column IDs — status is a filter-only field, not a column.
+const EVENT_FIELD_IDS   = [ 'title', 'event_date', 'event_time', 'speakers' ];
+const SPEAKER_FIELD_IDS = [ 'title', 'speaker_title' ];
 
 const DEFAULT_VIEW = {
 	type: 'table',
@@ -18,14 +25,32 @@ const DEFAULT_VIEW = {
 	page: 1,
 	search: '',
 	sort: {
-		field: postType === 'event' ? 'event_date' : 'title',
+		field: isEvent ? 'event_date' : 'title',
 		direction: 'asc',
 	},
 	filters: [],
-	fields: postType === 'event' ? EVENT_FIELD_IDS : SPEAKER_FIELD_IDS,
+	fields: isEvent ? EVENT_FIELD_IDS : SPEAKER_FIELD_IDS,
 };
 
-const DEFAULT_LAYOUTS = { table: {} };
+// Grid layout enabled so the user can switch via the view toggle.
+const DEFAULT_LAYOUTS = { table: {}, grid: {} };
+
+// ─── Status field (shared) — shows as primary tab filter ──────────────────────
+
+const STATUS_FIELD = {
+	id: 'status',
+	label: __( 'Status', 'events-speakers' ),
+	enableSorting: false,
+	getValue: ( { item } ) => item.status,
+	elements: [
+		{ value: 'publish', label: __( 'Published', 'events-speakers' ) },
+		{ value: 'draft',   label: __( 'Draft',     'events-speakers' ) },
+	],
+	filterBy: {
+		operators: [ 'isAny' ],
+		isPrimary: true,
+	},
+};
 
 // ─── Events ───────────────────────────────────────────────────────────────────
 
@@ -36,9 +61,11 @@ const EVENT_FIELDS = [
 		enableSorting: true,
 		enableHiding: false,
 		render: ( { item } ) => (
-			<a href={ `${ editBase }?page=${ editPage }&post=${ item.id }` }>
-				<strong>{ item.title?.rendered || __( '(no title)', 'events-speakers' ) }</strong>
-			</a>
+			<strong>
+				<a href={ `${ editBase }?page=${ editPage }&post=${ item.id }` }>
+					{ item.title?.rendered || __( '(no title)', 'events-speakers' ) }
+				</a>
+			</strong>
 		),
 	},
 	{
@@ -63,7 +90,7 @@ const EVENT_FIELDS = [
 		getValue: ( { item } ) => item.meta?.event_start_time ?? '',
 		render: ( { item } ) => {
 			const start = item.meta?.event_start_time;
-			const end = item.meta?.event_end_time;
+			const end   = item.meta?.event_end_time;
 			return start ? `${ start }${ end ? `\u2013${ end }` : '' }` : '—';
 		},
 	},
@@ -74,6 +101,7 @@ const EVENT_FIELDS = [
 		getValue: ( { item } ) => item._speakerNames ?? '',
 		render: ( { item } ) => item._speakerNames || '—',
 	},
+	STATUS_FIELD,
 ];
 
 // ─── Speakers ─────────────────────────────────────────────────────────────────
@@ -85,9 +113,11 @@ const SPEAKER_FIELDS = [
 		enableSorting: true,
 		enableHiding: false,
 		render: ( { item } ) => (
-			<a href={ `${ editBase }?page=${ editPage }&post=${ item.id }` }>
-				<strong>{ item.title?.rendered || __( '(no name)', 'events-speakers' ) }</strong>
-			</a>
+			<strong>
+				<a href={ `${ editBase }?page=${ editPage }&post=${ item.id }` }>
+					{ item.title?.rendered || __( '(no name)', 'events-speakers' ) }
+				</a>
+			</strong>
 		),
 	},
 	{
@@ -97,6 +127,7 @@ const SPEAKER_FIELDS = [
 		getValue: ( { item } ) => item.meta?.speaker_title ?? '',
 		render: ( { item } ) => item.meta?.speaker_title || '—',
 	},
+	STATUS_FIELD,
 ];
 
 // ─── Actions ──────────────────────────────────────────────────────────────────
@@ -121,14 +152,21 @@ const ACTIONS = [
 	},
 ];
 
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+function getStatusParam( view ) {
+	const f = view.filters?.find( ( filter ) => filter.field === 'status' );
+	return f?.value?.length ? f.value.join( ',' ) : 'publish,draft,pending,private';
+}
+
 // ─── Data fetching ────────────────────────────────────────────────────────────
 
 async function fetchEvents( view ) {
 	const params = new URLSearchParams( {
-		status: 'publish,draft,pending,private',
+		status:   getStatusParam( view ),
 		per_page: String( view.perPage ),
-		page: String( view.page ),
-		_fields: 'id,title,meta,link,status',
+		page:     String( view.page ),
+		_fields:  'id,title,meta,link,status',
 	} );
 
 	if ( view.search ) params.set( 'search', view.search );
@@ -144,8 +182,8 @@ async function fetchEvents( view ) {
 	}
 
 	const response = await apiFetch( { path: `/wp/v2/event?${ params }`, parse: false } );
-	const total = parseInt( response.headers.get( 'X-WP-Total' ) || '0', 10 );
-	const events = await response.json();
+	const total    = parseInt( response.headers.get( 'X-WP-Total' ) || '0', 10 );
+	const events   = await response.json();
 
 	// Batch-resolve speaker names.
 	const speakerIds = [];
@@ -174,31 +212,34 @@ async function fetchEvents( view ) {
 
 async function fetchSpeakers( view ) {
 	const params = new URLSearchParams( {
-		status: 'publish,draft,pending,private',
+		status:   getStatusParam( view ),
 		per_page: String( view.perPage ),
-		page: String( view.page ),
-		orderby: 'title',
-		order: view.sort?.direction ?? 'asc',
-		_fields: 'id,title,meta,link,status',
+		page:     String( view.page ),
+		orderby:  'title',
+		order:    view.sort?.direction ?? 'asc',
+		_fields:  'id,title,meta,link,status',
 	} );
 
 	if ( view.search ) params.set( 'search', view.search );
 
 	const response = await apiFetch( { path: `/wp/v2/speaker?${ params }`, parse: false } );
-	const total = parseInt( response.headers.get( 'X-WP-Total' ) || '0', 10 );
-	const data = await response.json();
+	const total    = parseInt( response.headers.get( 'X-WP-Total' ) || '0', 10 );
+	const data     = await response.json();
 	return { data, total };
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function AdminList() {
-	const [ view, setView ] = useState( DEFAULT_VIEW );
-	const [ data, setData ] = useState( [] );
+	const [ view,       setView       ] = useState( DEFAULT_VIEW );
+	const [ data,       setData       ] = useState( [] );
 	const [ totalItems, setTotalItems ] = useState( 0 );
-	const [ isLoading, setIsLoading ] = useState( true );
+	const [ isLoading,  setIsLoading  ] = useState( true );
 
-	const fetchFn = postType === 'event' ? fetchEvents : fetchSpeakers;
+	const fetchFn = isEvent ? fetchEvents : fetchSpeakers;
+
+	// Serialise filters so useCallback can detect changes without reference churn.
+	const filtersKey = JSON.stringify( view.filters );
 
 	const load = useCallback( () => {
 		setIsLoading( true );
@@ -209,16 +250,23 @@ export default function AdminList() {
 			} )
 			.catch( () => {} )
 			.finally( () => setIsLoading( false ) );
-	}, [ view.page, view.perPage, view.search, view.sort?.field, view.sort?.direction ] ); // eslint-disable-line
+	}, [ view.page, view.perPage, view.search, view.sort?.field, view.sort?.direction, filtersKey ] ); // eslint-disable-line
 
-	useEffect( () => {
-		load();
-	}, [ load ] );
+	useEffect( () => { load(); }, [ load ] );
+
+	const header = (
+		<div className="es-list-header">
+			<h1 className="es-list-title">{ TITLE }</h1>
+			<Button variant="primary" href={ newUrl }>
+				{ ADD_LABEL }
+			</Button>
+		</div>
+	);
 
 	return (
 		<DataViews
 			data={ data }
-			fields={ postType === 'event' ? EVENT_FIELDS : SPEAKER_FIELDS }
+			fields={ isEvent ? EVENT_FIELDS : SPEAKER_FIELDS }
 			view={ view }
 			onChangeView={ setView }
 			actions={ ACTIONS }
@@ -229,6 +277,7 @@ export default function AdminList() {
 			} }
 			defaultLayouts={ DEFAULT_LAYOUTS }
 			isLoading={ isLoading }
+			header={ header }
 		/>
 	);
 }
