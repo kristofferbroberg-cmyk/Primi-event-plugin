@@ -12,6 +12,7 @@ module.exports = {
 	...defaultConfig,
 	entry: {
 		'admin-list': './src/admin-list/index.js',
+		'admin-edit': './src/admin-edit/index.js',
 	},
 	// Mark CSS files as having side effects so they are not tree-shaken.
 	module: {
