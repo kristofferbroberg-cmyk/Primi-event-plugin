@@ -4,28 +4,16 @@ defined( 'ABSPATH' ) || exit;
 class Events_Speakers_Admin_List {
 
 	public static function register_pages(): void {
-		add_submenu_page(
-			'edit.php?post_type=event',
-			__( 'Events', 'events-speakers' ),
-			__( 'All Events', 'events-speakers' ),
-			'edit_posts',
-			'es-events-list',
-			array( self::class, 'render_page' )
-		);
+		// Register list pages as hidden (null parent = no sidebar entry).
+		add_submenu_page( null, __( 'Events', 'events-speakers' ),   __( 'Events', 'events-speakers' ),   'edit_posts', 'es-events-list',   array( self::class, 'render_page' ) );
+		add_submenu_page( null, __( 'Speakers', 'events-speakers' ), __( 'Speakers', 'events-speakers' ), 'edit_posts', 'es-speakers-list', array( self::class, 'render_page' ) );
 
-		add_submenu_page(
-			'edit.php?post_type=speaker',
-			__( 'Speakers', 'events-speakers' ),
-			__( 'All Speakers', 'events-speakers' ),
-			'edit_posts',
-			'es-speakers-list',
-			array( self::class, 'render_page' )
-		);
-
-		// Remove the WP-generated default "All Events" / "All Speakers" submenu
-		// items so ours become the first (default) entry.
+		// Remove all WP-generated submenu items so the top-level menu entries
+		// have no flyout — clicking Events/Speakers goes straight to our list.
 		remove_submenu_page( 'edit.php?post_type=event',   'edit.php?post_type=event' );
+		remove_submenu_page( 'edit.php?post_type=event',   'post-new.php?post_type=event' );
 		remove_submenu_page( 'edit.php?post_type=speaker', 'edit.php?post_type=speaker' );
+		remove_submenu_page( 'edit.php?post_type=speaker', 'post-new.php?post_type=speaker' );
 	}
 
 	/**
@@ -51,8 +39,8 @@ class Events_Speakers_Admin_List {
 	}
 
 	public static function enqueue( string $hook ): void {
-		$is_events   = 'event_page_es-events-list' === $hook;
-		$is_speakers = 'speaker_page_es-speakers-list' === $hook;
+		$is_events   = 'admin_page_es-events-list' === $hook;
+		$is_speakers = 'admin_page_es-speakers-list' === $hook;
 
 		if ( ! $is_events && ! $is_speakers ) {
 			return;
