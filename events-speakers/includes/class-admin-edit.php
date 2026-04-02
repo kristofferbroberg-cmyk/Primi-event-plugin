@@ -63,12 +63,15 @@ class Events_Speakers_Admin_Edit {
 
 	private static function inline_styles(): string {
 		return '
-		#es-edit-root { max-width: 680px; padding: 16px 0 40px; }
-		.es-edit-page { display: flex; flex-direction: column; gap: 16px; }
-		.es-edit-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
-		.es-edit-header h1 { margin: 0; font-size: 23px; font-weight: 400; }
-		.es-edit-actions { display: flex; align-items: center; gap: 8px; }
-		.es-notice { padding: 10px 14px; border-radius: 2px; font-size: 13px; }
+		#es-edit-root { padding: 0; }
+		.es-edit-page { display: flex; flex-direction: column; max-width: 680px; }
+		.es-edit-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 24px 0 16px; }
+		.es-edit-header__left { display: flex; flex-direction: column; gap: 4px; }
+		.es-edit-back { font-size: 12px; color: #787c82; text-decoration: none; }
+		.es-edit-back:hover { color: #1d2327; }
+		.es-edit-title { margin: 0; font-size: 20px; font-weight: 600; line-height: 1.2; }
+		.es-edit-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+		.es-notice { padding: 10px 14px; border-radius: 2px; font-size: 13px; margin-bottom: 8px; }
 		.es-notice--success { background: #edfaef; border-left: 4px solid #00a32a; color: #1e4620; }
 		.es-notice--error   { background: #fce8e8; border-left: 4px solid #d63638; color: #50130c; }
 		.es-loading { padding: 48px; text-align: center; }

@@ -430,9 +430,11 @@ function EditPage() {
 	return (
 		<div className="es-edit-page">
 			<div className="es-edit-header">
-				<h1>{ pageTitle }</h1>
+				<div className="es-edit-header__left">
+					<a href={ LIST_URL } className="es-edit-back">{ backLabel }</a>
+					<h1 className="es-edit-title">{ pageTitle }</h1>
+				</div>
 				<div className="es-edit-actions">
-					<a href={ LIST_URL } className="button">{ backLabel }</a>
 					<Button
 						variant="primary"
 						isBusy={ saving }
