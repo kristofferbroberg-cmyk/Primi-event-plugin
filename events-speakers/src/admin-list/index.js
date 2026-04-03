@@ -257,7 +257,7 @@ export default function AdminList() {
 	return (
 		<>
 			<h1 className="wp-heading-inline">{ TITLE }</h1>
-			<Button variant="primary" href={ newUrl } className="page-title-action">
+			<Button variant="primary" href={ newUrl }>
 				{ ADD_LABEL }
 			</Button>
 			<hr className="wp-header-end" />
