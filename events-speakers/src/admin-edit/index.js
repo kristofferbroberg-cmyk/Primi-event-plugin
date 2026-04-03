@@ -2,7 +2,13 @@ import { DataForm } from '@wordpress/dataviews';
 import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import {
+	BaseControl,
 	Button,
+	Card,
+	CardBody,
+	__experimentalHStack as HStack,
+	__experimentalVStack as VStack,
+	Notice,
 	SelectControl,
 	FormTokenField,
 	DatePicker,
@@ -108,47 +114,30 @@ function StatusEdit( { data, onChange } ) {
 function DatePickerEdit( { data, onChange } ) {
 	const raw = data.event_date;
 	return (
-		<div>
-			<label
-				style={ {
-					display: 'block',
-					fontSize: 11,
-					fontWeight: 500,
-					textTransform: 'uppercase',
-					letterSpacing: '0.06em',
-					marginBottom: 8,
-					color: '#1e1e1e',
-				} }
-			>
-				{ __( 'Date', 'events-speakers' ) }
-			</label>
+		<BaseControl
+			label={ __( 'Date', 'events-speakers' ) }
+			id="es-date-picker"
+			__nextHasNoMarginBottom
+		>
 			<DatePicker
 				currentDate={ raw ? raw + 'T12:00:00' : null }
 				onChange={ ( v ) => onChange( { event_date: v ? v.slice( 0, 10 ) : '' } ) }
 			/>
-		</div>
+		</BaseControl>
 	);
 }
 
 function TimeEdit( { data, onChange } ) {
 	return (
-		<div>
-			<label
-				style={ {
-					display: 'block',
-					fontSize: 11,
-					fontWeight: 500,
-					textTransform: 'uppercase',
-					letterSpacing: '0.06em',
-					marginBottom: 8,
-					color: '#1e1e1e',
-				} }
-			>
-				{ __( 'Time', 'events-speakers' ) }
-			</label>
+		<BaseControl
+			label={ __( 'Time', 'events-speakers' ) }
+			id="es-time-start"
+			__nextHasNoMarginBottom
+		>
 			<div className="es-time-row">
 				<input
 					type="time"
+					id="es-time-start"
 					value={ data.event_start_time ?? '' }
 					aria-label={ __( 'Start time', 'events-speakers' ) }
 					onChange={ ( e ) => onChange( { event_start_time: e.target.value } ) }
@@ -161,7 +150,7 @@ function TimeEdit( { data, onChange } ) {
 					onChange={ ( e ) => onChange( { event_end_time: e.target.value } ) }
 				/>
 			</div>
-		</div>
+		</BaseControl>
 	);
 }
 
@@ -236,7 +225,7 @@ function ImagePickerEdit( { data, field, onChange } ) {
 					className="es-image-remove"
 					variant="secondary"
 					isDestructive
-					size="small"
+					size="compact"
 					onClick={ () => onChange( { [ field.id ]: 0 } ) }
 				>
 					{ __( 'Remove', 'events-speakers' ) }
@@ -429,37 +418,40 @@ function EditPage() {
 
 	return (
 		<div className="es-edit-page">
-			<div className="es-edit-header">
-				<div className="es-edit-header__left">
+			<HStack alignment="edge" spacing={ 2 } style={ { padding: 'calc(var(--wp-admin--grid-unit,8px)*3) 0 calc(var(--wp-admin--grid-unit,8px)*2)' } }>
+				<VStack spacing={ 0.5 }>
 					<a href={ LIST_URL } className="es-edit-back">{ backLabel }</a>
 					<h1 className="es-edit-title">{ pageTitle }</h1>
-				</div>
-				<div className="es-edit-actions">
-					<Button
-						variant="primary"
-						isBusy={ saving }
-						disabled={ saving }
-						onClick={ save }
-					>
-						{ saving ? __( 'Saving…', 'events-speakers' ) : __( 'Save', 'events-speakers' ) }
-					</Button>
-				</div>
-			</div>
+				</VStack>
+				<Button
+					variant="primary"
+					isBusy={ saving }
+					disabled={ saving }
+					onClick={ save }
+				>
+					{ saving ? __( 'Saving…', 'events-speakers' ) : __( 'Save', 'events-speakers' ) }
+				</Button>
+			</HStack>
 
-			<div className="es-edit-card">
-				{ notice && (
-					<div className={ `es-notice es-notice--${ notice.type }` }>
-						{ notice.text }
-					</div>
-				) }
+			<Card>
+				<CardBody>
+					{ notice && (
+						<Notice
+							status={ notice.type === 'success' ? 'success' : 'error' }
+							isDismissible={ false }
+						>
+							{ notice.text }
+						</Notice>
+					) }
 
-				<DataForm
-					data={ item }
-					fields={ fields }
-					form={ form }
-					onChange={ handleChange }
-				/>
-			</div>
+					<DataForm
+						data={ item }
+						fields={ fields }
+						form={ form }
+						onChange={ handleChange }
+					/>
+				</CardBody>
+			</Card>
 		</div>
 	);
 }

@@ -1,6 +1,5 @@
 import { DataViews } from '@wordpress/dataviews';
 import { useState, useEffect, useCallback } from '@wordpress/element';
-import { Button } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 
@@ -257,10 +256,8 @@ export default function AdminList() {
 	return (
 		<>
 			<h1 className="wp-heading-inline">{ TITLE }</h1>
-			<Button variant="primary" href={ newUrl } className="page-title-action">
-				{ ADD_LABEL }
-			</Button>
-			<hr className="wp-header-end" />
+			<a href={ newUrl } className="page-title-action">{ ADD_LABEL }</a>
+			<hr className="wp-header-end" style={ { marginBottom: 'calc(var(--wp-admin--grid-unit, 8px) * 3)' } } />
 			<DataViews
 				data={ data }
 				fields={ isEvent ? EVENT_FIELDS : SPEAKER_FIELDS }
