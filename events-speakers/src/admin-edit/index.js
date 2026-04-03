@@ -6,6 +6,8 @@ import {
 	Button,
 	Card,
 	CardBody,
+	__experimentalHStack as HStack,
+	__experimentalVStack as VStack,
 	Notice,
 	SelectControl,
 	FormTokenField,
@@ -416,22 +418,20 @@ function EditPage() {
 
 	return (
 		<div className="es-edit-page">
-			<div className="es-edit-header">
-				<div className="es-edit-header__left">
+			<HStack alignment="edge" spacing={ 2 } style={ { padding: 'calc(var(--wp-admin--grid-unit,8px)*3) 0 calc(var(--wp-admin--grid-unit,8px)*2)' } }>
+				<VStack spacing={ 0.5 }>
 					<a href={ LIST_URL } className="es-edit-back">{ backLabel }</a>
 					<h1 className="es-edit-title">{ pageTitle }</h1>
-				</div>
-				<div className="es-edit-actions">
-					<Button
-						variant="primary"
-						isBusy={ saving }
-						disabled={ saving }
-						onClick={ save }
-					>
-						{ saving ? __( 'Saving…', 'events-speakers' ) : __( 'Save', 'events-speakers' ) }
-					</Button>
-				</div>
-			</div>
+				</VStack>
+				<Button
+					variant="primary"
+					isBusy={ saving }
+					disabled={ saving }
+					onClick={ save }
+				>
+					{ saving ? __( 'Saving…', 'events-speakers' ) : __( 'Save', 'events-speakers' ) }
+				</Button>
+			</HStack>
 
 			<Card>
 				<CardBody>
