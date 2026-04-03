@@ -254,31 +254,28 @@ export default function AdminList() {
 
 	useEffect( () => { load(); }, [ load ] );
 
-	const header = (
-		<div className="es-list-header">
-			<h1 className="es-list-title">{ TITLE }</h1>
-			<Button variant="primary" href={ newUrl }>
+	return (
+		<>
+			<h1 className="wp-heading-inline">{ TITLE }</h1>
+			<Button variant="primary" href={ newUrl } className="page-title-action">
 				{ ADD_LABEL }
 			</Button>
-		</div>
-	);
-
-	return (
-		<DataViews
-			data={ data }
-			fields={ isEvent ? EVENT_FIELDS : SPEAKER_FIELDS }
-			view={ view }
-			onChangeView={ setView }
-			actions={ ACTIONS }
-			getItemId={ ( item ) => String( item.id ) }
-			paginationInfo={ {
-				totalItems,
-				totalPages: Math.ceil( totalItems / view.perPage ),
-			} }
-			defaultLayouts={ DEFAULT_LAYOUTS }
-			isLoading={ isLoading }
-			header={ header }
-		/>
+			<hr className="wp-header-end" />
+			<DataViews
+				data={ data }
+				fields={ isEvent ? EVENT_FIELDS : SPEAKER_FIELDS }
+				view={ view }
+				onChangeView={ setView }
+				actions={ ACTIONS }
+				getItemId={ ( item ) => String( item.id ) }
+				paginationInfo={ {
+					totalItems,
+					totalPages: Math.ceil( totalItems / view.perPage ),
+				} }
+				defaultLayouts={ DEFAULT_LAYOUTS }
+				isLoading={ isLoading }
+			/>
+		</>
 	);
 }
 

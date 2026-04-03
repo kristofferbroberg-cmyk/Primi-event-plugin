@@ -74,15 +74,6 @@ class Events_Speakers_Admin_List {
 			);
 		}
 
-		// Full-bleed layout — strip .wrap / #wpbody-content padding on list pages
-		// so the DataViews component fills the content column edge-to-edge.
-		wp_add_inline_style( 'wp-admin', '
-			.es-list-wrap { margin: 0; padding: 0; }
-			#wpbody-content .es-list-wrap { padding-bottom: 0; }
-			.es-list-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 16px 0; }
-			.es-list-title  { margin: 0; font-size: 20px; font-weight: 600; }
-		' );
-
 		$edit_page = $is_events ? 'es-edit-event' : 'es-edit-speaker';
 		wp_localize_script( 'es-admin-list', 'esAdminList', array(
 			'postType' => $is_events ? 'event' : 'speaker',
