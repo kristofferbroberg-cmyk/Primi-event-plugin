@@ -1,0 +1,14 @@
+{
+	"name": "events-speakers",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"build": "wp-scripts build",
+		"start": "wp-scripts start"
+	},
+	"devDependencies": {
+		"@wordpress/dataviews": "^14.0.0",
+		"@wordpress/dependency-extraction-webpack-plugin": "^6.0.0",
+		"@wordpress/scripts": "^31.0.0"
+	}
+}
