@@ -257,7 +257,7 @@ export default function AdminList() {
 		<>
 			<h1 className="wp-heading-inline">{ TITLE }</h1>
 			<a href={ newUrl } className="page-title-action">{ ADD_LABEL }</a>
-			<hr className="wp-header-end" style={ { marginBottom: 'calc(var(--wp-admin--grid-unit, 8px) * 2)' } } />
+			<hr className="wp-header-end" style={ { marginBottom: 'calc(var(--wp-admin--grid-unit, 8px) * 3)' } } />
 			<DataViews
 				data={ data }
 				fields={ isEvent ? EVENT_FIELDS : SPEAKER_FIELDS }
