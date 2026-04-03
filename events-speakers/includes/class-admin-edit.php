@@ -71,7 +71,8 @@ class Events_Speakers_Admin_Edit {
 		.es-edit-back:hover { color: #1d2327; }
 		.es-edit-title { margin: 0; font-size: 20px; font-weight: 600; line-height: 1.2; }
 		.es-edit-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-		.es-notice { padding: 10px 14px; border-radius: 2px; font-size: 13px; margin-bottom: 8px; }
+		.es-edit-card { background: #fff; border: 1px solid #c3c4c7; border-radius: 2px; padding: 16px 20px; margin-top: 8px; }
+		.es-notice { padding: 10px 14px; border-radius: 2px; font-size: 13px; margin-bottom: 12px; }
 		.es-notice--success { background: #edfaef; border-left: 4px solid #00a32a; color: #1e4620; }
 		.es-notice--error   { background: #fce8e8; border-left: 4px solid #d63638; color: #50130c; }
 		.es-loading { padding: 48px; text-align: center; }

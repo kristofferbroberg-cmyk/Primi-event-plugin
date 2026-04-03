@@ -446,18 +446,20 @@ function EditPage() {
 				</div>
 			</div>
 
-			{ notice && (
-				<div className={ `es-notice es-notice--${ notice.type }` }>
-					{ notice.text }
-				</div>
-			) }
+			<div className="es-edit-card">
+				{ notice && (
+					<div className={ `es-notice es-notice--${ notice.type }` }>
+						{ notice.text }
+					</div>
+				) }
 
-			<DataForm
-				data={ item }
-				fields={ fields }
-				form={ form }
-				onChange={ handleChange }
-			/>
+				<DataForm
+					data={ item }
+					fields={ fields }
+					form={ form }
+					onChange={ handleChange }
+				/>
+			</div>
 		</div>
 	);
 }
