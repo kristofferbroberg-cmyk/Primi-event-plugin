@@ -72,6 +72,7 @@ class Events_Speakers_Admin_Edit {
 		.es-edit-title { margin: 0; font-size: 20px; font-weight: 600; line-height: 1.2; }
 		.es-edit-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 		.es-loading { padding: 48px; text-align: center; }
+		.es-edit-page .components-notice { margin-bottom: 16px; }
 		.es-image-placeholder { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--wp-components-color-gray-100, #f0f0f1); border: 2px dashed var(--wp-components-color-gray-300, #c3c4c7); border-radius: 2px; height: 160px; width: 100%; cursor: pointer; color: var(--wp-components-color-gray-700, #50575e); font-size: 13px; }
 		.es-image-preview { position: relative; display: inline-block; }
 		.es-image-preview img { display: block; max-height: 200px; border-radius: 2px; }
