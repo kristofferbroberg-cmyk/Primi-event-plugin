@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/tooltip/trigger.tsx"],
+  "sourcesContent": ["import { Tooltip } from '@base-ui/react/tooltip';\nimport { forwardRef } from '@wordpress/element';\nimport type { TriggerProps } from './types';\n\nconst Trigger = forwardRef< HTMLButtonElement, TriggerProps >(\n\tfunction TooltipTrigger( { children, ...props }, ref ) {\n\t\treturn (\n\t\t\t<Tooltip.Trigger ref={ ref } { ...props }>\n\t\t\t\t{ children }\n\t\t\t</Tooltip.Trigger>\n\t\t);\n\t}\n);\n\nexport { Trigger };\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,qBAAwB;AACxB,qBAA2B;AAMxB;AAHH,IAAM,cAAU;AAAA,EACf,SAAS,eAAgB,EAAE,UAAU,GAAG,MAAM,GAAG,KAAM;AACtD,WACC,4CAAC,uBAAQ,SAAR,EAAgB,KAAc,GAAG,OAC/B,UACH;AAAA,EAEF;AACD;",
+  "names": []
+}

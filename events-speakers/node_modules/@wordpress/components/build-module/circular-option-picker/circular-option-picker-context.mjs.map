@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/circular-option-picker/circular-option-picker-context.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { createContext } from '@wordpress/element';\n\n/**\n * Internal dependencies\n */\n\nexport const CircularOptionPickerContext = createContext({});\nCircularOptionPickerContext.displayName = 'CircularOptionPickerContext';"],
+  "mappings": ";AAGA,SAAS,qBAAqB;AAMvB,IAAM,8BAA8B,cAAc,CAAC,CAAC;AAC3D,4BAA4B,cAAc;",
+  "names": []
+}

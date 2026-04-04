@@ -1,0 +1,90 @@
+"use strict";
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// packages/components/src/resizable-box/resize-tooltip/styles/resize-tooltip.styles.ts
+var resize_tooltip_styles_exports = {};
+__export(resize_tooltip_styles_exports, {
+  LabelText: () => LabelText,
+  Root: () => Root,
+  Tooltip: () => Tooltip,
+  TooltipWrapper: () => TooltipWrapper
+});
+module.exports = __toCommonJS(resize_tooltip_styles_exports);
+var import_base = __toESM(require("@emotion/styled/base"));
+var import_text = require("../../../text/index.cjs");
+var import_utils = require("../../../utils/index.cjs");
+function _EMOTION_STRINGIFIED_CSS_ERROR__() {
+  return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop).";
+}
+var Root = /* @__PURE__ */ (0, import_base.default)("div", process.env.NODE_ENV === "production" ? {
+  target: "e1wq7y4k3"
+} : {
+  target: "e1wq7y4k3",
+  label: "Root"
+})(process.env.NODE_ENV === "production" ? {
+  name: "1cd7zoc",
+  styles: "bottom:0;box-sizing:border-box;left:0;pointer-events:none;position:absolute;right:0;top:0"
+} : {
+  name: "1cd7zoc",
+  styles: "bottom:0;box-sizing:border-box;left:0;pointer-events:none;position:absolute;right:0;top:0/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJlc2l6ZS10b29sdGlwLnN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFXOEIiLCJmaWxlIjoicmVzaXplLXRvb2x0aXAuc3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBUZXh0IH0gZnJvbSAnLi4vLi4vLi4vdGV4dCc7XG5pbXBvcnQgeyBmb250LCBDT0xPUlMsIENPTkZJRyB9IGZyb20gJy4uLy4uLy4uL3V0aWxzJztcblxuZXhwb3J0IGNvbnN0IFJvb3QgPSBzdHlsZWQuZGl2YFxuXHRib3R0b206IDA7XG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdGxlZnQ6IDA7XG5cdHBvaW50ZXItZXZlbnRzOiBub25lO1xuXHRwb3NpdGlvbjogYWJzb2x1dGU7XG5cdHJpZ2h0OiAwO1xuXHR0b3A6IDA7XG5gO1xuXG5leHBvcnQgY29uc3QgVG9vbHRpcFdyYXBwZXIgPSBzdHlsZWQuZGl2YFxuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRkaXNwbGF5OiBpbmxpbmUtZmxleDtcblx0anVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG5cdG9wYWNpdHk6IDA7XG5cdHBvaW50ZXItZXZlbnRzOiBub25lO1xuXHR0cmFuc2l0aW9uOiBvcGFjaXR5IDEyMG1zIGxpbmVhcjtcbmA7XG5cbmV4cG9ydCBjb25zdCBUb29sdGlwID0gc3R5bGVkLmRpdmBcblx0YmFja2dyb3VuZDogJHsgQ09MT1JTLnRoZW1lLmZvcmVncm91bmQgfTtcblx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c1NtYWxsIH07XG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdGZvbnQtZmFtaWx5OiAkeyBmb250KCAnZGVmYXVsdC5mb250RmFtaWx5JyApIH07XG5cdGZvbnQtc2l6ZTogMTJweDtcblx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kSW52ZXJ0ZWQgfTtcblx0cGFkZGluZzogNHB4IDhweDtcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuYDtcblxuLy8gVE9ETzogUmVzb2x2ZSBuZWVkIHRvIHVzZSAmJiYgdG8gaW5jcmVhc2Ugc3BlY2lmaWNpdHlcbi8vIGh0dHBzOi8vZ2l0aHViLmNvbS9Xb3JkUHJlc3MvZ3V0ZW5iZXJnL2lzc3Vlcy8xODQ4M1xuXG5leHBvcnQgY29uc3QgTGFiZWxUZXh0ID0gc3R5bGVkKCBUZXh0IClgXG5cdCYmJiB7XG5cdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kSW52ZXJ0ZWQgfTtcblx0XHRkaXNwbGF5OiBibG9jaztcblx0XHRmb250LXNpemU6IDEzcHg7XG5cdFx0bGluZS1oZWlnaHQ6IDEuNDtcblx0XHR3aGl0ZS1zcGFjZTogbm93cmFwO1xuXHR9XG5gO1xuIl19 */",
+  toString: _EMOTION_STRINGIFIED_CSS_ERROR__
+});
+var TooltipWrapper = /* @__PURE__ */ (0, import_base.default)("div", process.env.NODE_ENV === "production" ? {
+  target: "e1wq7y4k2"
+} : {
+  target: "e1wq7y4k2",
+  label: "TooltipWrapper"
+})(process.env.NODE_ENV === "production" ? {
+  name: "ajymcs",
+  styles: "align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity 120ms linear"
+} : {
+  name: "ajymcs",
+  styles: "align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity 120ms linear/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJlc2l6ZS10b29sdGlwLnN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFxQndDIiwiZmlsZSI6InJlc2l6ZS10b29sdGlwLnN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgVGV4dCB9IGZyb20gJy4uLy4uLy4uL3RleHQnO1xuaW1wb3J0IHsgZm9udCwgQ09MT1JTLCBDT05GSUcgfSBmcm9tICcuLi8uLi8uLi91dGlscyc7XG5cbmV4cG9ydCBjb25zdCBSb290ID0gc3R5bGVkLmRpdmBcblx0Ym90dG9tOiAwO1xuXHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRsZWZ0OiAwO1xuXHRwb2ludGVyLWV2ZW50czogbm9uZTtcblx0cG9zaXRpb246IGFic29sdXRlO1xuXHRyaWdodDogMDtcblx0dG9wOiAwO1xuYDtcblxuZXhwb3J0IGNvbnN0IFRvb2x0aXBXcmFwcGVyID0gc3R5bGVkLmRpdmBcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0ZGlzcGxheTogaW5saW5lLWZsZXg7XG5cdGp1c3RpZnktY29udGVudDogY2VudGVyO1xuXHRvcGFjaXR5OiAwO1xuXHRwb2ludGVyLWV2ZW50czogbm9uZTtcblx0dHJhbnNpdGlvbjogb3BhY2l0eSAxMjBtcyBsaW5lYXI7XG5gO1xuXG5leHBvcnQgY29uc3QgVG9vbHRpcCA9IHN0eWxlZC5kaXZgXG5cdGJhY2tncm91bmQ6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNTbWFsbCB9O1xuXHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRmb250LWZhbWlseTogJHsgZm9udCggJ2RlZmF1bHQuZm9udEZhbWlseScgKSB9O1xuXHRmb250LXNpemU6IDEycHg7XG5cdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZEludmVydGVkIH07XG5cdHBhZGRpbmc6IDRweCA4cHg7XG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcbmA7XG5cbi8vIFRPRE86IFJlc29sdmUgbmVlZCB0byB1c2UgJiYmIHRvIGluY3JlYXNlIHNwZWNpZmljaXR5XG4vLyBodHRwczovL2dpdGh1Yi5jb20vV29yZFByZXNzL2d1dGVuYmVyZy9pc3N1ZXMvMTg0ODNcblxuZXhwb3J0IGNvbnN0IExhYmVsVGV4dCA9IHN0eWxlZCggVGV4dCApYFxuXHQmJiYge1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZEludmVydGVkIH07XG5cdFx0ZGlzcGxheTogYmxvY2s7XG5cdFx0Zm9udC1zaXplOiAxM3B4O1xuXHRcdGxpbmUtaGVpZ2h0OiAxLjQ7XG5cdFx0d2hpdGUtc3BhY2U6IG5vd3JhcDtcblx0fVxuYDtcbiJdfQ== */",
+  toString: _EMOTION_STRINGIFIED_CSS_ERROR__
+});
+var Tooltip = /* @__PURE__ */ (0, import_base.default)("div", process.env.NODE_ENV === "production" ? {
+  target: "e1wq7y4k1"
+} : {
+  target: "e1wq7y4k1",
+  label: "Tooltip"
+})("background:", import_utils.COLORS.theme.foreground, ";border-radius:", import_utils.CONFIG.radiusSmall, ";box-sizing:border-box;font-family:", (0, import_utils.font)("default.fontFamily"), ";font-size:12px;color:", import_utils.COLORS.theme.foregroundInverted, ";padding:4px 8px;position:relative;" + (process.env.NODE_ENV === "production" ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJlc2l6ZS10b29sdGlwLnN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUErQmlDIiwiZmlsZSI6InJlc2l6ZS10b29sdGlwLnN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgVGV4dCB9IGZyb20gJy4uLy4uLy4uL3RleHQnO1xuaW1wb3J0IHsgZm9udCwgQ09MT1JTLCBDT05GSUcgfSBmcm9tICcuLi8uLi8uLi91dGlscyc7XG5cbmV4cG9ydCBjb25zdCBSb290ID0gc3R5bGVkLmRpdmBcblx0Ym90dG9tOiAwO1xuXHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRsZWZ0OiAwO1xuXHRwb2ludGVyLWV2ZW50czogbm9uZTtcblx0cG9zaXRpb246IGFic29sdXRlO1xuXHRyaWdodDogMDtcblx0dG9wOiAwO1xuYDtcblxuZXhwb3J0IGNvbnN0IFRvb2x0aXBXcmFwcGVyID0gc3R5bGVkLmRpdmBcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0ZGlzcGxheTogaW5saW5lLWZsZXg7XG5cdGp1c3RpZnktY29udGVudDogY2VudGVyO1xuXHRvcGFjaXR5OiAwO1xuXHRwb2ludGVyLWV2ZW50czogbm9uZTtcblx0dHJhbnNpdGlvbjogb3BhY2l0eSAxMjBtcyBsaW5lYXI7XG5gO1xuXG5leHBvcnQgY29uc3QgVG9vbHRpcCA9IHN0eWxlZC5kaXZgXG5cdGJhY2tncm91bmQ6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNTbWFsbCB9O1xuXHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRmb250LWZhbWlseTogJHsgZm9udCggJ2RlZmF1bHQuZm9udEZhbWlseScgKSB9O1xuXHRmb250LXNpemU6IDEycHg7XG5cdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZEludmVydGVkIH07XG5cdHBhZGRpbmc6IDRweCA4cHg7XG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcbmA7XG5cbi8vIFRPRE86IFJlc29sdmUgbmVlZCB0byB1c2UgJiYmIHRvIGluY3JlYXNlIHNwZWNpZmljaXR5XG4vLyBodHRwczovL2dpdGh1Yi5jb20vV29yZFByZXNzL2d1dGVuYmVyZy9pc3N1ZXMvMTg0ODNcblxuZXhwb3J0IGNvbnN0IExhYmVsVGV4dCA9IHN0eWxlZCggVGV4dCApYFxuXHQmJiYge1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZEludmVydGVkIH07XG5cdFx0ZGlzcGxheTogYmxvY2s7XG5cdFx0Zm9udC1zaXplOiAxM3B4O1xuXHRcdGxpbmUtaGVpZ2h0OiAxLjQ7XG5cdFx0d2hpdGUtc3BhY2U6IG5vd3JhcDtcblx0fVxuYDtcbiJdfQ== */"));
+var LabelText = /* @__PURE__ */ (0, import_base.default)(import_text.Text, process.env.NODE_ENV === "production" ? {
+  target: "e1wq7y4k0"
+} : {
+  target: "e1wq7y4k0",
+  label: "LabelText"
+})("&&&{color:", import_utils.COLORS.theme.foregroundInverted, ";display:block;font-size:13px;line-height:1.4;white-space:nowrap;}" + (process.env.NODE_ENV === "production" ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJlc2l6ZS10b29sdGlwLnN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUE2Q3VDIiwiZmlsZSI6InJlc2l6ZS10b29sdGlwLnN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgVGV4dCB9IGZyb20gJy4uLy4uLy4uL3RleHQnO1xuaW1wb3J0IHsgZm9udCwgQ09MT1JTLCBDT05GSUcgfSBmcm9tICcuLi8uLi8uLi91dGlscyc7XG5cbmV4cG9ydCBjb25zdCBSb290ID0gc3R5bGVkLmRpdmBcblx0Ym90dG9tOiAwO1xuXHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRsZWZ0OiAwO1xuXHRwb2ludGVyLWV2ZW50czogbm9uZTtcblx0cG9zaXRpb246IGFic29sdXRlO1xuXHRyaWdodDogMDtcblx0dG9wOiAwO1xuYDtcblxuZXhwb3J0IGNvbnN0IFRvb2x0aXBXcmFwcGVyID0gc3R5bGVkLmRpdmBcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0ZGlzcGxheTogaW5saW5lLWZsZXg7XG5cdGp1c3RpZnktY29udGVudDogY2VudGVyO1xuXHRvcGFjaXR5OiAwO1xuXHRwb2ludGVyLWV2ZW50czogbm9uZTtcblx0dHJhbnNpdGlvbjogb3BhY2l0eSAxMjBtcyBsaW5lYXI7XG5gO1xuXG5leHBvcnQgY29uc3QgVG9vbHRpcCA9IHN0eWxlZC5kaXZgXG5cdGJhY2tncm91bmQ6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNTbWFsbCB9O1xuXHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRmb250LWZhbWlseTogJHsgZm9udCggJ2RlZmF1bHQuZm9udEZhbWlseScgKSB9O1xuXHRmb250LXNpemU6IDEycHg7XG5cdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZEludmVydGVkIH07XG5cdHBhZGRpbmc6IDRweCA4cHg7XG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcbmA7XG5cbi8vIFRPRE86IFJlc29sdmUgbmVlZCB0byB1c2UgJiYmIHRvIGluY3JlYXNlIHNwZWNpZmljaXR5XG4vLyBodHRwczovL2dpdGh1Yi5jb20vV29yZFByZXNzL2d1dGVuYmVyZy9pc3N1ZXMvMTg0ODNcblxuZXhwb3J0IGNvbnN0IExhYmVsVGV4dCA9IHN0eWxlZCggVGV4dCApYFxuXHQmJiYge1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZEludmVydGVkIH07XG5cdFx0ZGlzcGxheTogYmxvY2s7XG5cdFx0Zm9udC1zaXplOiAxM3B4O1xuXHRcdGxpbmUtaGVpZ2h0OiAxLjQ7XG5cdFx0d2hpdGUtc3BhY2U6IG5vd3JhcDtcblx0fVxuYDtcbiJdfQ== */"));
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  LabelText,
+  Root,
+  Tooltip,
+  TooltipWrapper
+});
+//# sourceMappingURL=resize-tooltip.styles.cjs.map

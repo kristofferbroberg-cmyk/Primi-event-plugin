@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/field-types/utils/get-format.ts"],
+  "sourcesContent": ["import type { Field } from '../../types';\nimport type { FieldType } from '../../types/private';\n\nfunction getFormat< Item >(\n\tfield: Field< Item >,\n\tfieldType: FieldType< Item >\n) {\n\treturn {\n\t\t...fieldType.format,\n\t\t...field.format,\n\t};\n}\n\nexport default getFormat;\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAGA,SAAS,UACR,OACA,WACC;AACD,SAAO;AAAA,IACN,GAAG,UAAU;AAAA,IACb,GAAG,MAAM;AAAA,EACV;AACD;AAEA,IAAO,qBAAQ;",
+  "names": []
+}

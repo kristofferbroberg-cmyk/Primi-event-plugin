@@ -1,0 +1,10 @@
+export declare const FieldsetLegend: import("react").ForwardRefExoticComponent<Omit<Omit<Omit<import("@base-ui/react").FieldsetLegendProps, "ref"> & import("react").RefAttributes<HTMLDivElement>, "ref">, "className" | "children" | "render"> & {
+    className?: string;
+    render?: ((props: import("react").HTMLAttributes<any> & {
+        ref?: import("react").Ref<any> | undefined;
+    }) => React.ReactElement<unknown>) | React.ReactElement<Record<string, unknown>>;
+} & {
+    children?: React.ReactNode;
+    hideFromVision?: boolean;
+} & import("react").RefAttributes<HTMLDivElement>>;
+//# sourceMappingURL=legend.d.ts.map

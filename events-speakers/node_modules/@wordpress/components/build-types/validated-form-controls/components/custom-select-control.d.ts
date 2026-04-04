@@ -1,0 +1,3 @@
+import type { ValidatedControlProps } from './types';
+export declare const ValidatedCustomSelectControl: import("react").ForwardRefExoticComponent<Omit<import("../../custom-select-control/types").CustomSelectProps<import("../../custom-select-control/types").CustomSelectOption>, "__next40pxDefaultSize"> & ValidatedControlProps & import("react").RefAttributes<HTMLDivElement>>;
+//# sourceMappingURL=custom-select-control.d.ts.map

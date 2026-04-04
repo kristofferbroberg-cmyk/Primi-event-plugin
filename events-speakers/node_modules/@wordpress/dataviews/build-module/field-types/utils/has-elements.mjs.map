@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/field-types/utils/has-elements.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { Field } from '../../types/field-api';\n\nexport default function hasElements< Item >( field: Field< Item > ): boolean {\n\treturn (\n\t\t( Array.isArray( field.elements ) && field.elements.length > 0 ) ||\n\t\ttypeof field.getElements === 'function'\n\t);\n}\n"],
+  "mappings": ";AAKe,SAAR,YAAsC,OAAgC;AAC5E,SACG,MAAM,QAAS,MAAM,QAAS,KAAK,MAAM,SAAS,SAAS,KAC7D,OAAO,MAAM,gBAAgB;AAE/B;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/navigation/constants.tsx"],
+  "sourcesContent": ["export const ROOT_MENU = 'root';\nexport const SEARCH_FOCUS_DELAY = 100;"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAO,IAAM,YAAY;AAClB,IAAM,qBAAqB;",
+  "names": []
+}

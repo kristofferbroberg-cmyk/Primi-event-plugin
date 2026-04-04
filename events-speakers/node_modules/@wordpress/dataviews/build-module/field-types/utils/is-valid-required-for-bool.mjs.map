@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/field-types/utils/is-valid-required-for-bool.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { NormalizedField } from '../../types';\n\nexport default function isValidRequiredForBool< Item >(\n\titem: Item,\n\tfield: NormalizedField< Item >\n) {\n\tconst value = field.getValue( { item } );\n\n\treturn value === true;\n}\n"],
+  "mappings": ";AAKe,SAAR,uBACN,MACA,OACC;AACD,QAAM,QAAQ,MAAM,SAAU,EAAE,KAAK,CAAE;AAEvC,SAAO,UAAU;AAClB;",
+  "names": []
+}

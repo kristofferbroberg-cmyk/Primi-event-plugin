@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/button/icon.tsx"],
+  "sourcesContent": ["import { forwardRef } from '@wordpress/element';\nimport { type IconProps } from '../icon/types';\nimport { Icon } from '../icon';\n\ninterface ButtonIconProps extends IconProps {\n\t/**\n\t * The icon to display, from the `@wordpress/icons` package.\n\t */\n\ticon: IconProps[ 'icon' ];\n}\n\nexport const ButtonIcon = forwardRef< SVGSVGElement, ButtonIconProps >(\n\tfunction ButtonIcon( { icon, ...props }, ref ) {\n\t\treturn (\n\t\t\t<Icon\n\t\t\t\tref={ ref }\n\t\t\t\ticon={ icon }\n\t\t\t\tviewBox=\"4 4 16 16\"\n\t\t\t\tsize={ 16 }\n\t\t\t\t{ ...props }\n\t\t\t/>\n\t\t);\n\t}\n);\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,qBAA2B;AAE3B,kBAAqB;AAYlB;AAHI,IAAM,iBAAa;AAAA,EACzB,SAASA,YAAY,EAAE,MAAM,GAAG,MAAM,GAAG,KAAM;AAC9C,WACC;AAAA,MAAC;AAAA;AAAA,QACA;AAAA,QACA;AAAA,QACA,SAAQ;AAAA,QACR,MAAO;AAAA,QACL,GAAG;AAAA;AAAA,IACN;AAAA,EAEF;AACD;",
+  "names": ["ButtonIcon"]
+}

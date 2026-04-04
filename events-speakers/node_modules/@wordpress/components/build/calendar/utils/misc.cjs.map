@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/calendar/utils/misc.ts"],
+  "sourcesContent": ["export function clampNumberOfMonths(numberOfMonths) {\n  return Math.min(3, Math.max(1, numberOfMonths));\n}"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAO,SAAS,oBAAoB,gBAAgB;AAClD,SAAO,KAAK,IAAI,GAAG,KAAK,IAAI,GAAG,cAAc,CAAC;AAChD;",
+  "names": []
+}

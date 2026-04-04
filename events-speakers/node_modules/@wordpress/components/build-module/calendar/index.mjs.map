@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/calendar/index.tsx"],
+  "sourcesContent": ["export { TZDate } from 'react-day-picker';\nexport { DateCalendar } from './date-calendar';\nexport { DateRangeCalendar } from './date-range-calendar';"],
+  "mappings": ";AAAA,SAAS,cAAc;AACvB,SAAS,oBAAoB;AAC7B,SAAS,yBAAyB;",
+  "names": []
+}

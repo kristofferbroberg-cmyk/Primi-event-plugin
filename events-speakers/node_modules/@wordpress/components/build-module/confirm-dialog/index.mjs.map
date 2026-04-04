@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/confirm-dialog/index.tsx"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport ConfirmDialog from './component';\nexport { ConfirmDialog };"],
+  "mappings": ";AAGA,OAAO,mBAAmB;",
+  "names": []
+}

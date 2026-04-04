@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/components/dataviews-layouts/utils/grid-items.tsx"],
+  "sourcesContent": ["/**\n * External dependencies\n */\nimport type { ComponentPropsWithoutRef } from 'react';\n\n/**\n * WordPress dependencies\n */\nimport { forwardRef } from '@wordpress/element';\n\n/**\n * External dependencies\n */\nimport clsx from 'clsx';\n\nexport const GridItems = forwardRef<\n\tHTMLDivElement,\n\t{\n\t\tclassName?: string;\n\t\tpreviewSize: number | undefined;\n\t} & ComponentPropsWithoutRef< 'div' >\n>( ( { className, previewSize, ...props }, ref ) => {\n\treturn (\n\t\t<div\n\t\t\tref={ ref }\n\t\t\tclassName={ clsx( 'dataviews-view-grid-items', className ) }\n\t\t\tstyle={ {\n\t\t\t\tgridTemplateColumns:\n\t\t\t\t\tpreviewSize &&\n\t\t\t\t\t`repeat(auto-fill, minmax(${ previewSize }px, 1fr))`,\n\t\t\t} }\n\t\t\t{ ...props }\n\t\t/>\n\t);\n} );\n"],
+  "mappings": ";AAQA,SAAS,kBAAkB;AAK3B,OAAO,UAAU;AAUf;AARK,IAAM,YAAY,WAMtB,CAAE,EAAE,WAAW,aAAa,GAAG,MAAM,GAAG,QAAS;AACnD,SACC;AAAA,IAAC;AAAA;AAAA,MACA;AAAA,MACA,WAAY,KAAM,6BAA6B,SAAU;AAAA,MACzD,OAAQ;AAAA,QACP,qBACC,eACA,4BAA6B,WAAY;AAAA,MAC3C;AAAA,MACE,GAAG;AAAA;AAAA,EACN;AAEF,CAAE;",
+  "names": []
+}

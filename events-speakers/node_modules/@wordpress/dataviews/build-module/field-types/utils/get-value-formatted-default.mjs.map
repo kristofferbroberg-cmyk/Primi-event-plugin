@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/field-types/utils/get-value-formatted-default.ts"],
+  "sourcesContent": ["import type { NormalizedField } from '../../types';\n\nfunction getValueFormatted< Item >( {\n\titem,\n\tfield,\n}: {\n\titem: Item;\n\tfield: NormalizedField< Item >;\n} ): string {\n\treturn field.getValue( { item } );\n}\n\nexport default getValueFormatted;\n"],
+  "mappings": ";AAEA,SAAS,kBAA2B;AAAA,EACnC;AAAA,EACA;AACD,GAGY;AACX,SAAO,MAAM,SAAU,EAAE,KAAK,CAAE;AACjC;AAEA,IAAO,sCAAQ;",
+  "names": []
+}

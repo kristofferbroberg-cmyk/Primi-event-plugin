@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/default-registry.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport { createRegistry } from './registry';\n\nconst defaultRegistry = createRegistry();\n\nexport default defaultRegistry;\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAGA,sBAA+B;AAE/B,IAAM,sBAAkB,gCAAe;AAEvC,IAAO,2BAAQ;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+/**
+ * Internal dependencies
+ */
+import type { SlotFillRegistry } from './types';
+declare const SlotFillContext: import("react").Context<SlotFillRegistry>;
+export default SlotFillContext;
+//# sourceMappingURL=context.d.ts.map

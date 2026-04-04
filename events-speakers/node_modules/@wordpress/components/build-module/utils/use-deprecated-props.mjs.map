@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/use-deprecated-props.ts"],
+  "sourcesContent": ["export function useDeprecated36pxDefaultSizeProp(props) {\n  const {\n    __next36pxDefaultSize,\n    __next40pxDefaultSize,\n    ...otherProps\n  } = props;\n  return {\n    ...otherProps,\n    __next40pxDefaultSize: __next40pxDefaultSize ?? __next36pxDefaultSize\n  };\n}"],
+  "mappings": ";AAAO,SAAS,iCAAiC,OAAO;AACtD,QAAM;AAAA,IACJ;AAAA,IACA;AAAA,IACA,GAAG;AAAA,EACL,IAAI;AACJ,SAAO;AAAA,IACL,GAAG;AAAA,IACH,uBAAuB,yBAAyB;AAAA,EAClD;AACF;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/library/justify-right.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { Path, SVG } from '@wordpress/primitives';\n\nexport default (\n\t<SVG xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\n\t\t<Path d=\"M4 15h11V9H4v6zM18.5 4v16H20V4h-1.5z\" />\n\t</SVG>\n);\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAGA,wBAA0B;AAIxB;AAFF,IAAO,wBACN,4CAAC,yBAAI,OAAM,8BAA6B,SAAQ,aAC/C,sDAAC,0BAAK,GAAE,wCAAuC,GAChD;",
+  "names": []
+}

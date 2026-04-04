@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/card/context.ts"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { createContext, useContext } from '@wordpress/element';\nexport const CardContext = createContext({});\nCardContext.displayName = 'CardContext';\nexport const useCardContext = () => useContext(CardContext);"],
+  "mappings": ";AAGA,SAAS,eAAe,kBAAkB;AACnC,IAAM,cAAc,cAAc,CAAC,CAAC;AAC3C,YAAY,cAAc;AACnB,IAAM,iBAAiB,MAAM,WAAW,WAAW;",
+  "names": []
+}

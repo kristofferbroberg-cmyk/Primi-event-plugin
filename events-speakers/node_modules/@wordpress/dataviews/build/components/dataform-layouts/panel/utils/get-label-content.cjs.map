@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../src/components/dataform-layouts/panel/utils/get-label-content.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { Icon, Tooltip } from '@wordpress/components';\nimport { error as errorIcon } from '@wordpress/icons';\n\nfunction getLabelContent(\n\tshowError?: boolean,\n\terrorMessage?: string,\n\tfieldLabel?: string\n) {\n\treturn showError ? (\n\t\t<Tooltip text={ errorMessage } placement=\"top\">\n\t\t\t<span className=\"dataforms-layouts-panel__field-label-error-content\">\n\t\t\t\t<Icon icon={ errorIcon } size={ 16 } />\n\t\t\t\t{ fieldLabel }\n\t\t\t</span>\n\t\t</Tooltip>\n\t) : (\n\t\tfieldLabel\n\t);\n}\n\nexport default getLabelContent;\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAGA,wBAA8B;AAC9B,mBAAmC;AAShC;AAPH,SAAS,gBACR,WACA,cACA,YACC;AACD,SAAO,YACN,4CAAC,6BAAQ,MAAO,cAAe,WAAU,OACxC,uDAAC,UAAK,WAAU,sDACf;AAAA,gDAAC,0BAAK,MAAO,aAAAA,OAAY,MAAO,IAAK;AAAA,IACnC;AAAA,KACH,GACD,IAEA;AAEF;AAEA,IAAO,4BAAQ;",
+  "names": ["errorIcon"]
+}

@@ -1,0 +1,16 @@
+// packages/ui/src/form/primitives/field/index.ts
+import { Root } from "./root.mjs";
+import { Item } from "./item.mjs";
+import { Label } from "./label.mjs";
+import { Description } from "./description.mjs";
+import { Details } from "./details.mjs";
+import { Control } from "./control.mjs";
+export {
+  Control,
+  Description,
+  Details,
+  Item,
+  Label,
+  Root
+};
+//# sourceMappingURL=index.mjs.map

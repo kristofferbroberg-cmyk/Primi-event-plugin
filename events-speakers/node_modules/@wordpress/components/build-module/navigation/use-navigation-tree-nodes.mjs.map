@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/navigation/use-navigation-tree-nodes.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { useState } from '@wordpress/element';\nexport function useNavigationTreeNodes() {\n  const [nodes, setNodes] = useState({});\n  const getNode = key => nodes[key];\n  const addNode = (key, value) => {\n    const {\n      children,\n      ...newNode\n    } = value;\n    return setNodes(original => ({\n      ...original,\n      [key]: newNode\n    }));\n  };\n  const removeNode = key => {\n    return setNodes(original => {\n      const {\n        [key]: removedNode,\n        ...remainingNodes\n      } = original;\n      return remainingNodes;\n    });\n  };\n  return {\n    nodes,\n    getNode,\n    addNode,\n    removeNode\n  };\n}"],
+  "mappings": ";AAGA,SAAS,gBAAgB;AAClB,SAAS,yBAAyB;AACvC,QAAM,CAAC,OAAO,QAAQ,IAAI,SAAS,CAAC,CAAC;AACrC,QAAM,UAAU,SAAO,MAAM,GAAG;AAChC,QAAM,UAAU,CAAC,KAAK,UAAU;AAC9B,UAAM;AAAA,MACJ;AAAA,MACA,GAAG;AAAA,IACL,IAAI;AACJ,WAAO,SAAS,eAAa;AAAA,MAC3B,GAAG;AAAA,MACH,CAAC,GAAG,GAAG;AAAA,IACT,EAAE;AAAA,EACJ;AACA,QAAM,aAAa,SAAO;AACxB,WAAO,SAAS,cAAY;AAC1B,YAAM;AAAA,QACJ,CAAC,GAAG,GAAG;AAAA,QACP,GAAG;AAAA,MACL,IAAI;AACJ,aAAO;AAAA,IACT,CAAC;AAAA,EACH;AACA,SAAO;AAAA,IACL;AAAA,IACA;AAAA,IACA;AAAA,IACA;AAAA,EACF;AACF;",
+  "names": []
+}

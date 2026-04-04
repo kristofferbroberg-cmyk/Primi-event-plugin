@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/library/plus.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { Path, SVG } from '@wordpress/primitives';\n\nexport default (\n\t<SVG xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\n\t\t<Path d=\"M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z\" />\n\t</SVG>\n);\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAGA,wBAA0B;AAIxB;AAFF,IAAO,eACN,4CAAC,yBAAI,OAAM,8BAA6B,SAAQ,aAC/C,sDAAC,0BAAK,GAAE,2DAA0D,GACnE;",
+  "names": []
+}

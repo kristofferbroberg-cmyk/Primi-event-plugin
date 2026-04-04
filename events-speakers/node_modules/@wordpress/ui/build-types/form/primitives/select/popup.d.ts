@@ -1,0 +1,2 @@
+export declare const Popup: import("react").ForwardRefExoticComponent<Omit<import("@base-ui/react").SelectPopupProps, "ref"> & import("react").RefAttributes<HTMLDivElement>>;
+//# sourceMappingURL=popup.d.ts.map

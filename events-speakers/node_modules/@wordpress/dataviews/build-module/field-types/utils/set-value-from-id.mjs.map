@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/field-types/utils/set-value-from-id.ts"],
+  "sourcesContent": ["const setValueFromId =\n\t( id: string ) =>\n\t( { value }: { value: any } ) => {\n\t\tconst path = id.split( '.' );\n\t\tconst result: any = {};\n\t\tlet current = result;\n\n\t\tfor ( const segment of path.slice( 0, -1 ) ) {\n\t\t\tcurrent[ segment ] = {};\n\t\t\tcurrent = current[ segment ];\n\t\t}\n\n\t\tcurrent[ path.at( -1 )! ] = value;\n\t\treturn result;\n\t};\n\nexport default setValueFromId;\n"],
+  "mappings": ";AAAA,IAAM,iBACL,CAAE,OACF,CAAE,EAAE,MAAM,MAAuB;AAChC,QAAM,OAAO,GAAG,MAAO,GAAI;AAC3B,QAAM,SAAc,CAAC;AACrB,MAAI,UAAU;AAEd,aAAY,WAAW,KAAK,MAAO,GAAG,EAAG,GAAI;AAC5C,YAAS,OAAQ,IAAI,CAAC;AACtB,cAAU,QAAS,OAAQ;AAAA,EAC5B;AAEA,UAAS,KAAK,GAAI,EAAG,CAAG,IAAI;AAC5B,SAAO;AACR;AAED,IAAO,4BAAQ;",
+  "names": []
+}

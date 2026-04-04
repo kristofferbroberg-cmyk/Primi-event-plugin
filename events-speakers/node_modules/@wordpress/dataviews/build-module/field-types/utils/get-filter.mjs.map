@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/field-types/utils/get-filter.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { FilterOperatorMap } from '../../types';\nimport type { FieldType } from '../../types/private';\nimport { getOperatorByName } from '../../utils/operators';\n\nexport default function getFilter< Item >(\n\tfieldType: FieldType< Item >\n): FilterOperatorMap< Item > {\n\treturn fieldType.validOperators.reduce( ( accumulator, operator ) => {\n\t\tconst operatorObj = getOperatorByName( operator );\n\t\tif ( operatorObj?.filter ) {\n\t\t\taccumulator[ operator ] = operatorObj.filter;\n\t\t}\n\t\treturn accumulator;\n\t}, {} as FilterOperatorMap< Item > );\n}\n"],
+  "mappings": ";AAKA,SAAS,yBAAyB;AAEnB,SAAR,UACN,WAC4B;AAC5B,SAAO,UAAU,eAAe,OAAQ,CAAE,aAAa,aAAc;AACpE,UAAM,cAAc,kBAAmB,QAAS;AAChD,QAAK,aAAa,QAAS;AAC1B,kBAAa,QAAS,IAAI,YAAY;AAAA,IACvC;AACA,WAAO;AAAA,EACR,GAAG,CAAC,CAA+B;AACpC;",
+  "names": []
+}

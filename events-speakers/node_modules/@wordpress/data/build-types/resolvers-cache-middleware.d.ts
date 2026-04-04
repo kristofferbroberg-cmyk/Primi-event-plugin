@@ -1,0 +1,19 @@
+/**
+ * External dependencies
+ */
+import type { Middleware } from 'redux';
+/**
+ * Internal dependencies
+ */
+import type { DataRegistry } from './types';
+/**
+ * Creates a middleware handling resolvers cache invalidation.
+ *
+ * @param registry  Registry for which to create the middleware.
+ * @param storeName Name of the store for which to create the middleware.
+ *
+ * @return Middleware function.
+ */
+declare const createResolversCacheMiddleware: (registry: DataRegistry, storeName: string) => Middleware;
+export default createResolversCacheMiddleware;
+//# sourceMappingURL=resolvers-cache-middleware.d.ts.map

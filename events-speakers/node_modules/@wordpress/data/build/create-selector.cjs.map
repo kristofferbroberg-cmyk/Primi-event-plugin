@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/create-selector.ts"],
+  "sourcesContent": ["/**\n * Creates a memoized selector that caches the computed values according to the array of \"dependants\"\n * and the selector parameters, and recomputes the values only when any of them changes.\n *\n * @see The documentation for the `rememo` package from which the `createSelector` function is reexported.\n */\nexport { default as createSelector } from 'rememo';\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAMA,oBAA0C;",
+  "names": []
+}

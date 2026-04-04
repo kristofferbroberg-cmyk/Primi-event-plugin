@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/field-types/utils/is-valid-required-for-array.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { NormalizedField } from '../../types';\n\nexport default function isValidRequiredForArray< Item >(\n\titem: Item,\n\tfield: NormalizedField< Item >\n) {\n\tconst value = field.getValue( { item } );\n\treturn (\n\t\tArray.isArray( value ) &&\n\t\tvalue.length > 0 &&\n\t\tvalue.every(\n\t\t\t( element: any ) => ! [ undefined, '', null ].includes( element )\n\t\t)\n\t);\n}\n"],
+  "mappings": ";AAKe,SAAR,wBACN,MACA,OACC;AACD,QAAM,QAAQ,MAAM,SAAU,EAAE,KAAK,CAAE;AACvC,SACC,MAAM,QAAS,KAAM,KACrB,MAAM,SAAS,KACf,MAAM;AAAA,IACL,CAAE,YAAkB,CAAE,CAAE,QAAW,IAAI,IAAK,EAAE,SAAU,OAAQ;AAAA,EACjE;AAEF;",
+  "names": []
+}

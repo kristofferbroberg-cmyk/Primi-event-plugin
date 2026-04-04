@@ -1,0 +1,1 @@
+{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../src/hooks/use-dragging/index.js"],"names":[],"mappings":"AAYA;;;;;GAKG;AACH,4EAJG;IAA6C,WAAW,EAAhD,CAAC,CAAC,EAAE,KAAK,CAAC,UAAU,KAAK,IAAI;IACQ,UAAU,EAA/C,CAAC,CAAC,EAAE,UAAU,KAAK,IAAI;IACc,SAAS,EAA9C,CAAC,CAAC,CAAC,EAAE,UAAU,KAAK,IAAI;CAClC;mBA+Be,KAAK,CAAC,UAAU,KAAK,IAAI;kBATxB,UAAU,KAAK,IAAI;;EAkCnC"}

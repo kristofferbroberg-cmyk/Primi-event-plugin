@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/form/primitives/input-layout/index.ts"],
+  "sourcesContent": ["import { InputLayout as _InputLayout } from './input-layout';\nimport { InputLayoutSlot } from './slot';\n\nexport const InputLayout = Object.assign( _InputLayout, {\n\tSlot: InputLayoutSlot,\n} );\n"],
+  "mappings": ";AAAA,SAAS,eAAe,oBAAoB;AAC5C,SAAS,uBAAuB;AAEzB,IAAM,cAAc,OAAO,OAAQ,cAAc;AAAA,EACvD,MAAM;AACP,CAAE;",
+  "names": []
+}

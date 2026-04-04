@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/library/chart-bar.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { Path, SVG } from '@wordpress/primitives';\n\nexport default (\n\t<SVG xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\n\t\t<Path fillRule=\"evenodd\" clipRule=\"evenodd\" d=\"M11.25 5h1.5v15h-1.5V5zM6 10h1.5v10H6V10zm12 4h-1.5v6H18v-6z\" />\n\t</SVG>\n);\n"],
+  "mappings": ";AAGA,SAAS,MAAM,WAAW;AAIxB;AAFF,IAAO,oBACN,oBAAC,OAAI,OAAM,8BAA6B,SAAQ,aAC/C,8BAAC,QAAK,UAAS,WAAU,UAAS,WAAU,GAAE,gEAA+D,GAC9G;",
+  "names": []
+}

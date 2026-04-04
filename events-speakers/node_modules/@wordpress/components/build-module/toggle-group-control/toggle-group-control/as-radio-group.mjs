@@ -1,0 +1,72 @@
+// packages/components/src/toggle-group-control/toggle-group-control/as-radio-group.tsx
+import * as Ariakit from "@ariakit/react";
+import { useInstanceId } from "@wordpress/compose";
+import { forwardRef, useEffect, useMemo } from "@wordpress/element";
+import { isRTL } from "@wordpress/i18n";
+import { View } from "../../view/index.mjs";
+import ToggleGroupControlContext from "../context.mjs";
+import { useComputeControlledOrUncontrolledValue } from "./utils.mjs";
+import { jsx as _jsx } from "react/jsx-runtime";
+function UnforwardedToggleGroupControlAsRadioGroup({
+  children,
+  isAdaptiveWidth,
+  label,
+  onChange: onChangeProp,
+  size,
+  value: valueProp,
+  id: idProp,
+  setSelectedElement,
+  ...otherProps
+}, forwardedRef) {
+  const generatedId = useInstanceId(ToggleGroupControlAsRadioGroup, "toggle-group-control-as-radio-group");
+  const baseId = idProp || generatedId;
+  const {
+    value,
+    defaultValue
+  } = useComputeControlledOrUncontrolledValue(valueProp);
+  const wrappedOnChangeProp = onChangeProp ? (v) => {
+    onChangeProp(v ?? void 0);
+  } : void 0;
+  const radio = Ariakit.useRadioStore({
+    defaultValue,
+    value,
+    setValue: wrappedOnChangeProp,
+    rtl: isRTL()
+  });
+  const selectedValue = Ariakit.useStoreState(radio, "value");
+  const setValue = radio.setValue;
+  useEffect(() => {
+    if (selectedValue === "") {
+      radio.setActiveId(void 0);
+    }
+  }, [radio, selectedValue]);
+  const groupContextValue = useMemo(() => ({
+    activeItemIsNotFirstItem: () => radio.getState().activeId !== radio.first(),
+    baseId,
+    isBlock: !isAdaptiveWidth,
+    size,
+    // @ts-expect-error - This is wrong and we should fix it.
+    value: selectedValue,
+    // @ts-expect-error - This is wrong and we should fix it.
+    setValue,
+    setSelectedElement
+  }), [baseId, isAdaptiveWidth, radio, selectedValue, setSelectedElement, setValue, size]);
+  return /* @__PURE__ */ _jsx(ToggleGroupControlContext.Provider, {
+    value: groupContextValue,
+    children: /* @__PURE__ */ _jsx(Ariakit.RadioGroup, {
+      store: radio,
+      "aria-label": label,
+      render: /* @__PURE__ */ _jsx(View, {}),
+      ...otherProps,
+      id: baseId,
+      ref: forwardedRef,
+      children
+    })
+  });
+}
+var ToggleGroupControlAsRadioGroup = forwardRef(UnforwardedToggleGroupControlAsRadioGroup);
+ToggleGroupControlAsRadioGroup.displayName = "ToggleGroupControlAsRadioGroup";
+export {
+  ToggleGroupControlAsRadioGroup
+};
+//# sourceMappingURL=as-radio-group.mjs.map

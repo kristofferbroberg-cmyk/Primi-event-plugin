@@ -1,0 +1,12 @@
+// packages/components/src/item-group/context.ts
+import { createContext, useContext } from "@wordpress/element";
+var ItemGroupContext = createContext({
+  size: "medium"
+});
+ItemGroupContext.displayName = "ItemGroupContext";
+var useItemGroupContext = () => useContext(ItemGroupContext);
+export {
+  ItemGroupContext,
+  useItemGroupContext
+};
+//# sourceMappingURL=context.mjs.map

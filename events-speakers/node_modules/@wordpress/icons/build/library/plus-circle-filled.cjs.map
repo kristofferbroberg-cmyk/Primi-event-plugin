@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/library/plus-circle-filled.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { Path, SVG } from '@wordpress/primitives';\n\nexport default (\n\t<SVG xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\n\t\t<Path d=\"M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8Zm3.8 8.8h-3v3h-1.5v-3h-3v-1.5h3v-3h1.5v3h3v1.5Z\" />\n\t</SVG>\n);\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAGA,wBAA0B;AAIxB;AAFF,IAAO,6BACN,4CAAC,yBAAI,OAAM,8BAA6B,SAAQ,aAC/C,sDAAC,0BAAK,GAAE,wGAAuG,GAChH;",
+  "names": []
+}

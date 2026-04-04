@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/card/card-header/hook.ts"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { useMemo } from '@wordpress/element';\n\n/**\n * Internal dependencies\n */\n\nimport { useContextSystem } from '../../context';\nimport * as styles from '../styles';\nimport { useCx } from '../../utils/hooks/use-cx';\nimport { getPaddingBySize } from '../get-padding-by-size';\nexport function useCardHeader(props) {\n  const {\n    className,\n    isBorderless = false,\n    isShady = false,\n    size = 'medium',\n    ...otherProps\n  } = useContextSystem(props, 'CardHeader');\n  const cx = useCx();\n  const classes = useMemo(() => cx(styles.Header, styles.borderRadius, styles.borderColor, getPaddingBySize(size), isBorderless && styles.borderless, isShady && styles.shady,\n  // This classname is added for legacy compatibility reasons.\n  'components-card__header', className), [className, cx, isBorderless, isShady, size]);\n  return {\n    ...otherProps,\n    className: classes\n  };\n}"],
+  "mappings": ";AAGA,SAAS,eAAe;AAMxB,SAAS,wBAAwB;AACjC,YAAY,YAAY;AACxB,SAAS,aAAa;AACtB,SAAS,wBAAwB;AAC1B,SAAS,cAAc,OAAO;AACnC,QAAM;AAAA,IACJ;AAAA,IACA,eAAe;AAAA,IACf,UAAU;AAAA,IACV,OAAO;AAAA,IACP,GAAG;AAAA,EACL,IAAI,iBAAiB,OAAO,YAAY;AACxC,QAAM,KAAK,MAAM;AACjB,QAAM,UAAU,QAAQ,MAAM;AAAA,IAAU;AAAA,IAAe;AAAA,IAAqB;AAAA,IAAa,iBAAiB,IAAI;AAAA,IAAG,gBAAuB;AAAA,IAAY,WAAkB;AAAA;AAAA,IAEtK;AAAA,IAA2B;AAAA,EAAS,GAAG,CAAC,WAAW,IAAI,cAAc,SAAS,IAAI,CAAC;AACnF,SAAO;AAAA,IACL,GAAG;AAAA,IACH,WAAW;AAAA,EACb;AACF;",
+  "names": []
+}

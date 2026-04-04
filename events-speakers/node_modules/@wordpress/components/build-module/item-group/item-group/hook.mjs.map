@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/item-group/item-group/hook.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\n\nimport { useContextSystem } from '../../context';\n\n/**\n * Internal dependencies\n */\nimport * as styles from '../styles';\nimport { useCx } from '../../utils/hooks/use-cx';\nexport function useItemGroup(props) {\n  const {\n    className,\n    isBordered = false,\n    isRounded = true,\n    isSeparated = false,\n    role = 'list',\n    ...otherProps\n  } = useContextSystem(props, 'ItemGroup');\n  const cx = useCx();\n  const classes = cx(isBordered && styles.bordered, isSeparated && styles.separated, isRounded && styles.rounded, className);\n  return {\n    isBordered,\n    className: classes,\n    role,\n    isSeparated,\n    ...otherProps\n  };\n}"],
+  "mappings": ";AAIA,SAAS,wBAAwB;AAKjC,YAAY,YAAY;AACxB,SAAS,aAAa;AACf,SAAS,aAAa,OAAO;AAClC,QAAM;AAAA,IACJ;AAAA,IACA,aAAa;AAAA,IACb,YAAY;AAAA,IACZ,cAAc;AAAA,IACd,OAAO;AAAA,IACP,GAAG;AAAA,EACL,IAAI,iBAAiB,OAAO,WAAW;AACvC,QAAM,KAAK,MAAM;AACjB,QAAM,UAAU,GAAG,cAAqB,iBAAU,eAAsB,kBAAW,aAAoB,gBAAS,SAAS;AACzH,SAAO;AAAA,IACL;AAAA,IACA,WAAW;AAAA,IACX;AAAA,IACA;AAAA,IACA,GAAG;AAAA,EACL;AACF;",
+  "names": []
+}

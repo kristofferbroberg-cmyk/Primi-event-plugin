@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/field-types/utils/get-filter-by.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { Field, FilterByConfig, Operator } from '../../types';\n\nfunction getFilterBy< Item >(\n\tfield: Field< Item >,\n\tdefaultOperators: Operator[],\n\tvalidOperators: Operator[]\n): Required< FilterByConfig > | false {\n\tif ( field.filterBy === false ) {\n\t\treturn false;\n\t}\n\n\tconst operators =\n\t\tfield.filterBy?.operators?.filter( ( op ) =>\n\t\t\tvalidOperators.includes( op )\n\t\t) ?? defaultOperators;\n\n\t// If no operators are left at this point,\n\t// the filters should be disabled.\n\tif ( operators.length === 0 ) {\n\t\treturn false;\n\t}\n\n\treturn {\n\t\tisPrimary: !! field.filterBy?.isPrimary,\n\t\toperators,\n\t};\n}\n\nexport default getFilterBy;\n"],
+  "mappings": ";AAKA,SAAS,YACR,OACA,kBACA,gBACqC;AACrC,MAAK,MAAM,aAAa,OAAQ;AAC/B,WAAO;AAAA,EACR;AAEA,QAAM,YACL,MAAM,UAAU,WAAW;AAAA,IAAQ,CAAE,OACpC,eAAe,SAAU,EAAG;AAAA,EAC7B,KAAK;AAIN,MAAK,UAAU,WAAW,GAAI;AAC7B,WAAO;AAAA,EACR;AAEA,SAAO;AAAA,IACN,WAAW,CAAC,CAAE,MAAM,UAAU;AAAA,IAC9B;AAAA,EACD;AACD;AAEA,IAAO,wBAAQ;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/private-apis.js"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport { lock } from './lock-unlock';\nimport { useRichText } from './hook';\n\n/**\n * Private @wordpress/rich-text APIs.\n */\nexport const privateApis = {};\nlock( privateApis, {\n\tuseRichText,\n} );\n"],
+  "mappings": ";AAGA,SAAS,YAAY;AACrB,SAAS,mBAAmB;AAKrB,IAAM,cAAc,CAAC;AAC5B,KAAM,aAAa;AAAA,EAClB;AACD,CAAE;",
+  "names": []
+}

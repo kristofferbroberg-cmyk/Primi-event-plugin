@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/field-types/utils/render-from-elements.tsx"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { DataViewRenderFieldProps } from '../../types';\nimport useElements from '../../hooks/use-elements';\n\nexport default function RenderFromElements< Item >( {\n\titem,\n\tfield,\n}: DataViewRenderFieldProps< Item > ) {\n\tconst { elements, isLoading } = useElements( {\n\t\telements: field.elements,\n\t\tgetElements: field.getElements,\n\t} );\n\n\tconst value = field.getValue( { item } );\n\tif ( isLoading ) {\n\t\treturn value;\n\t}\n\n\tif ( elements.length === 0 ) {\n\t\treturn value;\n\t}\n\n\treturn (\n\t\telements?.find( ( element ) => element.value === value )?.label ||\n\t\tfield.getValue( { item } )\n\t);\n}\n"],
+  "mappings": ";AAIA,OAAO,iBAAiB;AAET,SAAR,mBAA6C;AAAA,EACnD;AAAA,EACA;AACD,GAAsC;AACrC,QAAM,EAAE,UAAU,UAAU,IAAI,YAAa;AAAA,IAC5C,UAAU,MAAM;AAAA,IAChB,aAAa,MAAM;AAAA,EACpB,CAAE;AAEF,QAAM,QAAQ,MAAM,SAAU,EAAE,KAAK,CAAE;AACvC,MAAK,WAAY;AAChB,WAAO;AAAA,EACR;AAEA,MAAK,SAAS,WAAW,GAAI;AAC5B,WAAO;AAAA,EACR;AAEA,SACC,UAAU,KAAM,CAAE,YAAa,QAAQ,UAAU,KAAM,GAAG,SAC1D,MAAM,SAAU,EAAE,KAAK,CAAE;AAE3B;",
+  "names": []
+}

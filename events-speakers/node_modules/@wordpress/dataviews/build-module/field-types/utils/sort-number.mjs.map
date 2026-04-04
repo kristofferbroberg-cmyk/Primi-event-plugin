@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/field-types/utils/sort-number.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { SortDirection } from '../../types';\n\nexport default ( a: any, b: any, direction: SortDirection ) => {\n\treturn direction === 'asc' ? a - b : b - a;\n};\n"],
+  "mappings": ";AAKA,IAAO,sBAAQ,CAAE,GAAQ,GAAQ,cAA8B;AAC9D,SAAO,cAAc,QAAQ,IAAI,IAAI,IAAI;AAC1C;",
+  "names": []
+}

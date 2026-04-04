@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/library/line-dotted.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { Path, SVG } from '@wordpress/primitives';\n\nexport default (\n\t<SVG xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\n\t\t<Path fillRule=\"evenodd\" clipRule=\"evenodd\" d=\"M5.25 11.25h1.5v1.5h-1.5v-1.5zm3 0h1.5v1.5h-1.5v-1.5zm4.5 0h-1.5v1.5h1.5v-1.5zm1.5 0h1.5v1.5h-1.5v-1.5zm4.5 0h-1.5v1.5h1.5v-1.5z\" />\n\t</SVG>\n);\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAGA,wBAA0B;AAIxB;AAFF,IAAO,sBACN,4CAAC,yBAAI,OAAM,8BAA6B,SAAQ,aAC/C,sDAAC,0BAAK,UAAS,WAAU,UAAS,WAAU,GAAE,oIAAmI,GAClL;",
+  "names": []
+}

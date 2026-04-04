@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/border-box-control/border-box-control-visualizer/hook.ts"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { useMemo } from '@wordpress/element';\n\n/**\n * Internal dependencies\n */\nimport * as styles from '../styles';\nimport { useContextSystem } from '../../context';\nimport { useCx } from '../../utils';\nexport function useBorderBoxControlVisualizer(props) {\n  const {\n    className,\n    value,\n    size = 'default',\n    ...otherProps\n  } = useContextSystem(props, 'BorderBoxControlVisualizer');\n\n  // Generate class names.\n  const cx = useCx();\n  const classes = useMemo(() => {\n    return cx(styles.borderBoxControlVisualizer(value, size), className);\n  }, [cx, className, value, size]);\n  return {\n    ...otherProps,\n    className: classes,\n    value\n  };\n}"],
+  "mappings": ";AAGA,SAAS,eAAe;AAKxB,YAAY,YAAY;AACxB,SAAS,wBAAwB;AACjC,SAAS,aAAa;AACf,SAAS,8BAA8B,OAAO;AACnD,QAAM;AAAA,IACJ;AAAA,IACA;AAAA,IACA,OAAO;AAAA,IACP,GAAG;AAAA,EACL,IAAI,iBAAiB,OAAO,4BAA4B;AAGxD,QAAM,KAAK,MAAM;AACjB,QAAM,UAAU,QAAQ,MAAM;AAC5B,WAAO,GAAU,kCAA2B,OAAO,IAAI,GAAG,SAAS;AAAA,EACrE,GAAG,CAAC,IAAI,WAAW,OAAO,IAAI,CAAC;AAC/B,SAAO;AAAA,IACL,GAAG;AAAA,IACH,WAAW;AAAA,IACX;AAAA,EACF;AACF;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/components/dataviews-layouts/utils/get-data-by-group.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { NormalizedField } from '../../../types';\n\nexport default function getDataByGroup< Item >(\n\tdata: any[],\n\tgroupByField: NormalizedField< Item >\n): Map< string, any[] > {\n\treturn data.reduce( ( groups: Map< string, typeof data >, item ) => {\n\t\tconst groupName = groupByField.getValue( { item } );\n\t\tif ( ! groups.has( groupName ) ) {\n\t\t\tgroups.set( groupName, [] );\n\t\t}\n\t\tgroups.get( groupName )?.push( item );\n\t\treturn groups;\n\t}, new Map< string, typeof data >() );\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAKe,SAAR,eACN,MACA,cACuB;AACvB,SAAO,KAAK,OAAQ,CAAE,QAAoC,SAAU;AACnE,UAAM,YAAY,aAAa,SAAU,EAAE,KAAK,CAAE;AAClD,QAAK,CAAE,OAAO,IAAK,SAAU,GAAI;AAChC,aAAO,IAAK,WAAW,CAAC,CAAE;AAAA,IAC3B;AACA,WAAO,IAAK,SAAU,GAAG,KAAM,IAAK;AACpC,WAAO;AAAA,EACR,GAAG,oBAAI,IAA2B,CAAE;AACrC;",
+  "names": []
+}

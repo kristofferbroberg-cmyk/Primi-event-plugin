@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/custom-select-control-v2/index.tsx"],
+  "sourcesContent": ["/**\n * External dependencies\n */\nimport * as Ariakit from '@ariakit/react';\n/**\n * Internal dependencies\n */\nimport _CustomSelect from './custom-select';\nimport Item from './item';\nimport { jsx as _jsx } from \"react/jsx-runtime\";\nfunction CustomSelectControlV2(props) {\n  const {\n    defaultValue,\n    onChange,\n    value,\n    ...restProps\n  } = props;\n  // Forward props + store from v2 implementation\n  const store = Ariakit.useSelectStore({\n    setValue: nextValue => onChange?.(nextValue),\n    defaultValue,\n    value\n  });\n  return /*#__PURE__*/_jsx(_CustomSelect, {\n    ...restProps,\n    store: store\n  });\n}\nCustomSelectControlV2.Item = Item;\nexport default CustomSelectControlV2;"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAGA,cAAyB;AAIzB,2BAA0B;AAC1B,kBAAiB;AACjB,yBAA4B;AAC5B,SAAS,sBAAsB,OAAO;AACpC,QAAM;AAAA,IACJ;AAAA,IACA;AAAA,IACA;AAAA,IACA,GAAG;AAAA,EACL,IAAI;AAEJ,QAAM,QAAgB,uBAAe;AAAA,IACnC,UAAU,eAAa,WAAW,SAAS;AAAA,IAC3C;AAAA,IACA;AAAA,EACF,CAAC;AACD,SAAoB,uCAAAA,KAAK,qBAAAC,SAAe;AAAA,IACtC,GAAG;AAAA,IACH;AAAA,EACF,CAAC;AACH;AACA,sBAAsB,OAAO,YAAAC;AAC7B,IAAO,mCAAQ;",
+  "names": ["_jsx", "_CustomSelect", "Item"]
+}

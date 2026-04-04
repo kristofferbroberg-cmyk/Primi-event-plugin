@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/dialog/root.tsx"],
+  "sourcesContent": ["import { Dialog as _Dialog } from '@base-ui/react/dialog';\nimport type { RootProps } from './types';\n\n/**\n * Groups the dialog trigger and popup.\n *\n * `Dialog` is a collection of React components that combine to render\n * an ARIA-compliant dialog pattern.\n */\nfunction Root( props: RootProps ) {\n\treturn <_Dialog.Root { ...props } />;\n}\n\nexport { Root };\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,oBAAkC;AAU1B;AADR,SAAS,KAAM,OAAmB;AACjC,SAAO,4CAAC,cAAAA,OAAQ,MAAR,EAAe,GAAG,OAAQ;AACnC;",
+  "names": ["_Dialog"]
+}

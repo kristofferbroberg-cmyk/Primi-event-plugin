@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/navigation/menu/context.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { createContext, useContext } from '@wordpress/element';\n\n/**\n * Internal dependencies\n */\n\nexport const NavigationMenuContext = createContext({\n  menu: undefined,\n  search: ''\n});\nNavigationMenuContext.displayName = 'NavigationMenuContext';\nexport const useNavigationMenuContext = () => useContext(NavigationMenuContext);"],
+  "mappings": ";AAGA,SAAS,eAAe,kBAAkB;AAMnC,IAAM,wBAAwB,cAAc;AAAA,EACjD,MAAM;AAAA,EACN,QAAQ;AACV,CAAC;AACD,sBAAsB,cAAc;AAC7B,IAAM,2BAA2B,MAAM,WAAW,qBAAqB;",
+  "names": []
+}

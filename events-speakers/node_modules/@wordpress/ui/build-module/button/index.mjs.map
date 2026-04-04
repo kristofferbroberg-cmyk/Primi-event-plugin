@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/button/index.ts"],
+  "sourcesContent": ["import { Button as ButtonButton } from './button';\nimport { ButtonIcon } from './icon';\n\n/**\n * A versatile button component with multiple variants, tones, and sizes.\n * Built on design tokens for consistent theming and accessibility.\n */\nexport const Button = Object.assign( ButtonButton, {\n\t/**\n\t * An icon component specifically designed to work well when rendered inside\n\t * a `Button` component.\n\t */\n\tIcon: ButtonIcon,\n} ) as typeof ButtonButton & {\n\tIcon: typeof ButtonIcon;\n};\n"],
+  "mappings": ";AAAA,SAAS,UAAU,oBAAoB;AACvC,SAAS,kBAAkB;AAMpB,IAAM,SAAS,OAAO,OAAQ,cAAc;AAAA;AAAA;AAAA;AAAA;AAAA,EAKlD,MAAM;AACP,CAAE;",
+  "names": []
+}

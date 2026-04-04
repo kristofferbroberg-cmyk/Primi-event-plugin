@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/scrollable/hook.ts"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { useMemo } from '@wordpress/element';\n\n/**\n * Internal dependencies\n */\n\nimport { useContextSystem } from '../context';\nimport * as styles from './styles';\nimport { useCx } from '../utils/hooks/use-cx';\nexport function useScrollable(props) {\n  const {\n    className,\n    scrollDirection = 'y',\n    smoothScroll = false,\n    ...otherProps\n  } = useContextSystem(props, 'Scrollable');\n  const cx = useCx();\n  const classes = useMemo(() => cx(styles.Scrollable, styles.scrollableScrollbar, smoothScroll && styles.smoothScroll, scrollDirection === 'x' && styles.scrollX, scrollDirection === 'y' && styles.scrollY, scrollDirection === 'auto' && styles.scrollAuto, className), [className, cx, scrollDirection, smoothScroll]);\n  return {\n    ...otherProps,\n    className: classes\n  };\n}"],
+  "mappings": ";AAGA,SAAS,eAAe;AAMxB,SAAS,wBAAwB;AACjC,YAAY,YAAY;AACxB,SAAS,aAAa;AACf,SAAS,cAAc,OAAO;AACnC,QAAM;AAAA,IACJ;AAAA,IACA,kBAAkB;AAAA,IAClB,cAAAA,gBAAe;AAAA,IACf,GAAG;AAAA,EACL,IAAI,iBAAiB,OAAO,YAAY;AACxC,QAAM,KAAK,MAAM;AACjB,QAAM,UAAU,QAAQ,MAAM,GAAU,mBAAmB,4BAAqBA,iBAAuB,qBAAc,oBAAoB,OAAc,gBAAS,oBAAoB,OAAc,gBAAS,oBAAoB,UAAiB,mBAAY,SAAS,GAAG,CAAC,WAAW,IAAI,iBAAiBA,aAAY,CAAC;AACtT,SAAO;AAAA,IACL,GAAG;AAAA,IACH,WAAW;AAAA,EACb;AACF;",
+  "names": ["smoothScroll"]
+}

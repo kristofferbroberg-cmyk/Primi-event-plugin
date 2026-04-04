@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/navigation/group/context.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { createContext, useContext } from '@wordpress/element';\n\n/**\n * Internal dependencies\n */\n\nexport const NavigationGroupContext = createContext({\n  group: undefined\n});\nNavigationGroupContext.displayName = 'NavigationGroupContext';\nexport const useNavigationGroupContext = () => useContext(NavigationGroupContext);"],
+  "mappings": ";AAGA,SAAS,eAAe,kBAAkB;AAMnC,IAAM,yBAAyB,cAAc;AAAA,EAClD,OAAO;AACT,CAAC;AACD,uBAAuB,cAAc;AAC9B,IAAM,4BAA4B,MAAM,WAAW,sBAAsB;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/dialog/index.ts"],
+  "sourcesContent": ["import { Action } from './action';\nimport { CloseIcon } from './close-icon';\nimport { Footer } from './footer';\nimport { Header } from './header';\nimport { Popup } from './popup';\nimport { Root } from './root';\nimport { Title } from './title';\nimport { Trigger } from './trigger';\n\nexport { Action, CloseIcon, Footer, Header, Popup, Root, Title, Trigger };\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,oBAAuB;AACvB,wBAA0B;AAC1B,oBAAuB;AACvB,oBAAuB;AACvB,mBAAsB;AACtB,kBAAqB;AACrB,mBAAsB;AACtB,qBAAwB;",
+  "names": []
+}

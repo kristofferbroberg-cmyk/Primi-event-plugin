@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/field-types/media.tsx"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { FieldType } from '../types/private';\nimport getValueFormatted from './utils/get-value-formatted-default';\n\nexport default {\n\ttype: 'media',\n\trender: () => null,\n\tEdit: null,\n\tsort: () => 0,\n\tenableSorting: false,\n\tenableGlobalSearch: false,\n\tdefaultOperators: [],\n\tvalidOperators: [],\n\tformat: {},\n\tgetValueFormatted,\n\t// cannot validate any constraint, so\n\t// the only available validation for the field author\n\t// would be providing a custom validator.\n\tvalidate: {},\n} satisfies FieldType< any >;\n"],
+  "mappings": ";AAIA,OAAO,uBAAuB;AAE9B,IAAO,gBAAQ;AAAA,EACd,MAAM;AAAA,EACN,QAAQ,MAAM;AAAA,EACd,MAAM;AAAA,EACN,MAAM,MAAM;AAAA,EACZ,eAAe;AAAA,EACf,oBAAoB;AAAA,EACpB,kBAAkB,CAAC;AAAA,EACnB,gBAAgB,CAAC;AAAA,EACjB,QAAQ,CAAC;AAAA,EACT;AAAA;AAAA;AAAA;AAAA,EAIA,UAAU,CAAC;AACZ;",
+  "names": []
+}

@@ -1,0 +1,25 @@
+/**
+ * Internal dependencies
+ */
+import Fill from './fill';
+import type { WordPressComponentProps } from '../context';
+export { default as useSlot } from './bubbles-virtually/use-slot';
+export { default as useSlotFills } from './bubbles-virtually/use-slot-fills';
+import type { DistributiveOmit, FillComponentProps, SlotComponentProps, SlotFillProviderProps, SlotKey } from './types';
+export { Fill };
+export declare const Slot: import("react").ForwardRefExoticComponent<(SlotComponentProps & Omit<WordPressComponentProps<{}, "div">, "className">) & import("react").RefAttributes<any>>;
+export declare function Provider({ children, passthrough, }: SlotFillProviderProps): import("react").JSX.Element;
+export declare namespace Provider {
+    var displayName: string;
+}
+export declare function createSlotFill(key: SlotKey): {
+    name: SlotKey;
+    Fill: {
+        (props: Omit<FillComponentProps, "name">): import("react").JSX.Element;
+        displayName: string;
+    };
+    Slot: import("react").ForwardRefExoticComponent<DistributiveOmit<SlotComponentProps, "name"> & import("react").RefAttributes<any>> & {
+        __unstableName: SlotKey;
+    };
+};
+//# sourceMappingURL=index.d.ts.map

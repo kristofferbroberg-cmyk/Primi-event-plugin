@@ -1,0 +1,1 @@
+{"version":3,"file":"validation-badge.d.ts","sourceRoot":"","sources":["../../../src/components/dataform-layouts/validation-badge.tsx"],"names":[],"mappings":"AAMA;;GAEG;AACH,OAAO,KAAK,EAAE,aAAa,EAAE,MAAM,aAAa,CAAC;AA6BjD,MAAM,CAAC,OAAO,UAAU,eAAe,CAAE,EACxC,QAAQ,GACR,EAAE;IACF,QAAQ,EAAE,aAAa,GAAG,SAAS,CAAC;CACpC,sCAoBA"}

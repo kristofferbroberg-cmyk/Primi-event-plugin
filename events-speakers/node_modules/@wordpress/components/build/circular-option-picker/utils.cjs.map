@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/circular-option-picker/utils.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { __ } from '@wordpress/i18n';\n\n/**\n * Computes the common props for the CircularOptionPicker.\n */\nexport function getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby) {\n  const metaProps = asButtons ? {\n    asButtons: true\n  } : {\n    asButtons: false,\n    loop\n  };\n  const labelProps = {\n    'aria-labelledby': ariaLabelledby,\n    'aria-label': ariaLabelledby ? undefined : ariaLabel || __('Custom color picker')\n  };\n  return {\n    metaProps,\n    labelProps\n  };\n}"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAGA,kBAAmB;AAKZ,SAAS,0CAA0C,WAAW,MAAM,WAAW,gBAAgB;AACpG,QAAM,YAAY,YAAY;AAAA,IAC5B,WAAW;AAAA,EACb,IAAI;AAAA,IACF,WAAW;AAAA,IACX;AAAA,EACF;AACA,QAAM,aAAa;AAAA,IACjB,mBAAmB;AAAA,IACnB,cAAc,iBAAiB,SAAY,iBAAa,gBAAG,qBAAqB;AAAA,EAClF;AACA,SAAO;AAAA,IACL;AAAA,IACA;AAAA,EACF;AACF;",
+  "names": []
+}

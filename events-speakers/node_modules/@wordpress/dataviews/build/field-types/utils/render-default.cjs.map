@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/field-types/utils/render-default.tsx"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { DataViewRenderFieldProps } from '../../types';\nimport RenderFromElements from './render-from-elements';\n\nexport default function render( {\n\titem,\n\tfield,\n}: DataViewRenderFieldProps< any > ) {\n\tif ( field.hasElements ) {\n\t\treturn <RenderFromElements item={ item } field={ field } />;\n\t}\n\n\treturn field.getValueFormatted( { item, field } );\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAIA,kCAA+B;AAOtB;AALM,SAAR,OAAyB;AAAA,EAC/B;AAAA,EACA;AACD,GAAqC;AACpC,MAAK,MAAM,aAAc;AACxB,WAAO,4CAAC,4BAAAA,SAAA,EAAmB,MAAc,OAAgB;AAAA,EAC1D;AAEA,SAAO,MAAM,kBAAmB,EAAE,MAAM,MAAM,CAAE;AACjD;",
+  "names": ["RenderFromElements"]
+}

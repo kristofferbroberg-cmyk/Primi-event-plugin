@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/tooltip/types.ts"],
+  "sourcesContent": ["import type { ReactNode } from 'react';\nimport type { Tooltip } from '@base-ui/react/tooltip';\nimport type { ComponentProps } from '../utils/types';\n\nexport type RootProps = Pick< Tooltip.Root.Props, 'disabled' | 'children' >;\n\nexport type ProviderProps = Pick<\n\tTooltip.Provider.Props,\n\t'delay' | 'children'\n>;\n\nexport interface TriggerProps extends ComponentProps< 'button' > {\n\t/**\n\t * The content to be rendered inside the component.\n\t */\n\tchildren?: ReactNode;\n}\n\nexport interface PopupProps\n\textends ComponentProps< 'div' >,\n\t\tPick< Tooltip.Positioner.Props, 'align' | 'side' | 'sideOffset' > {\n\t/**\n\t * The content to be rendered inside the component.\n\t */\n\tchildren?: ReactNode;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;AAAA;AAAA;",
+  "names": []
+}

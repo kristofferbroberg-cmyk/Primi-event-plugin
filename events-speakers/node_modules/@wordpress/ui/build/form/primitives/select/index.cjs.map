@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/form/primitives/select/index.ts"],
+  "sourcesContent": ["export { Item } from './item';\nexport { Popup } from './popup';\nexport { Root } from './root';\nexport { Trigger } from './trigger';\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,kBAAqB;AACrB,mBAAsB;AACtB,kBAAqB;AACrB,qBAAwB;",
+  "names": []
+}

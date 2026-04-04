@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/types/private.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type {\n\tCustomValidator,\n\tNormalizedField,\n\tOperator,\n\tValidator,\n} from './field-api';\n\nexport type SelectionOrUpdater = string[] | ( ( prev: string[] ) => string[] );\nexport type SetSelection = ( selection: SelectionOrUpdater ) => void;\nexport type FieldType< Item > = Pick<\n\tNormalizedField< Item >,\n\t| 'type'\n\t| 'render'\n\t| 'sort'\n\t| 'enableSorting'\n\t| 'enableGlobalSearch'\n\t| 'format'\n\t| 'getValueFormatted'\n> & {\n\tEdit: string | null;\n\tvalidOperators: Operator[];\n\tdefaultOperators: Operator[];\n\tvalidate: {\n\t\trequired?: Validator< Item >;\n\t\telements?: Validator< Item >;\n\t\tpattern?: Validator< Item >;\n\t\tminLength?: Validator< Item >;\n\t\tmaxLength?: Validator< Item >;\n\t\tmin?: Validator< Item >;\n\t\tmax?: Validator< Item >;\n\t\tcustom?: CustomValidator< Item >;\n\t};\n};\n"],
+  "mappings": ";;;;;;;;;;;;;;;;AAAA;AAAA;",
+  "names": []
+}

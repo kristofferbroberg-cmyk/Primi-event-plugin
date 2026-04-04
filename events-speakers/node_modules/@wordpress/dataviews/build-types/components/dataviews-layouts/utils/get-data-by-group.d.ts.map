@@ -1,0 +1,1 @@
+{"version":3,"file":"get-data-by-group.d.ts","sourceRoot":"","sources":["../../../../src/components/dataviews-layouts/utils/get-data-by-group.ts"],"names":[],"mappings":"AAAA;;GAEG;AACH,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,gBAAgB,CAAC;AAEtD,MAAM,CAAC,OAAO,UAAU,cAAc,CAAE,IAAI,EAC3C,IAAI,EAAE,GAAG,EAAE,EACX,YAAY,EAAE,eAAe,CAAE,IAAI,CAAE,GACnC,GAAG,CAAE,MAAM,EAAE,GAAG,EAAE,CAAE,CAStB"}

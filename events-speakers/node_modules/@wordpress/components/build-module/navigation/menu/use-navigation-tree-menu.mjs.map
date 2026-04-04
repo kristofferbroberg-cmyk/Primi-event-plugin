@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/navigation/menu/use-navigation-tree-menu.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { useEffect } from '@wordpress/element';\n\n/**\n * Internal dependencies\n */\nimport { useNavigationContext } from '../context';\nimport { ROOT_MENU } from '../constants';\nexport const useNavigationTreeMenu = props => {\n  const {\n    navigationTree: {\n      addMenu,\n      removeMenu\n    }\n  } = useNavigationContext();\n  const key = props.menu || ROOT_MENU;\n  useEffect(() => {\n    addMenu(key, {\n      ...props,\n      menu: key\n    });\n    return () => {\n      removeMenu(key);\n    };\n    // Not adding deps for now, as it would require either a larger refactor\n    // See https://github.com/WordPress/gutenberg/pull/44090\n  }, []);\n};"],
+  "mappings": ";AAGA,SAAS,iBAAiB;AAK1B,SAAS,4BAA4B;AACrC,SAAS,iBAAiB;AACnB,IAAM,wBAAwB,WAAS;AAC5C,QAAM;AAAA,IACJ,gBAAgB;AAAA,MACd;AAAA,MACA;AAAA,IACF;AAAA,EACF,IAAI,qBAAqB;AACzB,QAAM,MAAM,MAAM,QAAQ;AAC1B,YAAU,MAAM;AACd,YAAQ,KAAK;AAAA,MACX,GAAG;AAAA,MACH,MAAM;AAAA,IACR,CAAC;AACD,WAAO,MAAM;AACX,iBAAW,GAAG;AAAA,IAChB;AAAA,EAGF,GAAG,CAAC,CAAC;AACP;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/index.js"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport * as focusable from './focusable';\nimport * as tabbable from './tabbable';\n\n/**\n * Object grouping `focusable` and `tabbable` utils\n * under the keys with the same name.\n */\nexport const focus = { focusable, tabbable };\n\nexport * from './dom';\nexport * from './phrasing-content';\nexport * from './data-transfer';\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAGA,gBAA2B;AAC3B,eAA0B;AAQ1B,0BAAc,4BAZd;AAaA,0BAAc,mCAbd;AAcA,0BAAc,gCAdd;AAUO,IAAM,QAAQ,EAAE,WAAW,SAAS;",
+  "names": []
+}

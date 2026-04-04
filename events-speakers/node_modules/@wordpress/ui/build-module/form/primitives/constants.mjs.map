@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/form/primitives/constants.ts"],
+  "sourcesContent": ["import type { Select as _Select } from '@base-ui/react/select';\n\n/**\n * Shared positioning props for item popups (Select, Combobox, etc.).\n */\nexport const ITEM_POPUP_POSITIONER_PROPS = {\n\talign: 'start',\n\tsideOffset: 8,\n\tcollisionPadding: 12,\n} satisfies Partial< _Select.Positioner.Props >;\n"],
+  "mappings": ";AAKO,IAAM,8BAA8B;AAAA,EAC1C,OAAO;AAAA,EACP,YAAY;AAAA,EACZ,kBAAkB;AACnB;",
+  "names": []
+}

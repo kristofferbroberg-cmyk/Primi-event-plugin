@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/components/dataform-controls/integer.tsx"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { DataFormControlProps } from '../../types';\nimport ValidatedNumber from './utils/validated-number';\n\nexport default function Integer< Item >( props: DataFormControlProps< Item > ) {\n\treturn <ValidatedNumber { ...props } />;\n}\n"],
+  "mappings": ";AAIA,OAAO,qBAAqB;AAGpB;AADO,SAAR,QAAkC,OAAsC;AAC9E,SAAO,oBAAC,mBAAkB,GAAG,OAAQ;AACtC;",
+  "names": []
+}

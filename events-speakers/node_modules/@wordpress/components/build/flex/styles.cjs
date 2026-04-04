@@ -1,0 +1,82 @@
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// packages/components/src/flex/styles.ts
+var styles_exports = {};
+__export(styles_exports, {
+  Flex: () => Flex,
+  Item: () => Item,
+  ItemsColumn: () => ItemsColumn,
+  ItemsRow: () => ItemsRow,
+  block: () => block
+});
+module.exports = __toCommonJS(styles_exports);
+var import_react = require("@emotion/react");
+function _EMOTION_STRINGIFIED_CSS_ERROR__() {
+  return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop).";
+}
+var Flex = process.env.NODE_ENV === "production" ? {
+  name: "zjik7",
+  styles: "display:flex"
+} : {
+  name: "a57899-Flex",
+  styles: "display:flex;label:Flex;/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFLdUIiLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuXG5leHBvcnQgY29uc3QgRmxleCA9IGNzc2Bcblx0ZGlzcGxheTogZmxleDtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtID0gY3NzYFxuXHRkaXNwbGF5OiBibG9jaztcblx0bWF4LWhlaWdodDogMTAwJTtcblx0bWF4LXdpZHRoOiAxMDAlO1xuXHRtaW4taGVpZ2h0OiAwO1xuXHRtaW4td2lkdGg6IDA7XG5gO1xuXG5leHBvcnQgY29uc3QgYmxvY2sgPSBjc3NgXG5cdGZsZXg6IDE7XG5gO1xuXG4vKipcbiAqIFdvcmthcm91bmQgdG8gb3B0aW1pemUgRE9NIHJlbmRlcmluZy5cbiAqIFdlJ2xsIGVuaGFuY2UgYWxpZ25tZW50IHdpdGggbmFpdmUgcGFyZW50IGZsZXggYXNzdW1wdGlvbnMuXG4gKlxuICogVHJhZGUtb2ZmOlxuICogRmFyIGxlc3MgRE9NIGxlc3MuIEhvd2V2ZXIsIFVJIHJlbmRlcmluZyBpcyBub3QgYXMgcmVsaWFibGUuXG4gKi9cblxuLyoqXG4gKiBJbXByb3ZlcyBzdGFiaWxpdHkgb2Ygd2lkdGgvaGVpZ2h0IHJlbmRlcmluZy5cbiAqIGh0dHBzOi8vZ2l0aHViLmNvbS9JdHNKb25RL2cyL3B1bGwvMTQ5XG4gKi9cbmV4cG9ydCBjb25zdCBJdGVtc0NvbHVtbiA9IGNzc2Bcblx0PiAqIHtcblx0XHRtaW4taGVpZ2h0OiAwO1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbXNSb3cgPSBjc3NgXG5cdD4gKiB7XG5cdFx0bWluLXdpZHRoOiAwO1xuXHR9XG5gO1xuIl19 */",
+  toString: _EMOTION_STRINGIFIED_CSS_ERROR__
+};
+var Item = process.env.NODE_ENV === "production" ? {
+  name: "qgaee5",
+  styles: "display:block;max-height:100%;max-width:100%;min-height:0;min-width:0"
+} : {
+  name: "14ac8g8-Item",
+  styles: "display:block;max-height:100%;max-width:100%;min-height:0;min-width:0;label:Item;/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFTdUIiLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuXG5leHBvcnQgY29uc3QgRmxleCA9IGNzc2Bcblx0ZGlzcGxheTogZmxleDtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtID0gY3NzYFxuXHRkaXNwbGF5OiBibG9jaztcblx0bWF4LWhlaWdodDogMTAwJTtcblx0bWF4LXdpZHRoOiAxMDAlO1xuXHRtaW4taGVpZ2h0OiAwO1xuXHRtaW4td2lkdGg6IDA7XG5gO1xuXG5leHBvcnQgY29uc3QgYmxvY2sgPSBjc3NgXG5cdGZsZXg6IDE7XG5gO1xuXG4vKipcbiAqIFdvcmthcm91bmQgdG8gb3B0aW1pemUgRE9NIHJlbmRlcmluZy5cbiAqIFdlJ2xsIGVuaGFuY2UgYWxpZ25tZW50IHdpdGggbmFpdmUgcGFyZW50IGZsZXggYXNzdW1wdGlvbnMuXG4gKlxuICogVHJhZGUtb2ZmOlxuICogRmFyIGxlc3MgRE9NIGxlc3MuIEhvd2V2ZXIsIFVJIHJlbmRlcmluZyBpcyBub3QgYXMgcmVsaWFibGUuXG4gKi9cblxuLyoqXG4gKiBJbXByb3ZlcyBzdGFiaWxpdHkgb2Ygd2lkdGgvaGVpZ2h0IHJlbmRlcmluZy5cbiAqIGh0dHBzOi8vZ2l0aHViLmNvbS9JdHNKb25RL2cyL3B1bGwvMTQ5XG4gKi9cbmV4cG9ydCBjb25zdCBJdGVtc0NvbHVtbiA9IGNzc2Bcblx0PiAqIHtcblx0XHRtaW4taGVpZ2h0OiAwO1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbXNSb3cgPSBjc3NgXG5cdD4gKiB7XG5cdFx0bWluLXdpZHRoOiAwO1xuXHR9XG5gO1xuIl19 */",
+  toString: _EMOTION_STRINGIFIED_CSS_ERROR__
+};
+var block = process.env.NODE_ENV === "production" ? {
+  name: "82a6rk",
+  styles: "flex:1"
+} : {
+  name: "1ya6i3g-block",
+  styles: "flex:1;label:block;/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFpQndCIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IGNzcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcblxuZXhwb3J0IGNvbnN0IEZsZXggPSBjc3NgXG5cdGRpc3BsYXk6IGZsZXg7XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbSA9IGNzc2Bcblx0ZGlzcGxheTogYmxvY2s7XG5cdG1heC1oZWlnaHQ6IDEwMCU7XG5cdG1heC13aWR0aDogMTAwJTtcblx0bWluLWhlaWdodDogMDtcblx0bWluLXdpZHRoOiAwO1xuYDtcblxuZXhwb3J0IGNvbnN0IGJsb2NrID0gY3NzYFxuXHRmbGV4OiAxO1xuYDtcblxuLyoqXG4gKiBXb3JrYXJvdW5kIHRvIG9wdGltaXplIERPTSByZW5kZXJpbmcuXG4gKiBXZSdsbCBlbmhhbmNlIGFsaWdubWVudCB3aXRoIG5haXZlIHBhcmVudCBmbGV4IGFzc3VtcHRpb25zLlxuICpcbiAqIFRyYWRlLW9mZjpcbiAqIEZhciBsZXNzIERPTSBsZXNzLiBIb3dldmVyLCBVSSByZW5kZXJpbmcgaXMgbm90IGFzIHJlbGlhYmxlLlxuICovXG5cbi8qKlxuICogSW1wcm92ZXMgc3RhYmlsaXR5IG9mIHdpZHRoL2hlaWdodCByZW5kZXJpbmcuXG4gKiBodHRwczovL2dpdGh1Yi5jb20vSXRzSm9uUS9nMi9wdWxsLzE0OVxuICovXG5leHBvcnQgY29uc3QgSXRlbXNDb2x1bW4gPSBjc3NgXG5cdD4gKiB7XG5cdFx0bWluLWhlaWdodDogMDtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IEl0ZW1zUm93ID0gY3NzYFxuXHQ+ICoge1xuXHRcdG1pbi13aWR0aDogMDtcblx0fVxuYDtcbiJdfQ== */",
+  toString: _EMOTION_STRINGIFIED_CSS_ERROR__
+};
+var ItemsColumn = process.env.NODE_ENV === "production" ? {
+  name: "13nosa1",
+  styles: ">*{min-height:0;}"
+} : {
+  name: "9k4k7f-ItemsColumn",
+  styles: ">*{min-height:0;};label:ItemsColumn;/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFpQzhCIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IGNzcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcblxuZXhwb3J0IGNvbnN0IEZsZXggPSBjc3NgXG5cdGRpc3BsYXk6IGZsZXg7XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbSA9IGNzc2Bcblx0ZGlzcGxheTogYmxvY2s7XG5cdG1heC1oZWlnaHQ6IDEwMCU7XG5cdG1heC13aWR0aDogMTAwJTtcblx0bWluLWhlaWdodDogMDtcblx0bWluLXdpZHRoOiAwO1xuYDtcblxuZXhwb3J0IGNvbnN0IGJsb2NrID0gY3NzYFxuXHRmbGV4OiAxO1xuYDtcblxuLyoqXG4gKiBXb3JrYXJvdW5kIHRvIG9wdGltaXplIERPTSByZW5kZXJpbmcuXG4gKiBXZSdsbCBlbmhhbmNlIGFsaWdubWVudCB3aXRoIG5haXZlIHBhcmVudCBmbGV4IGFzc3VtcHRpb25zLlxuICpcbiAqIFRyYWRlLW9mZjpcbiAqIEZhciBsZXNzIERPTSBsZXNzLiBIb3dldmVyLCBVSSByZW5kZXJpbmcgaXMgbm90IGFzIHJlbGlhYmxlLlxuICovXG5cbi8qKlxuICogSW1wcm92ZXMgc3RhYmlsaXR5IG9mIHdpZHRoL2hlaWdodCByZW5kZXJpbmcuXG4gKiBodHRwczovL2dpdGh1Yi5jb20vSXRzSm9uUS9nMi9wdWxsLzE0OVxuICovXG5leHBvcnQgY29uc3QgSXRlbXNDb2x1bW4gPSBjc3NgXG5cdD4gKiB7XG5cdFx0bWluLWhlaWdodDogMDtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IEl0ZW1zUm93ID0gY3NzYFxuXHQ+ICoge1xuXHRcdG1pbi13aWR0aDogMDtcblx0fVxuYDtcbiJdfQ== */",
+  toString: _EMOTION_STRINGIFIED_CSS_ERROR__
+};
+var ItemsRow = process.env.NODE_ENV === "production" ? {
+  name: "1pwxzk4",
+  styles: ">*{min-width:0;}"
+} : {
+  name: "1ozeagb-ItemsRow",
+  styles: ">*{min-width:0;};label:ItemsRow;/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUF1QzJCIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IGNzcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcblxuZXhwb3J0IGNvbnN0IEZsZXggPSBjc3NgXG5cdGRpc3BsYXk6IGZsZXg7XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbSA9IGNzc2Bcblx0ZGlzcGxheTogYmxvY2s7XG5cdG1heC1oZWlnaHQ6IDEwMCU7XG5cdG1heC13aWR0aDogMTAwJTtcblx0bWluLWhlaWdodDogMDtcblx0bWluLXdpZHRoOiAwO1xuYDtcblxuZXhwb3J0IGNvbnN0IGJsb2NrID0gY3NzYFxuXHRmbGV4OiAxO1xuYDtcblxuLyoqXG4gKiBXb3JrYXJvdW5kIHRvIG9wdGltaXplIERPTSByZW5kZXJpbmcuXG4gKiBXZSdsbCBlbmhhbmNlIGFsaWdubWVudCB3aXRoIG5haXZlIHBhcmVudCBmbGV4IGFzc3VtcHRpb25zLlxuICpcbiAqIFRyYWRlLW9mZjpcbiAqIEZhciBsZXNzIERPTSBsZXNzLiBIb3dldmVyLCBVSSByZW5kZXJpbmcgaXMgbm90IGFzIHJlbGlhYmxlLlxuICovXG5cbi8qKlxuICogSW1wcm92ZXMgc3RhYmlsaXR5IG9mIHdpZHRoL2hlaWdodCByZW5kZXJpbmcuXG4gKiBodHRwczovL2dpdGh1Yi5jb20vSXRzSm9uUS9nMi9wdWxsLzE0OVxuICovXG5leHBvcnQgY29uc3QgSXRlbXNDb2x1bW4gPSBjc3NgXG5cdD4gKiB7XG5cdFx0bWluLWhlaWdodDogMDtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IEl0ZW1zUm93ID0gY3NzYFxuXHQ+ICoge1xuXHRcdG1pbi13aWR0aDogMDtcblx0fVxuYDtcbiJdfQ== */",
+  toString: _EMOTION_STRINGIFIED_CSS_ERROR__
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  Flex,
+  Item,
+  ItemsColumn,
+  ItemsRow,
+  block
+});
+//# sourceMappingURL=styles.cjs.map

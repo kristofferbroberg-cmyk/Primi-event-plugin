@@ -1,0 +1,199 @@
+"use strict";
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// packages/data/src/components/use-select/index.ts
+var use_select_exports = {};
+__export(use_select_exports, {
+  default: () => useSelect,
+  useSuspenseSelect: () => useSuspenseSelect
+});
+module.exports = __toCommonJS(use_select_exports);
+var import_priority_queue = require("@wordpress/priority-queue");
+var import_element = require("@wordpress/element");
+var import_is_shallow_equal = require("@wordpress/is-shallow-equal");
+var import_use_registry = __toESM(require("../registry-provider/use-registry.cjs"));
+var import_use_async_mode = __toESM(require("../async-mode-provider/use-async-mode.cjs"));
+var renderQueue = (0, import_priority_queue.createQueue)();
+function warnOnUnstableReference(a, b) {
+  if (!a || !b) {
+    return;
+  }
+  const keys = typeof a === "object" && typeof b === "object" ? Object.keys(a).filter((k) => a[k] !== b[k]) : [];
+  console.warn(
+    "The `useSelect` hook returns different values when called with the same state and parameters.\nThis can lead to unnecessary re-renders and performance issues if not fixed.\n\nNon-equal value keys: %s\n\n",
+    keys.join(", ")
+  );
+}
+function Store(registry, suspense) {
+  const select = suspense ? registry.suspendSelect : registry.select;
+  const queueContext = {};
+  let lastMapSelect;
+  let lastMapResult;
+  let lastMapResultValid = false;
+  let lastIsAsync;
+  let subscriber;
+  let didWarnUnstableReference;
+  const storeStatesOnMount = /* @__PURE__ */ new Map();
+  function getStoreState(name) {
+    return registry.stores[name]?.store?.getState?.() ?? {};
+  }
+  const createSubscriber = (stores) => {
+    const activeStores = [...stores];
+    const activeSubscriptions = /* @__PURE__ */ new Set();
+    function subscribe(listener) {
+      if (lastMapResultValid) {
+        for (const name of activeStores) {
+          if (storeStatesOnMount.get(name) !== getStoreState(name)) {
+            lastMapResultValid = false;
+          }
+        }
+      }
+      storeStatesOnMount.clear();
+      const onStoreChange = () => {
+        lastMapResultValid = false;
+        listener();
+      };
+      const onChange = () => {
+        if (lastIsAsync) {
+          renderQueue.add(queueContext, onStoreChange);
+        } else {
+          onStoreChange();
+        }
+      };
+      const unsubs = [];
+      function subscribeStore(storeName) {
+        unsubs.push(registry.subscribe(onChange, storeName));
+      }
+      for (const storeName of activeStores) {
+        subscribeStore(storeName);
+      }
+      activeSubscriptions.add(subscribeStore);
+      return () => {
+        activeSubscriptions.delete(subscribeStore);
+        for (const unsub of unsubs.values()) {
+          unsub?.();
+        }
+        renderQueue.cancel(queueContext);
+      };
+    }
+    function updateStores(newStores) {
+      for (const newStore of newStores) {
+        if (activeStores.includes(newStore)) {
+          continue;
+        }
+        activeStores.push(newStore);
+        for (const subscription of activeSubscriptions) {
+          subscription(newStore);
+        }
+      }
+    }
+    return { subscribe, updateStores };
+  };
+  return (mapSelect, isAsync) => {
+    function updateValue() {
+      if (lastMapResultValid && mapSelect === lastMapSelect) {
+        return;
+      }
+      const listeningStores = { current: null };
+      const mapResult = registry.__unstableMarkListeningStores(
+        () => mapSelect(select, registry),
+        listeningStores
+      );
+      if (globalThis.SCRIPT_DEBUG) {
+        if (!didWarnUnstableReference) {
+          const secondMapResult = mapSelect(select, registry);
+          if (!(0, import_is_shallow_equal.isShallowEqual)(mapResult, secondMapResult)) {
+            warnOnUnstableReference(mapResult, secondMapResult);
+            didWarnUnstableReference = true;
+          }
+        }
+      }
+      if (!subscriber) {
+        for (const name of listeningStores.current) {
+          storeStatesOnMount.set(name, getStoreState(name));
+        }
+        subscriber = createSubscriber(listeningStores.current);
+      } else {
+        subscriber.updateStores(listeningStores.current);
+      }
+      if (!(0, import_is_shallow_equal.isShallowEqual)(lastMapResult, mapResult)) {
+        lastMapResult = mapResult;
+      }
+      lastMapSelect = mapSelect;
+      lastMapResultValid = true;
+    }
+    function getValue() {
+      updateValue();
+      return lastMapResult;
+    }
+    if (lastIsAsync && !isAsync) {
+      lastMapResultValid = false;
+      renderQueue.cancel(queueContext);
+    }
+    updateValue();
+    lastIsAsync = isAsync;
+    return { subscribe: subscriber.subscribe, getValue };
+  };
+}
+function _useStaticSelect(storeName) {
+  return (0, import_use_registry.default)().select(storeName);
+}
+function _useMappingSelect(suspense, mapSelect, deps) {
+  const registry = (0, import_use_registry.default)();
+  const isAsync = (0, import_use_async_mode.default)();
+  const store = (0, import_element.useMemo)(
+    () => Store(registry, suspense),
+    [registry, suspense]
+  );
+  const selector = (0, import_element.useCallback)(mapSelect, deps);
+  const { subscribe, getValue } = store(selector, isAsync);
+  const result = (0, import_element.useSyncExternalStore)(subscribe, getValue, getValue);
+  (0, import_element.useDebugValue)(result);
+  return result;
+}
+function useSelect(mapSelect, deps) {
+  const staticSelectMode = typeof mapSelect !== "function";
+  const staticSelectModeRef = (0, import_element.useRef)(staticSelectMode);
+  if (staticSelectMode !== staticSelectModeRef.current) {
+    const prevMode = staticSelectModeRef.current ? "static" : "mapping";
+    const nextMode = staticSelectMode ? "static" : "mapping";
+    throw new Error(
+      `Switching useSelect from ${prevMode} to ${nextMode} is not allowed`
+    );
+  }
+  return staticSelectMode ? _useStaticSelect(mapSelect) : _useMappingSelect(false, mapSelect, deps);
+}
+function useSuspenseSelect(mapSelect, deps) {
+  return _useMappingSelect(true, mapSelect, deps);
+}
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  useSuspenseSelect
+});
+//# sourceMappingURL=index.cjs.map

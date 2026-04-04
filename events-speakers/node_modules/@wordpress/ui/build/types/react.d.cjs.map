@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/types/react.d.ts"],
+  "sourcesContent": ["import 'react';\n\ndeclare module 'react' {\n\tinterface CSSProperties {\n\t\t[ key: `--${ string }` ]: string | number | undefined;\n\t}\n}\n"],
+  "mappings": ";;;AAAA,mBAAO;",
+  "names": []
+}

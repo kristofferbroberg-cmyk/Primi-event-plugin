@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/library/resize-corner-ne.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { Path, SVG } from '@wordpress/primitives';\n\nexport default (\n\t<SVG xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\n\t\t<Path d=\"M7 18h4.5v1.5h-7v-7H6V17L17 6h-4.5V4.5h7v7H18V7L7 18Z\" />\n\t</SVG>\n);\n"],
+  "mappings": ";AAGA,SAAS,MAAM,WAAW;AAIxB;AAFF,IAAO,2BACN,oBAAC,OAAI,OAAM,8BAA6B,SAAQ,aAC/C,8BAAC,QAAK,GAAE,yDAAwD,GACjE;",
+  "names": []
+}

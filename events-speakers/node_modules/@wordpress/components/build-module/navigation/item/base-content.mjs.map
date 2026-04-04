@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/navigation/item/base-content.tsx"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport { ItemBadgeUI, ItemTitleUI } from '../styles/navigation-styles';\nimport { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from \"react/jsx-runtime\";\nexport default function NavigationItemBaseContent(props) {\n  const {\n    badge,\n    title\n  } = props;\n  return /*#__PURE__*/_jsxs(_Fragment, {\n    children: [title && /*#__PURE__*/_jsx(ItemTitleUI, {\n      className: \"components-navigation__item-title\",\n      as: \"span\",\n      children: title\n    }), badge && /*#__PURE__*/_jsx(ItemBadgeUI, {\n      className: \"components-navigation__item-badge\",\n      children: badge\n    })]\n  });\n}"],
+  "mappings": ";AAGA,SAAS,aAAa,mBAAmB;AACzC,SAAS,OAAO,MAAM,YAAY,WAAW,QAAQ,aAAa;AACnD,SAAR,0BAA2C,OAAO;AACvD,QAAM;AAAA,IACJ;AAAA,IACA;AAAA,EACF,IAAI;AACJ,SAAoB,sBAAM,WAAW;AAAA,IACnC,UAAU,CAAC,SAAsB,qBAAK,aAAa;AAAA,MACjD,WAAW;AAAA,MACX,IAAI;AAAA,MACJ,UAAU;AAAA,IACZ,CAAC,GAAG,SAAsB,qBAAK,aAAa;AAAA,MAC1C,WAAW;AAAA,MACX,UAAU;AAAA,IACZ,CAAC,CAAC;AAAA,EACJ,CAAC;AACH;",
+  "names": []
+}

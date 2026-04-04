@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/tooltip/index.ts"],
+  "sourcesContent": ["import { Popup } from './popup';\nimport { Trigger } from './trigger';\nimport { Root } from './root';\nimport { Provider } from './provider';\n\nexport { Provider, Root, Trigger, Popup };\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,mBAAsB;AACtB,qBAAwB;AACxB,kBAAqB;AACrB,sBAAyB;",
+  "names": []
+}

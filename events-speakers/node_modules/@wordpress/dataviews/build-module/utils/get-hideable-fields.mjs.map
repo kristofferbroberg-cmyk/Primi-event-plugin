@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/get-hideable-fields.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { NormalizedField, View } from '../types';\n\nexport default function getHideableFields< Item >(\n\tview: View,\n\tfields: NormalizedField< Item >[]\n): NormalizedField< Item >[] {\n\tconst togglableFields = [\n\t\tview?.titleField,\n\t\tview?.mediaField,\n\t\tview?.descriptionField,\n\t].filter( Boolean );\n\treturn fields.filter(\n\t\t( f ) =>\n\t\t\t! togglableFields.includes( f.id ) &&\n\t\t\tf.type !== 'media' &&\n\t\t\tf.enableHiding !== false\n\t);\n}\n"],
+  "mappings": ";AAKe,SAAR,kBACN,MACA,QAC4B;AAC5B,QAAM,kBAAkB;AAAA,IACvB,MAAM;AAAA,IACN,MAAM;AAAA,IACN,MAAM;AAAA,EACP,EAAE,OAAQ,OAAQ;AAClB,SAAO,OAAO;AAAA,IACb,CAAE,MACD,CAAE,gBAAgB,SAAU,EAAE,EAAG,KACjC,EAAE,SAAS,WACX,EAAE,iBAAiB;AAAA,EACrB;AACD;",
+  "names": []
+}

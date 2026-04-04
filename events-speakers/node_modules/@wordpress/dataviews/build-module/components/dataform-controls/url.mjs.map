@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/components/dataform-controls/url.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport {\n\tIcon,\n\t__experimentalInputControlPrefixWrapper as InputControlPrefixWrapper,\n} from '@wordpress/components';\nimport { link } from '@wordpress/icons';\n\n/**\n * Internal dependencies\n */\nimport type { DataFormControlProps } from '../../types';\nimport ValidatedText from './utils/validated-input';\n\nexport default function Url< Item >( {\n\tdata,\n\tfield,\n\tonChange,\n\thideLabelFromVision,\n\tmarkWhenOptional,\n\tvalidity,\n}: DataFormControlProps< Item > ) {\n\treturn (\n\t\t<ValidatedText\n\t\t\t{ ...{\n\t\t\t\tdata,\n\t\t\t\tfield,\n\t\t\t\tonChange,\n\t\t\t\thideLabelFromVision,\n\t\t\t\tmarkWhenOptional,\n\t\t\t\tvalidity,\n\t\t\t\ttype: 'url',\n\t\t\t\tprefix: (\n\t\t\t\t\t<InputControlPrefixWrapper variant=\"icon\">\n\t\t\t\t\t\t<Icon icon={ link } />\n\t\t\t\t\t</InputControlPrefixWrapper>\n\t\t\t\t),\n\t\t\t} }\n\t\t/>\n\t);\n}\n"],
+  "mappings": ";AAGA;AAAA,EACC;AAAA,EACA,2CAA2C;AAAA,OACrC;AACP,SAAS,YAAY;AAMrB,OAAO,mBAAmB;AAsBpB;AApBS,SAAR,IAA8B;AAAA,EACpC;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA,EACA;AACD,GAAkC;AACjC,SACC;AAAA,IAAC;AAAA;AAAA,MACE,GAAG;AAAA,QACJ;AAAA,QACA;AAAA,QACA;AAAA,QACA;AAAA,QACA;AAAA,QACA;AAAA,QACA,MAAM;AAAA,QACN,QACC,oBAAC,6BAA0B,SAAQ,QAClC,8BAAC,QAAK,MAAO,MAAO,GACrB;AAAA,MAEF;AAAA;AAAA,EACD;AAEF;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/field-types/utils/get-value-from-id.ts"],
+  "sourcesContent": ["const getValueFromId =\n\t( id: string ) =>\n\t( { item }: { item: any } ) => {\n\t\tconst path = id.split( '.' );\n\t\tlet value = item;\n\t\tfor ( const segment of path ) {\n\t\t\tif ( value.hasOwnProperty( segment ) ) {\n\t\t\t\tvalue = value[ segment ];\n\t\t\t} else {\n\t\t\t\tvalue = undefined;\n\t\t\t}\n\t\t}\n\n\t\treturn value;\n\t};\n\nexport default getValueFromId;\n"],
+  "mappings": ";AAAA,IAAM,iBACL,CAAE,OACF,CAAE,EAAE,KAAK,MAAsB;AAC9B,QAAM,OAAO,GAAG,MAAO,GAAI;AAC3B,MAAI,QAAQ;AACZ,aAAY,WAAW,MAAO;AAC7B,QAAK,MAAM,eAAgB,OAAQ,GAAI;AACtC,cAAQ,MAAO,OAAQ;AAAA,IACxB,OAAO;AACN,cAAQ;AAAA,IACT;AAAA,EACD;AAEA,SAAO;AACR;AAED,IAAO,4BAAQ;",
+  "names": []
+}

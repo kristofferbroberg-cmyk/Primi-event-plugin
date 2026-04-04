@@ -1,0 +1,49 @@
+// packages/components/src/menu/checkbox-item.tsx
+import * as Ariakit from "@ariakit/react";
+import { forwardRef, useContext } from "@wordpress/element";
+import { Icon, check } from "@wordpress/icons";
+import { Context } from "./context.mjs";
+import * as Styled from "./styles.mjs";
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+var CheckboxItem2 = forwardRef(function CheckboxItem3({
+  suffix,
+  children,
+  disabled = false,
+  hideOnClick = false,
+  ...props
+}, ref) {
+  const menuContext = useContext(Context);
+  if (!menuContext?.store) {
+    throw new Error("Menu.CheckboxItem can only be rendered inside a Menu component");
+  }
+  return /* @__PURE__ */ _jsxs(Styled.CheckboxItem, {
+    ref,
+    ...props,
+    accessibleWhenDisabled: true,
+    disabled,
+    hideOnClick,
+    store: menuContext.store,
+    children: [/* @__PURE__ */ _jsx(Ariakit.MenuItemCheck, {
+      store: menuContext.store,
+      render: /* @__PURE__ */ _jsx(Styled.ItemPrefixWrapper, {}),
+      style: {
+        width: "auto",
+        height: "auto"
+      },
+      children: /* @__PURE__ */ _jsx(Icon, {
+        icon: check,
+        size: 24
+      })
+    }), /* @__PURE__ */ _jsxs(Styled.ItemContentWrapper, {
+      children: [/* @__PURE__ */ _jsx(Styled.ItemChildrenWrapper, {
+        children
+      }), suffix && /* @__PURE__ */ _jsx(Styled.ItemSuffixWrapper, {
+        children: suffix
+      })]
+    })]
+  });
+});
+export {
+  CheckboxItem2 as CheckboxItem
+};
+//# sourceMappingURL=checkbox-item.mjs.map

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/components/dataform-layouts/panel/index.tsx"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { FieldLayoutProps, NormalizedPanelLayout } from '../../../types';\nimport PanelModal from './modal';\nimport PanelDropdown from './dropdown';\n\nexport default function FormPanelField< Item >( {\n\tdata,\n\tfield,\n\tonChange,\n\tvalidity,\n}: FieldLayoutProps< Item > ) {\n\tconst layout = field.layout as NormalizedPanelLayout;\n\n\tif ( layout.openAs.type === 'modal' ) {\n\t\treturn (\n\t\t\t<PanelModal\n\t\t\t\tdata={ data }\n\t\t\t\tfield={ field }\n\t\t\t\tonChange={ onChange }\n\t\t\t\tvalidity={ validity }\n\t\t\t/>\n\t\t);\n\t}\n\n\treturn (\n\t\t<PanelDropdown\n\t\t\tdata={ data }\n\t\t\tfield={ field }\n\t\t\tonChange={ onChange }\n\t\t\tvalidity={ validity }\n\t\t/>\n\t);\n}\n"],
+  "mappings": ";AAIA,OAAO,gBAAgB;AACvB,OAAO,mBAAmB;AAYvB;AAVY,SAAR,eAAyC;AAAA,EAC/C;AAAA,EACA;AAAA,EACA;AAAA,EACA;AACD,GAA8B;AAC7B,QAAM,SAAS,MAAM;AAErB,MAAK,OAAO,OAAO,SAAS,SAAU;AACrC,WACC;AAAA,MAAC;AAAA;AAAA,QACA;AAAA,QACA;AAAA,QACA;AAAA,QACA;AAAA;AAAA,IACD;AAAA,EAEF;AAEA,SACC;AAAA,IAAC;AAAA;AAAA,MACA;AAAA,MACA;AAAA,MACA;AAAA,MACA;AAAA;AAAA,EACD;AAEF;",
+  "names": []
+}

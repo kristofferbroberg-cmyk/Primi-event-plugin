@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../src/components/dataform-layouts/panel/utils/get-label-classname.ts"],
+  "sourcesContent": ["/**\n * External dependencies\n */\nimport clsx from 'clsx';\nimport type { LabelPosition } from '../../../../types';\n\nfunction getLabelClassName(\n\tlabelPosition: LabelPosition,\n\tshowError?: boolean\n) {\n\treturn clsx(\n\t\t'dataforms-layouts-panel__field-label',\n\t\t`dataforms-layouts-panel__field-label--label-position-${ labelPosition }`,\n\t\t{ 'has-error': showError }\n\t);\n}\n\nexport default getLabelClassName;\n"],
+  "mappings": ";AAGA,OAAO,UAAU;AAGjB,SAAS,kBACR,eACA,WACC;AACD,SAAO;AAAA,IACN;AAAA,IACA,wDAAyD,aAAc;AAAA,IACvE,EAAE,aAAa,UAAU;AAAA,EAC1B;AACD;AAEA,IAAO,8BAAQ;",
+  "names": []
+}

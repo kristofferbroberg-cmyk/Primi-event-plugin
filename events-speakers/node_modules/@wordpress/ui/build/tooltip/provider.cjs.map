@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/tooltip/provider.tsx"],
+  "sourcesContent": ["import { Tooltip } from '@base-ui/react/tooltip';\nimport type { ProviderProps } from './types';\n\nfunction Provider( { children, ...props }: ProviderProps ) {\n\treturn <Tooltip.Provider { ...props }>{ children }</Tooltip.Provider>;\n}\n\nexport { Provider };\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,qBAAwB;AAIhB;AADR,SAAS,SAAU,EAAE,UAAU,GAAG,MAAM,GAAmB;AAC1D,SAAO,4CAAC,uBAAQ,UAAR,EAAmB,GAAG,OAAU,UAAU;AACnD;",
+  "names": []
+}

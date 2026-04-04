@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/components/dataform-controls/text.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { createElement } from '@wordpress/element';\n\n/**\n * Internal dependencies\n */\nimport type { DataFormControlProps } from '../../types';\nimport ValidatedText from './utils/validated-input';\n\nexport default function Text< Item >( {\n\tdata,\n\tfield,\n\tonChange,\n\thideLabelFromVision,\n\tmarkWhenOptional,\n\tconfig,\n\tvalidity,\n}: DataFormControlProps< Item > ) {\n\tconst { prefix, suffix } = config || {};\n\n\treturn (\n\t\t<ValidatedText\n\t\t\t{ ...{\n\t\t\t\tdata,\n\t\t\t\tfield,\n\t\t\t\tonChange,\n\t\t\t\thideLabelFromVision,\n\t\t\t\tmarkWhenOptional,\n\t\t\t\tvalidity,\n\t\t\t\tprefix: prefix ? createElement( prefix ) : undefined,\n\t\t\t\tsuffix: suffix ? createElement( suffix ) : undefined,\n\t\t\t} }\n\t\t/>\n\t);\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAGA,qBAA8B;AAM9B,6BAA0B;AAcxB;AAZa,SAAR,KAA+B;AAAA,EACrC;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA,EACA;AACD,GAAkC;AACjC,QAAM,EAAE,QAAQ,OAAO,IAAI,UAAU,CAAC;AAEtC,SACC;AAAA,IAAC,uBAAAA;AAAA,IAAA;AAAA,MACE,GAAG;AAAA,QACJ;AAAA,QACA;AAAA,QACA;AAAA,QACA;AAAA,QACA;AAAA,QACA;AAAA,QACA,QAAQ,aAAS,8BAAe,MAAO,IAAI;AAAA,QAC3C,QAAQ,aAAS,8BAAe,MAAO,IAAI;AAAA,MAC5C;AAAA;AAAA,EACD;AAEF;",
+  "names": ["ValidatedText"]
+}

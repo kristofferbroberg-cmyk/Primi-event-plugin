@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/form/primitives/select/root.tsx"],
+  "sourcesContent": ["import { Select as _Select } from '@base-ui/react/select';\nimport type { SelectRootProps } from './types';\n\nexport function Root( props: SelectRootProps ) {\n\treturn <_Select.Root< string, false > { ...props } />;\n}\n"],
+  "mappings": ";AAAA,SAAS,UAAU,eAAe;AAI1B;AADD,SAAS,KAAM,OAAyB;AAC9C,SAAO,oBAAC,QAAQ,MAAR,EAAgC,GAAG,OAAQ;AACpD;",
+  "names": []
+}

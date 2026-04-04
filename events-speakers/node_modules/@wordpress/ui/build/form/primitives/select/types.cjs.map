@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/form/primitives/select/types.ts"],
+  "sourcesContent": ["import type { Select as _Select } from '@base-ui/react/select';\nimport type { InputLayoutProps } from '../input-layout/types';\n\n// The second type parameter is the `multiple` flag (currently disabled).\nexport type SelectRootProps = Omit<\n\t_Select.Root.Props< string, false >,\n\t'multiple'\n>;\n\nexport type SelectTriggerProps = Omit< _Select.Trigger.Props, 'children' > & {\n\t/**\n\t * The size of the trigger.\n\t *\n\t * @default 'default'\n\t */\n\tsize?: InputLayoutProps[ 'size' ];\n\t/**\n\t * The style variant of the trigger.\n\t *\n\t * @default 'default'\n\t */\n\tvariant?: 'default' | 'minimal';\n\t/**\n\t * A function that gets called with the current value as an argument.\n\t * Use this to customize the trigger content.\n\t */\n\tchildren?: _Select.Value.Props[ 'children' ];\n};\n\nexport type SelectPopupProps = _Select.Popup.Props;\n\nexport type SelectItemProps = Omit<\n\t_Select.Item.Props,\n\t'children' | 'value'\n> & {\n\t/**\n\t * A unique value that identifies this select item.\n\t */\n\tvalue?: string;\n\t/**\n\t * The size of the item.\n\t *\n\t * @default 'default'\n\t */\n\tsize?: InputLayoutProps[ 'size' ];\n\t/**\n\t * The content of the item.\n\t *\n\t * @default `value`\n\t */\n\tchildren?: _Select.Item.Props[ 'children' ];\n};\n"],
+  "mappings": ";;;;;;;;;;;;;;;;AAAA;AAAA;",
+  "names": []
+}

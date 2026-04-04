@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/field-types/utils/is-valid-required.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { NormalizedField } from '../../types';\n\nexport default function isValidRequired< Item >(\n\titem: Item,\n\tfield: NormalizedField< Item >\n) {\n\tconst value = field.getValue( { item } );\n\n\treturn ! [ undefined, '', null ].includes( value );\n}\n"],
+  "mappings": ";AAKe,SAAR,gBACN,MACA,OACC;AACD,QAAM,QAAQ,MAAM,SAAU,EAAE,KAAK,CAAE;AAEvC,SAAO,CAAE,CAAE,QAAW,IAAI,IAAK,EAAE,SAAU,KAAM;AAClD;",
+  "names": []
+}

@@ -1,0 +1,11 @@
+export default useUpdateEffect;
+/**
+ * A `React.useEffect` that will not run on the first render.
+ * Source:
+ * https://github.com/ariakit/ariakit/blob/main/packages/ariakit-react-core/src/utils/hooks.ts
+ *
+ * @param {React.EffectCallback} effect
+ * @param {React.DependencyList} deps
+ */
+declare function useUpdateEffect(effect: React.EffectCallback, deps: React.DependencyList): void;
+//# sourceMappingURL=use-update-effect.d.ts.map

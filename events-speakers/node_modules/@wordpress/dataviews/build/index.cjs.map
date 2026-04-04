@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/index.ts"],
+  "sourcesContent": ["export { default as DataViews } from './dataviews';\nexport { default as DataViewsPicker } from './dataviews-picker';\nexport { default as DataForm } from './dataform';\nexport { default as filterSortAndPaginate } from './utils/filter-sort-and-paginate';\nexport { useFormValidity } from './hooks';\nexport { VIEW_LAYOUTS } from './components/dataviews-layouts';\nexport type * from './types';\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,uBAAqC;AACrC,8BAA2C;AAC3C,sBAAoC;AACpC,sCAAiD;AACjD,mBAAgC;AAChC,+BAA6B;",
+  "names": []
+}

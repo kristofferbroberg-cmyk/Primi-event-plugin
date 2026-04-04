@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/color-picker/index.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nexport { LegacyAdapter as ColorPicker } from './legacy-adapter';"],
+  "mappings": ";AAGA,SAA0B,qBAAmB;",
+  "names": []
+}

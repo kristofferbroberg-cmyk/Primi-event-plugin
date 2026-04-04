@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/icon-button/types.ts"],
+  "sourcesContent": ["import { type ButtonProps } from '../button/types';\nimport { type IconProps } from '../icon/types';\n\nexport type IconButtonProps = Omit< ButtonProps, 'children' > & {\n\t/**\n\t * A label describing the button's action, shown as a tooltip and to\n\t * assistive technology.\n\t */\n\tlabel: string;\n\n\t/**\n\t * The icon to display in the button.\n\t */\n\ticon: IconProps[ 'icon' ];\n\n\t/**\n\t * The keyboard shortcut associated with this button. When provided, the\n\t * shortcut is displayed in the tooltip and announced to assistive technology.\n\t *\n\t * **Note**: This prop is for display and accessibility purposes only \u2014 the\n\t * consumer is responsible for implementing the actual keyboard event handler.\n\t */\n\tshortcut?: {\n\t\t/**\n\t\t * The human-readable representation of the shortcut, displayed in the\n\t\t * tooltip. Use platform-appropriate symbols (e.g., \"\u2318S\" on macOS,\n\t\t * \"Ctrl+S\" on Windows).\n\t\t */\n\t\tdisplayShortcut: string;\n\t\t/**\n\t\t * The shortcut in a format compatible with the\n\t\t * [aria-keyshortcuts](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-keyshortcuts)\n\t\t * attribute. Use \"+\" to separate keys and standard key names\n\t\t * (e.g., \"Meta+S\", \"Control+Shift+P\").\n\t\t */\n\t\tariaKeyShortcut: string;\n\t};\n};\n"],
+  "mappings": ";;;;;;;;;;;;;;;;AAAA;AAAA;",
+  "names": []
+}

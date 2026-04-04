@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/with-ignore-ime-events.ts"],
+  "sourcesContent": ["/**\n * A higher-order function that wraps a keyboard event handler to ensure it is not an IME event.\n *\n * In CJK languages, an IME (Input Method Editor) is used to input complex characters.\n * During an IME composition, keyboard events (e.g. Enter or Escape) can be fired\n * which are intended to control the IME and not the application.\n * These events should be ignored by any application logic.\n *\n * @param handler The keyboard event handler to execute after ensuring it was not an IME event.\n *\n * @return A wrapped version of the given event handler that ignores IME events.\n */\nexport function withIgnoreIMEEvents(handler) {\n  return event => {\n    const {\n      isComposing\n    } = 'nativeEvent' in event ? event.nativeEvent : event;\n    if (isComposing ||\n    // Workaround for Mac Safari where the final Enter/Backspace of an IME composition\n    // is `isComposing=false`, even though it's technically still part of the composition.\n    // These can only be detected by keyCode.\n    event.keyCode === 229) {\n      return;\n    }\n    handler(event);\n  };\n}"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAYO,SAAS,oBAAoB,SAAS;AAC3C,SAAO,WAAS;AACd,UAAM;AAAA,MACJ;AAAA,IACF,IAAI,iBAAiB,QAAQ,MAAM,cAAc;AACjD,QAAI;AAAA;AAAA;AAAA,IAIJ,MAAM,YAAY,KAAK;AACrB;AAAA,IACF;AACA,YAAQ,KAAK;AAAA,EACf;AACF;",
+  "names": []
+}

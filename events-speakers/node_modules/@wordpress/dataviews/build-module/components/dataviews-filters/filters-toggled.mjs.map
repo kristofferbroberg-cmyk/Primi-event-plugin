@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/components/dataviews-filters/filters-toggled.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { useContext } from '@wordpress/element';\n\n/**\n * Internal dependencies\n */\nimport DataViewsContext from '../dataviews-context';\nimport Filters from './filters';\n\nfunction FiltersToggled( props: { className?: string } ) {\n\tconst { isShowingFilter } = useContext( DataViewsContext );\n\tif ( ! isShowingFilter ) {\n\t\treturn null;\n\t}\n\treturn <Filters { ...props } />;\n}\n\nexport default FiltersToggled;\n"],
+  "mappings": ";AAGA,SAAS,kBAAkB;AAK3B,OAAO,sBAAsB;AAC7B,OAAO,aAAa;AAOZ;AALR,SAAS,eAAgB,OAAgC;AACxD,QAAM,EAAE,gBAAgB,IAAI,WAAY,gBAAiB;AACzD,MAAK,CAAE,iBAAkB;AACxB,WAAO;AAAA,EACR;AACA,SAAO,oBAAC,WAAU,GAAG,OAAQ;AAC9B;AAEA,IAAO,0BAAQ;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/components/async-mode-provider/use-async-mode.ts"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { useContext } from '@wordpress/element';\n\n/**\n * Internal dependencies\n */\nimport { Context } from './context';\n\nexport default function useAsyncMode(): boolean {\n\treturn useContext( Context );\n}\n"],
+  "mappings": ";AAGA,SAAS,kBAAkB;AAK3B,SAAS,eAAe;AAET,SAAR,eAAyC;AAC/C,SAAO,WAAY,OAAQ;AAC5B;",
+  "names": []
+}

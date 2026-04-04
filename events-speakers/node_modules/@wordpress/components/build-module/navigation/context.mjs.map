@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/navigation/context.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { createContext, useContext } from '@wordpress/element';\n\n/**\n * Internal dependencies\n */\nimport { ROOT_MENU } from './constants';\nconst noop = () => {};\nconst defaultIsEmpty = () => false;\nconst defaultGetter = () => undefined;\nexport const NavigationContext = createContext({\n  activeItem: undefined,\n  activeMenu: ROOT_MENU,\n  setActiveMenu: noop,\n  navigationTree: {\n    items: {},\n    getItem: defaultGetter,\n    addItem: noop,\n    removeItem: noop,\n    menus: {},\n    getMenu: defaultGetter,\n    addMenu: noop,\n    removeMenu: noop,\n    childMenu: {},\n    traverseMenu: noop,\n    isMenuEmpty: defaultIsEmpty\n  }\n});\nNavigationContext.displayName = 'NavigationContext';\nexport const useNavigationContext = () => useContext(NavigationContext);"],
+  "mappings": ";AAGA,SAAS,eAAe,kBAAkB;AAK1C,SAAS,iBAAiB;AAC1B,IAAM,OAAO,MAAM;AAAC;AACpB,IAAM,iBAAiB,MAAM;AAC7B,IAAM,gBAAgB,MAAM;AACrB,IAAM,oBAAoB,cAAc;AAAA,EAC7C,YAAY;AAAA,EACZ,YAAY;AAAA,EACZ,eAAe;AAAA,EACf,gBAAgB;AAAA,IACd,OAAO,CAAC;AAAA,IACR,SAAS;AAAA,IACT,SAAS;AAAA,IACT,YAAY;AAAA,IACZ,OAAO,CAAC;AAAA,IACR,SAAS;AAAA,IACT,SAAS;AAAA,IACT,YAAY;AAAA,IACZ,WAAW,CAAC;AAAA,IACZ,cAAc;AAAA,IACd,aAAa;AAAA,EACf;AACF,CAAC;AACD,kBAAkB,cAAc;AACzB,IAAM,uBAAuB,MAAM,WAAW,iBAAiB;",
+  "names": []
+}

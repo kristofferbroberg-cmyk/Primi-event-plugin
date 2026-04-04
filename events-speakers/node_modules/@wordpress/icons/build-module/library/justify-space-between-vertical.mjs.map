@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/library/justify-space-between-vertical.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { Path, SVG } from '@wordpress/primitives';\n\nexport default (\n\t<SVG xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\n\t\t<Path d=\"M7 4H17V8L7 8V4ZM7 16L17 16V20L7 20V16ZM20 11.25H4V12.75H20V11.25Z\" />\n\t</SVG>\n);\n"],
+  "mappings": ";AAGA,SAAS,MAAM,WAAW;AAIxB;AAFF,IAAO,yCACN,oBAAC,OAAI,OAAM,8BAA6B,SAAQ,aAC/C,8BAAC,QAAK,GAAE,sEAAqE,GAC9E;",
+  "names": []
+}

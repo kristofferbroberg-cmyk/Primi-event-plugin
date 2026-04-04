@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/deprecated-36px-size.ts"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport deprecated from '@wordpress/deprecated';\nexport function maybeWarnDeprecated36pxSize({\n  componentName,\n  __next40pxDefaultSize,\n  size,\n  __shouldNotWarnDeprecated36pxSize\n}) {\n  if (__shouldNotWarnDeprecated36pxSize || __next40pxDefaultSize || size !== undefined && size !== 'default') {\n    return;\n  }\n  deprecated(`36px default size for wp.components.${componentName}`, {\n    since: '6.8',\n    version: '7.1',\n    hint: 'Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version.'\n  });\n}"],
+  "mappings": ";AAGA,OAAO,gBAAgB;AAChB,SAAS,4BAA4B;AAAA,EAC1C;AAAA,EACA;AAAA,EACA;AAAA,EACA;AACF,GAAG;AACD,MAAI,qCAAqC,yBAAyB,SAAS,UAAa,SAAS,WAAW;AAC1G;AAAA,EACF;AACA,aAAW,uCAAuC,aAAa,IAAI;AAAA,IACjE,OAAO;AAAA,IACP,SAAS;AAAA,IACT,MAAM;AAAA,EACR,CAAC;AACH;",
+  "names": []
+}

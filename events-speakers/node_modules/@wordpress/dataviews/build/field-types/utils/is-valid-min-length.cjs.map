@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/field-types/utils/is-valid-min-length.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { NormalizedField } from '../../types';\n\nexport default function isValidMinLength< Item >(\n\titem: Item,\n\tfield: NormalizedField< Item >\n): boolean {\n\tif ( typeof field.isValid.minLength?.constraint !== 'number' ) {\n\t\treturn false;\n\t}\n\n\tconst value = field.getValue( { item } );\n\n\t// Empty values are considered valid for minLength validation\n\t// (use required validation to enforce non-empty values)\n\tif ( [ undefined, '', null ].includes( value ) ) {\n\t\treturn true;\n\t}\n\n\treturn String( value ).length >= field.isValid.minLength.constraint;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAKe,SAAR,iBACN,MACA,OACU;AACV,MAAK,OAAO,MAAM,QAAQ,WAAW,eAAe,UAAW;AAC9D,WAAO;AAAA,EACR;AAEA,QAAM,QAAQ,MAAM,SAAU,EAAE,KAAK,CAAE;AAIvC,MAAK,CAAE,QAAW,IAAI,IAAK,EAAE,SAAU,KAAM,GAAI;AAChD,WAAO;AAAA,EACR;AAEA,SAAO,OAAQ,KAAM,EAAE,UAAU,MAAM,QAAQ,UAAU;AAC1D;",
+  "names": []
+}

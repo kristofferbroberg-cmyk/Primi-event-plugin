@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/field-types/utils/is-valid-pattern.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { NormalizedField } from '../../types';\n\nexport default function isValidPattern< Item >(\n\titem: Item,\n\tfield: NormalizedField< Item >\n): boolean {\n\tif ( field.isValid.pattern?.constraint === undefined ) {\n\t\treturn true;\n\t}\n\n\ttry {\n\t\tconst regexp = new RegExp( field.isValid.pattern.constraint );\n\n\t\tconst value = field.getValue( { item } );\n\n\t\t// Empty values are considered valid for pattern validation\n\t\t// (use required validation to enforce non-empty values)\n\t\tif ( [ undefined, '', null ].includes( value ) ) {\n\t\t\treturn true;\n\t\t}\n\n\t\treturn regexp.test( String( value ) );\n\t} catch {\n\t\treturn false;\n\t}\n}\n"],
+  "mappings": ";AAKe,SAAR,eACN,MACA,OACU;AACV,MAAK,MAAM,QAAQ,SAAS,eAAe,QAAY;AACtD,WAAO;AAAA,EACR;AAEA,MAAI;AACH,UAAM,SAAS,IAAI,OAAQ,MAAM,QAAQ,QAAQ,UAAW;AAE5D,UAAM,QAAQ,MAAM,SAAU,EAAE,KAAK,CAAE;AAIvC,QAAK,CAAE,QAAW,IAAI,IAAK,EAAE,SAAU,KAAM,GAAI;AAChD,aAAO;AAAA,IACR;AAEA,WAAO,OAAO,KAAM,OAAQ,KAAM,CAAE;AAAA,EACrC,QAAQ;AACP,WAAO;AAAA,EACR;AACD;",
+  "names": []
+}

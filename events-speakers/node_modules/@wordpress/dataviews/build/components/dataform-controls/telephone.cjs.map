@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/components/dataform-controls/telephone.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport {\n\tIcon,\n\t__experimentalInputControlPrefixWrapper as InputControlPrefixWrapper,\n} from '@wordpress/components';\nimport { mobile } from '@wordpress/icons';\n\n/**\n * Internal dependencies\n */\nimport type { DataFormControlProps } from '../../types';\nimport ValidatedText from './utils/validated-input';\n\nexport default function Telephone< Item >( {\n\tdata,\n\tfield,\n\tonChange,\n\thideLabelFromVision,\n\tmarkWhenOptional,\n\tvalidity,\n}: DataFormControlProps< Item > ) {\n\treturn (\n\t\t<ValidatedText\n\t\t\t{ ...{\n\t\t\t\tdata,\n\t\t\t\tfield,\n\t\t\t\tonChange,\n\t\t\t\thideLabelFromVision,\n\t\t\t\tmarkWhenOptional,\n\t\t\t\tvalidity,\n\t\t\t\ttype: 'tel',\n\t\t\t\tprefix: (\n\t\t\t\t\t<InputControlPrefixWrapper variant=\"icon\">\n\t\t\t\t\t\t<Icon icon={ mobile } />\n\t\t\t\t\t</InputControlPrefixWrapper>\n\t\t\t\t),\n\t\t\t} }\n\t\t/>\n\t);\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAGA,wBAGO;AACP,mBAAuB;AAMvB,6BAA0B;AAsBpB;AApBS,SAAR,UAAoC;AAAA,EAC1C;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA,EACA;AACD,GAAkC;AACjC,SACC;AAAA,IAAC,uBAAAA;AAAA,IAAA;AAAA,MACE,GAAG;AAAA,QACJ;AAAA,QACA;AAAA,QACA;AAAA,QACA;AAAA,QACA;AAAA,QACA;AAAA,QACA,MAAM;AAAA,QACN,QACC,4CAAC,kBAAAC,yCAAA,EAA0B,SAAQ,QAClC,sDAAC,0BAAK,MAAO,qBAAS,GACvB;AAAA,MAEF;AAAA;AAAA,EACD;AAEF;",
+  "names": ["ValidatedText", "InputControlPrefixWrapper"]
+}

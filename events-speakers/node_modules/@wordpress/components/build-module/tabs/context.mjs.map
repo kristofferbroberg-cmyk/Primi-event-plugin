@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/tabs/context.ts"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { createContext, useContext } from '@wordpress/element';\n\n/**\n * Internal dependencies\n */\n\nexport const TabsContext = createContext(undefined);\nTabsContext.displayName = 'TabsContext';\nexport const useTabsContext = () => useContext(TabsContext);"],
+  "mappings": ";AAGA,SAAS,eAAe,kBAAkB;AAMnC,IAAM,cAAc,cAAc,MAAS;AAClD,YAAY,cAAc;AACnB,IAAM,iBAAiB,MAAM,WAAW,WAAW;",
+  "names": []
+}

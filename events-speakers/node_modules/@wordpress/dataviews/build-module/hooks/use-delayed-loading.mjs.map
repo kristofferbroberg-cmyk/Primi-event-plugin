@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/use-delayed-loading.ts"],
+  "sourcesContent": ["import { useEffect, useState } from '@wordpress/element';\n\nexport function useDelayedLoading(\n\tisLoading: boolean,\n\toptions: { delay: number } = { delay: 400 }\n): boolean {\n\tconst [ showLoader, setShowLoader ] = useState( false );\n\tuseEffect( () => {\n\t\tif ( ! isLoading ) {\n\t\t\treturn;\n\t\t}\n\t\tconst timeout = setTimeout( () => {\n\t\t\tsetShowLoader( true );\n\t\t}, options.delay );\n\t\treturn () => {\n\t\t\tclearTimeout( timeout );\n\t\t\tsetShowLoader( false );\n\t\t};\n\t}, [ isLoading, options.delay ] );\n\treturn showLoader;\n}\n"],
+  "mappings": ";AAAA,SAAS,WAAW,gBAAgB;AAE7B,SAAS,kBACf,WACA,UAA6B,EAAE,OAAO,IAAI,GAChC;AACV,QAAM,CAAE,YAAY,aAAc,IAAI,SAAU,KAAM;AACtD,YAAW,MAAM;AAChB,QAAK,CAAE,WAAY;AAClB;AAAA,IACD;AACA,UAAM,UAAU,WAAY,MAAM;AACjC,oBAAe,IAAK;AAAA,IACrB,GAAG,QAAQ,KAAM;AACjB,WAAO,MAAM;AACZ,mBAAc,OAAQ;AACtB,oBAAe,KAAM;AAAA,IACtB;AAAA,EACD,GAAG,CAAE,WAAW,QAAQ,KAAM,CAAE;AAChC,SAAO;AACR;",
+  "names": []
+}

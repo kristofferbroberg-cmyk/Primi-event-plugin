@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/components/dataform-context/index.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { createContext } from '@wordpress/element';\n\n/**\n * Internal dependencies\n */\nimport type { NormalizedField } from '../../types';\n\ntype DataFormContextType< Item > = {\n\tfields: NormalizedField< Item >[];\n};\n\nconst DataFormContext = createContext< DataFormContextType< any > >( {\n\tfields: [],\n} );\nDataFormContext.displayName = 'DataFormContext';\n\nexport function DataFormProvider< Item >( {\n\tfields,\n\tchildren,\n}: React.PropsWithChildren< {\n\tfields: NormalizedField< Item >[];\n} > ) {\n\treturn (\n\t\t<DataFormContext.Provider value={ { fields } }>\n\t\t\t{ children }\n\t\t</DataFormContext.Provider>\n\t);\n}\n\nexport default DataFormContext;\n"],
+  "mappings": ";AAGA,SAAS,qBAAqB;AAuB5B;AAZF,IAAM,kBAAkB,cAA6C;AAAA,EACpE,QAAQ,CAAC;AACV,CAAE;AACF,gBAAgB,cAAc;AAEvB,SAAS,iBAA0B;AAAA,EACzC;AAAA,EACA;AACD,GAEM;AACL,SACC,oBAAC,gBAAgB,UAAhB,EAAyB,OAAQ,EAAE,OAAO,GACxC,UACH;AAEF;AAEA,IAAO,2BAAQ;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/components/dataform-controls/adaptive-select.tsx"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { DataFormControlProps } from '../../types';\nimport useElements from '../../hooks/use-elements';\nimport Combobox from './combobox';\nimport Select from './select';\n\nconst ELEMENTS_THRESHOLD = 10;\n\nexport default function AdaptiveSelect< Item >(\n\tprops: DataFormControlProps< Item >\n) {\n\tconst { field } = props;\n\tconst { elements } = useElements( {\n\t\telements: field.elements,\n\t\tgetElements: field.getElements,\n\t} );\n\tif ( elements.length >= ELEMENTS_THRESHOLD ) {\n\t\treturn <Combobox { ...props } />;\n\t}\n\treturn <Select { ...props } />;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAIA,0BAAwB;AACxB,sBAAqB;AACrB,oBAAmB;AAaV;AAXT,IAAM,qBAAqB;AAEZ,SAAR,eACN,OACC;AACD,QAAM,EAAE,MAAM,IAAI;AAClB,QAAM,EAAE,SAAS,QAAI,oBAAAA,SAAa;AAAA,IACjC,UAAU,MAAM;AAAA,IAChB,aAAa,MAAM;AAAA,EACpB,CAAE;AACF,MAAK,SAAS,UAAU,oBAAqB;AAC5C,WAAO,4CAAC,gBAAAC,SAAA,EAAW,GAAG,OAAQ;AAAA,EAC/B;AACA,SAAO,4CAAC,cAAAC,SAAA,EAAS,GAAG,OAAQ;AAC7B;",
+  "names": ["useElements", "Combobox", "Select"]
+}

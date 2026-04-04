@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/mobile/image/constants.js"],
+  "sourcesContent": ["export const IMAGE_DEFAULT_FOCAL_POINT = {\n  x: 0.5,\n  y: 0.5\n};"],
+  "mappings": ";AAAO,IAAM,4BAA4B;AAAA,EACvC,GAAG;AAAA,EACH,GAAG;AACL;",
+  "names": []
+}

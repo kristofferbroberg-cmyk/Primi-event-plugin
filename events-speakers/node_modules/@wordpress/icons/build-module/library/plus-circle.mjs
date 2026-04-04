@@ -1,0 +1,8 @@
+// packages/icons/src/library/plus-circle.tsx
+import { Path, SVG } from "@wordpress/primitives";
+import { jsx } from "react/jsx-runtime";
+var plus_circle_default = /* @__PURE__ */ jsx(SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx(Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M7.404 16.596a6.5 6.5 0 1 0 9.192-9.192 6.5 6.5 0 0 0-9.192 9.192ZM6.344 6.343a8 8 0 1 0 11.313 11.314A8 8 0 0 0 6.343 6.343Zm4.906 9.407v-3h-3v-1.5h3v-3h1.5v3h3v1.5h-3v3h-1.5Z" }) });
+export {
+  plus_circle_default as default
+};
+//# sourceMappingURL=plus-circle.mjs.map

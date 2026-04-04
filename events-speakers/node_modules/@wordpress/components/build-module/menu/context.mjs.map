@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/menu/context.tsx"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { createContext } from '@wordpress/element';\n\n/**\n * Internal dependencies\n */\n\nexport const Context = createContext(undefined);\nContext.displayName = 'MenuContext';"],
+  "mappings": ";AAGA,SAAS,qBAAqB;AAMvB,IAAM,UAAU,cAAc,MAAS;AAC9C,QAAQ,cAAc;",
+  "names": []
+}

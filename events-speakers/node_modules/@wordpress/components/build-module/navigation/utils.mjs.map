@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/navigation/utils.tsx"],
+  "sourcesContent": ["/**\n * External dependencies\n */\nimport removeAccents from 'remove-accents';\n\n// @see packages/block-editor/src/components/inserter/search-items.js\nexport const normalizeInput = input => removeAccents(input).replace(/^\\//, '').toLowerCase();\nexport const normalizedSearch = (title, search) => -1 !== normalizeInput(title).indexOf(normalizeInput(search));"],
+  "mappings": ";AAGA,OAAO,mBAAmB;AAGnB,IAAM,iBAAiB,WAAS,cAAc,KAAK,EAAE,QAAQ,OAAO,EAAE,EAAE,YAAY;AACpF,IAAM,mBAAmB,CAAC,OAAO,WAAW,OAAO,eAAe,KAAK,EAAE,QAAQ,eAAe,MAAM,CAAC;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/field-types/utils/parse-date-time.ts"],
+  "sourcesContent": ["/**\n * External dependencies\n */\nimport { isValid as isValidDate } from 'date-fns';\n\n/**\n * WordPress dependencies\n */\nimport { getDate } from '@wordpress/date';\n\nexport default function parseDateTime( dateTimeString?: string ): Date | null {\n\tif ( ! dateTimeString ) {\n\t\treturn null;\n\t}\n\tconst parsed = getDate( dateTimeString );\n\treturn parsed && isValidDate( parsed ) ? parsed : null;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAGA,sBAAuC;AAKvC,kBAAwB;AAET,SAAR,cAAgC,gBAAuC;AAC7E,MAAK,CAAE,gBAAiB;AACvB,WAAO;AAAA,EACR;AACA,QAAM,aAAS,qBAAS,cAAe;AACvC,SAAO,cAAU,gBAAAA,SAAa,MAAO,IAAI,SAAS;AACnD;",
+  "names": ["isValidDate"]
+}

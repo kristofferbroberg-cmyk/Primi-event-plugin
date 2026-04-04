@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/hooks/use-reduced-motion/index.js"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport useMediaQuery from '../use-media-query';\n\n/**\n * Hook returning whether the user has a preference for reduced motion.\n *\n * @return {boolean} Reduced motion preference value.\n */\nconst useReducedMotion = () =>\n\tuseMediaQuery( '(prefers-reduced-motion: reduce)' );\n\nexport default useReducedMotion;\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAGA,6BAA0B;AAO1B,IAAM,mBAAmB,UACxB,uBAAAA,SAAe,kCAAmC;AAEnD,IAAO,6BAAQ;",
+  "names": ["useMediaQuery"]
+}

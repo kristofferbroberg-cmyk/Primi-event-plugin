@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/components/dataviews-filters/utils.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { NormalizedFilter, Filter } from '../../types';\n\nconst EMPTY_ARRAY: [] = [];\n\nexport const getCurrentValue = (\n\tfilterDefinition: NormalizedFilter,\n\tcurrentFilter?: Filter\n) => {\n\tif ( filterDefinition.singleSelection ) {\n\t\treturn currentFilter?.value;\n\t}\n\n\tif ( Array.isArray( currentFilter?.value ) ) {\n\t\treturn currentFilter.value;\n\t}\n\n\tif ( ! Array.isArray( currentFilter?.value ) && !! currentFilter?.value ) {\n\t\treturn [ currentFilter.value ];\n\t}\n\n\treturn EMPTY_ARRAY;\n};\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAKA,IAAM,cAAkB,CAAC;AAElB,IAAM,kBAAkB,CAC9B,kBACA,kBACI;AACJ,MAAK,iBAAiB,iBAAkB;AACvC,WAAO,eAAe;AAAA,EACvB;AAEA,MAAK,MAAM,QAAS,eAAe,KAAM,GAAI;AAC5C,WAAO,cAAc;AAAA,EACtB;AAEA,MAAK,CAAE,MAAM,QAAS,eAAe,KAAM,KAAK,CAAC,CAAE,eAAe,OAAQ;AACzE,WAAO,CAAE,cAAc,KAAM;AAAA,EAC9B;AAEA,SAAO;AACR;",
+  "names": []
+}

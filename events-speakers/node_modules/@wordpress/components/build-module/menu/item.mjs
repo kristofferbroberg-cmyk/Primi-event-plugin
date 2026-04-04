@@ -1,0 +1,41 @@
+// packages/components/src/menu/item.tsx
+import { forwardRef, useContext } from "@wordpress/element";
+import * as Styled from "./styles.mjs";
+import { Context } from "./context.mjs";
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+var Item2 = forwardRef(function Item3({
+  prefix,
+  suffix,
+  children,
+  disabled = false,
+  hideOnClick = true,
+  store,
+  ...props
+}, ref) {
+  const menuContext = useContext(Context);
+  if (!menuContext?.store) {
+    throw new Error("Menu.Item can only be rendered inside a Menu component");
+  }
+  const computedStore = store ?? menuContext.store;
+  return /* @__PURE__ */ _jsxs(Styled.Item, {
+    ref,
+    ...props,
+    accessibleWhenDisabled: true,
+    disabled,
+    hideOnClick,
+    store: computedStore,
+    children: [/* @__PURE__ */ _jsx(Styled.ItemPrefixWrapper, {
+      children: prefix
+    }), /* @__PURE__ */ _jsxs(Styled.ItemContentWrapper, {
+      children: [/* @__PURE__ */ _jsx(Styled.ItemChildrenWrapper, {
+        children
+      }), suffix && /* @__PURE__ */ _jsx(Styled.ItemSuffixWrapper, {
+        children: suffix
+      })]
+    })]
+  });
+});
+export {
+  Item2 as Item
+};
+//# sourceMappingURL=item.mjs.map

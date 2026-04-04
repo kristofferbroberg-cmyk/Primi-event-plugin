@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/item-group/context.ts"],
+  "sourcesContent": ["/**\n * WordPress dependencies\n */\nimport { createContext, useContext } from '@wordpress/element';\n\n/**\n * Internal dependencies\n */\n\nexport const ItemGroupContext = createContext({\n  size: 'medium'\n});\nItemGroupContext.displayName = 'ItemGroupContext';\nexport const useItemGroupContext = () => useContext(ItemGroupContext);"],
+  "mappings": ";AAGA,SAAS,eAAe,kBAAkB;AAMnC,IAAM,mBAAmB,cAAc;AAAA,EAC5C,MAAM;AACR,CAAC;AACD,iBAAiB,cAAc;AACxB,IAAM,sBAAsB,MAAM,WAAW,gBAAgB;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+/**
+ * Internal dependencies
+ */
+import type { StoreDescriptor, AnyConfig } from '../types';
+declare const coreDataStore: StoreDescriptor<AnyConfig>;
+export default coreDataStore;
+//# sourceMappingURL=index.d.ts.map

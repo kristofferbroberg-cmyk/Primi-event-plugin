@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/date-time/index.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport { default as DatePicker } from './date';\nimport { default as TimePicker } from './time';\nimport { default as DateTimePicker } from './date-time';\nexport { DatePicker, TimePicker };\nexport default DateTimePicker;"],
+  "mappings": ";AAGA,SAAS,WAAW,kBAAkB;AACtC,SAAS,WAAW,kBAAkB;AACtC,SAAS,WAAW,sBAAsB;AAE1C,IAAO,oBAAQ;",
+  "names": []
+}

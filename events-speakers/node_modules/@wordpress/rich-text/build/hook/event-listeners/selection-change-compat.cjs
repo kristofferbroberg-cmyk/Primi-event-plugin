@@ -1,0 +1,61 @@
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// packages/rich-text/src/hook/event-listeners/selection-change-compat.js
+var selection_change_compat_exports = {};
+__export(selection_change_compat_exports, {
+  default: () => selection_change_compat_default
+});
+module.exports = __toCommonJS(selection_change_compat_exports);
+var import_is_range_equal = require("../../is-range-equal.cjs");
+var selection_change_compat_default = () => (element) => {
+  const { ownerDocument } = element;
+  const { defaultView } = ownerDocument;
+  const selection = defaultView?.getSelection();
+  let range;
+  function getRange() {
+    return selection.rangeCount ? selection.getRangeAt(0) : null;
+  }
+  function onDown(event) {
+    const type = event.type === "keydown" ? "keyup" : "pointerup";
+    function onCancel() {
+      ownerDocument.removeEventListener(type, onUp);
+      ownerDocument.removeEventListener("selectionchange", onCancel);
+      ownerDocument.removeEventListener("input", onCancel);
+    }
+    function onUp() {
+      onCancel();
+      if ((0, import_is_range_equal.isRangeEqual)(range, getRange())) {
+        return;
+      }
+      ownerDocument.dispatchEvent(new Event("selectionchange"));
+    }
+    ownerDocument.addEventListener(type, onUp);
+    ownerDocument.addEventListener("selectionchange", onCancel);
+    ownerDocument.addEventListener("input", onCancel);
+    range = getRange();
+  }
+  element.addEventListener("pointerdown", onDown);
+  element.addEventListener("keydown", onDown);
+  return () => {
+    element.removeEventListener("pointerdown", onDown);
+    element.removeEventListener("keydown", onDown);
+  };
+};
+//# sourceMappingURL=selection-change-compat.cjs.map

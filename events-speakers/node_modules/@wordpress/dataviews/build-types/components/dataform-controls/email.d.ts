@@ -1,0 +1,6 @@
+/**
+ * Internal dependencies
+ */
+import type { DataFormControlProps } from '../../types';
+export default function Email<Item>({ data, field, onChange, hideLabelFromVision, markWhenOptional, validity, }: DataFormControlProps<Item>): import("react").JSX.Element;
+//# sourceMappingURL=email.d.ts.map

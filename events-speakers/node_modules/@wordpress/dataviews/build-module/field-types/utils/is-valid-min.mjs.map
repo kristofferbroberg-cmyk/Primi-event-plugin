@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/field-types/utils/is-valid-min.ts"],
+  "sourcesContent": ["/**\n * Internal dependencies\n */\nimport type { NormalizedField } from '../../types';\n\nexport default function isValidMin< Item >(\n\titem: Item,\n\tfield: NormalizedField< Item >\n): boolean {\n\tif ( typeof field.isValid.min?.constraint !== 'number' ) {\n\t\treturn false;\n\t}\n\n\tconst value = field.getValue( { item } );\n\n\t// Empty values are considered valid for min validation\n\t// (use required validation to enforce non-empty values)\n\tif ( [ undefined, '', null ].includes( value ) ) {\n\t\treturn true;\n\t}\n\n\treturn Number( value ) >= field.isValid.min.constraint;\n}\n"],
+  "mappings": ";AAKe,SAAR,WACN,MACA,OACU;AACV,MAAK,OAAO,MAAM,QAAQ,KAAK,eAAe,UAAW;AACxD,WAAO;AAAA,EACR;AAEA,QAAM,QAAQ,MAAM,SAAU,EAAE,KAAK,CAAE;AAIvC,MAAK,CAAE,QAAW,IAAI,IAAK,EAAE,SAAU,KAAM,GAAI;AAChD,WAAO;AAAA,EACR;AAEA,SAAO,OAAQ,KAAM,KAAK,MAAM,QAAQ,IAAI;AAC7C;",
+  "names": []
+}
