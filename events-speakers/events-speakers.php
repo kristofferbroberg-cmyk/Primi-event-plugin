@@ -16,8 +16,10 @@ require_once EVENTS_SPEAKERS_DIR . 'includes/class-post-types.php';
 require_once EVENTS_SPEAKERS_DIR . 'includes/class-meta-fields.php';
 require_once EVENTS_SPEAKERS_DIR . 'includes/class-block-bindings.php';
 require_once EVENTS_SPEAKERS_DIR . 'includes/class-blocks.php';
-require_once EVENTS_SPEAKERS_DIR . 'includes/class-admin-list.php';
-require_once EVENTS_SPEAKERS_DIR . 'includes/class-admin-edit.php';
+if ( is_admin() ) {
+	require_once EVENTS_SPEAKERS_DIR . 'includes/class-admin-list.php';
+	require_once EVENTS_SPEAKERS_DIR . 'includes/class-admin-edit.php';
+}
 
 register_activation_hook( __FILE__, 'events_speakers_activate' );
 register_deactivation_hook( __FILE__, 'events_speakers_deactivate' );

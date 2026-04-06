@@ -235,10 +235,15 @@ function ImagePickerEdit( { data, field, onChange } ) {
 	}
 
 	return (
-		<button type="button" className="es-image-placeholder" onClick={ openPicker }>
+		<Button
+			variant="secondary"
+			className="es-image-placeholder"
+			onClick={ openPicker }
+			style={ { width: '100%' } }
+		>
 			<span className="dashicons dashicons-format-image" aria-hidden="true" />
 			{ __( 'Set image', 'events-speakers' ) }
-		</button>
+		</Button>
 	);
 }
 
@@ -424,6 +429,7 @@ function EditPage() {
 					<h1 className="es-edit-title">{ pageTitle }</h1>
 				</VStack>
 				<Button
+					__next40pxDefaultSize
 					variant="primary"
 					isBusy={ saving }
 					disabled={ saving }
@@ -438,7 +444,8 @@ function EditPage() {
 					{ notice && (
 						<Notice
 							status={ notice.type === 'success' ? 'success' : 'error' }
-							isDismissible={ false }
+							isDismissible={ notice.type === 'success' }
+							onRemove={ () => setNotice( null ) }
 						>
 							{ notice.text }
 						</Notice>

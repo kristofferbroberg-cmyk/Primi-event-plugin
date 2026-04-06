@@ -1,7 +1,11 @@
 import { DataViews } from '@wordpress/dataviews';
-import { useState, useEffect, useCallback } from '@wordpress/element';
+import { useState, useEffect, useCallback, useMemo } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
+import { Button,
+	__experimentalHStack as HStack,
+	__experimentalVStack as VStack,
+} from '@wordpress/components';
 
 import '@wordpress/dataviews/build-style/style.css';
 
@@ -129,27 +133,54 @@ const SPEAKER_FIELDS = [
 	STATUS_FIELD,
 ];
 
-// ─── Actions ──────────────────────────────────────────────────────────────────
+// ─── Delete modal ─────────────────────────────────────────────────────────────
 
-const ACTIONS = [
-	{
-		id: 'edit',
-		label: __( 'Edit', 'events-speakers' ),
-		isPrimary: true,
-		callback( items ) {
-			const item = Array.isArray( items ) ? items[ 0 ] : items;
-			window.location.href = `${ editBase }?page=${ editPage }&post=${ item.id }`;
-		},
-	},
-	{
-		id: 'view',
-		label: __( 'View', 'events-speakers' ),
-		callback( items ) {
-			const item = Array.isArray( items ) ? items[ 0 ] : items;
-			window.open( item.link, '_blank', 'noreferrer' );
-		},
-	},
-];
+function DeleteModal( { items, closeModal, onDeleted } ) {
+	const [ isDeleting, setIsDeleting ] = useState( false );
+	const item = Array.isArray( items ) ? items[ 0 ] : items;
+	const name = item.title?.rendered || __( 'this item', 'events-speakers' );
+
+	async function handleDelete() {
+		setIsDeleting( true );
+		try {
+			await apiFetch( {
+				path:   `/wp/v2/${ postType }/${ item.id }`,
+				method: 'DELETE',
+			} );
+			onDeleted();
+			closeModal();
+		} catch {
+			setIsDeleting( false );
+		}
+	}
+
+	return (
+		<VStack spacing={ 4 }>
+			<p style={ { margin: 0 } }>
+				{ sprintf(
+					/* translators: %s: post title */
+					__( 'Move "%s" to trash?', 'events-speakers' ),
+					name
+				) }
+			</p>
+			<HStack justify="flex-end">
+				<Button __next40pxDefaultSize variant="tertiary" onClick={ closeModal }>
+					{ __( 'Cancel', 'events-speakers' ) }
+				</Button>
+				<Button
+					__next40pxDefaultSize
+					variant="primary"
+					isDestructive
+					isBusy={ isDeleting }
+					disabled={ isDeleting }
+					onClick={ handleDelete }
+				>
+					{ __( 'Move to Trash', 'events-speakers' ) }
+				</Button>
+			</HStack>
+		</VStack>
+	);
+}
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -253,6 +284,34 @@ export default function AdminList() {
 
 	useEffect( () => { load(); }, [ load ] );
 
+	const actions = useMemo( () => [
+		{
+			id: 'edit',
+			label: __( 'Edit', 'events-speakers' ),
+			isPrimary: true,
+			callback( items ) {
+				const item = Array.isArray( items ) ? items[ 0 ] : items;
+				window.location.href = `${ editBase }?page=${ editPage }&post=${ item.id }`;
+			},
+		},
+		{
+			id: 'view',
+			label: __( 'View', 'events-speakers' ),
+			callback( items ) {
+				const item = Array.isArray( items ) ? items[ 0 ] : items;
+				window.open( item.link, '_blank', 'noreferrer' );
+			},
+		},
+		{
+			id: 'delete',
+			label: __( 'Delete', 'events-speakers' ),
+			isDestructive: true,
+			RenderModal( props ) {
+				return <DeleteModal { ...props } onDeleted={ load } />;
+			},
+		},
+	], [ load ] );
+
 	return (
 		<>
 			<h1 className="wp-heading-inline">{ TITLE }</h1>
@@ -263,7 +322,7 @@ export default function AdminList() {
 				fields={ isEvent ? EVENT_FIELDS : SPEAKER_FIELDS }
 				view={ view }
 				onChangeView={ setView }
-				actions={ ACTIONS }
+				actions={ actions }
 				getItemId={ ( item ) => String( item.id ) }
 				paginationInfo={ {
 					totalItems,
