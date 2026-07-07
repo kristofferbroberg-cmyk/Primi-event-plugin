@@ -128,7 +128,7 @@ function esd_attach_bundled_image( int $post_id, string $src_path, string $title
 		return 0;
 	}
 
-	$filename = basename( $src_path );
+	$filename = wp_unique_filename( $upload['path'], basename( $src_path ) );
 	$dst_path = $upload['path'] . '/' . $filename;
 
 	// phpcs:ignore WordPress.WP.AlternativeFunctions.copy_copy

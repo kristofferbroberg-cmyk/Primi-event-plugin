@@ -114,6 +114,7 @@ function events_speakers_force_block_editor( bool $use_block_editor, string $pos
 
 add_action( 'init', array( 'Events_Speakers_Meta_Fields', 'register' ) );
 add_action( 'init', array( 'Events_Speakers_Block_Bindings', 'register' ) );
+add_action( 'rest_api_init', array( 'Events_Speakers_Block_Bindings', 'register_rest_routes' ) );
 add_filter( 'get_post_metadata', 'events_speakers_speakers_display_value', 10, 4 );
 add_filter( 'render_block',      'events_speakers_allow_links_in_bindings', 10, 2 );
 

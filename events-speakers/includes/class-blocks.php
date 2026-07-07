@@ -82,18 +82,18 @@ class Events_Speakers_Blocks {
 			$params['orderby']['enum'][] = 'meta_value';
 		}
 
-		$params['meta_key'] = array(
-			'description'       => __( 'Meta key to order by when orderby=meta_value.', 'events-speakers' ),
-			'type'              => 'string',
-			'sanitize_callback' => 'sanitize_key',
-		);
-
 		return $params;
 	}
 
 	/**
 	 * When the REST API receives `event_date_filter`, add a meta_query clause.
-	 * Also handles meta_value ordering when meta_key is supplied.
+	 * Also handles meta_value ordering.
+	 *
+	 * The meta key for orderby=meta_value is intentionally hardcoded rather
+	 * than accepted as a request param: event_date is the only field this
+	 * endpoint is meant to sort by, and taking an arbitrary client-supplied
+	 * meta key would let a request sort (and indirectly probe) any meta key
+	 * on the event post type.
 	 */
 	public static function apply_rest_date_filter( array $args, WP_REST_Request $request ): array {
 		$date = $request->get_param( 'event_date_filter' );
@@ -111,10 +111,8 @@ class Events_Speakers_Blocks {
 			$args['meta_query'] = $existing;
 		}
 
-		// Support orderby=meta_value with meta_key param.
-		$meta_key = $request->get_param( 'meta_key' );
-		if ( ! empty( $meta_key ) && ( $args['orderby'] ?? '' ) === 'meta_value' ) {
-			$args['meta_key'] = $meta_key;
+		if ( ( $args['orderby'] ?? '' ) === 'meta_value' ) {
+			$args['meta_key'] = 'event_date';
 		}
 
 		return $args;
@@ -154,6 +152,8 @@ class Events_Speakers_Blocks {
 
 	/**
 	 * Returns a meta_query clause matching a speaker ID in any JSON array position.
+	 *
+	 * NOTE: an identical copy of this method exists in Events_Speakers_Block_Bindings — keep in sync.
 	 */
 	private static function speaker_meta_query( int $id ): array {
 		return array(
@@ -225,6 +225,16 @@ class Events_Speakers_Blocks {
 	// -------------------------------------------------------------------------
 
 	public static function enqueue_editor_assets(): void {
+		// Attach directly to the wp-blocks handle (not our own handle below) so this
+		// runs concatenated with, and immediately after, WP core's own inline script
+		// that bootstraps PHP-registered block bindings sources into the JS store
+		// (see wp-admin/site-editor.php / edit-form-blocks.php). Core's bootstrap
+		// only carries { name, label, usesContext } — no getValues, since PHP can't
+		// serialize a function — so without this, the editor can call
+		// source.getValues() before any script on a separate, unordered handle gets
+		// a chance to add it, throwing "getValues is not a function".
+		wp_add_inline_script( 'wp-blocks', self::block_bindings_client_script() );
+
 		wp_register_script(
 			'events-speakers-blocks',
 			'',
@@ -234,6 +244,124 @@ class Events_Speakers_Blocks {
 		);
 		wp_enqueue_script( 'events-speakers-blocks' );
 		wp_add_inline_script( 'events-speakers-blocks', self::editor_script() );
+	}
+
+	/**
+	 * Registers the client-side half of the block bindings sources (the
+	 * `getValues` implementations). See enqueue_editor_assets() for why this
+	 * must be attached directly to the wp-blocks handle.
+	 */
+	private static function block_bindings_client_script(): string {
+		return <<<'JS'
+( function( blocks, apiFetch ) {
+	if ( ! blocks || typeof blocks.registerBlockBindingsSource !== 'function' ) {
+		return;
+	}
+
+	var bindingValuesCache = {};
+
+	function fetchBindingValues( sourceName, postId, keys ) {
+		var cacheKey = sourceName + '|' + postId + '|' + keys.join( ',' );
+		if ( bindingValuesCache[ cacheKey ] ) {
+			return bindingValuesCache[ cacheKey ];
+		}
+		var path = '/events-speakers/v1/binding-values'
+			+ '?post_id=' + encodeURIComponent( postId )
+			+ '&source=' + encodeURIComponent( sourceName )
+			+ '&keys=' + encodeURIComponent( keys.join( ',' ) );
+		var promise = apiFetch( { path: path } )
+			.then( function( res ) { return res && res.values ? res.values : {}; } )
+			.catch( function() { return {}; } );
+		bindingValuesCache[ cacheKey ] = promise;
+		return promise;
+	}
+
+	function makeGetValues( sourceName ) {
+		return function( args ) {
+			var context  = args.context || {};
+			var bindings = args.bindings || {};
+			var postId   = context.postId;
+
+			var attrNames = Object.keys( bindings );
+			if ( ! postId || ! attrNames.length ) {
+				var empty = {};
+				attrNames.forEach( function( attr ) { empty[ attr ] = ''; } );
+				return empty;
+			}
+
+			var keys = attrNames.map( function( attr ) {
+				return ( bindings[ attr ] && bindings[ attr ].args && bindings[ attr ].args.key ) || '';
+			} );
+
+			return fetchBindingValues( sourceName, postId, keys ).then( function( values ) {
+				var out = {};
+				attrNames.forEach( function( attr ) {
+					var key = ( bindings[ attr ] && bindings[ attr ].args && bindings[ attr ].args.key ) || '';
+					out[ attr ] = values[ key ] || '';
+				} );
+				return out;
+			} );
+		};
+	}
+
+	// Field lists power the "Attributes" panel picker and the empty-state
+	// placeholder text (e.g. "Add Start time" instead of "Add Event Fields").
+	// All fields are plain computed strings, matching a paragraph/heading's
+	// "content" attribute (normalized to "string" by core for this comparison).
+	var EVENT_FIELDS_LIST = [
+		{ key: 'date',            label: 'Date' },
+		{ key: 'date_raw',        label: 'Date (raw)' },
+		{ key: 'start_time',      label: 'Start time' },
+		{ key: 'end_time',        label: 'End time' },
+		{ key: 'start_time_raw',  label: 'Start time (raw)' },
+		{ key: 'end_time_raw',    label: 'End time (raw)' },
+		{ key: 'speakers_list',   label: 'Speakers (names)' },
+		{ key: 'speakers_links',  label: 'Speakers (links)' },
+		{ key: 'speakers_count',  label: 'Speaker count' },
+	];
+
+	var SPEAKER_FIELDS_LIST = [
+		{ key: 'title',            label: 'Title / Position' },
+		{ key: 'events_list',      label: 'Events (titles)' },
+		{ key: 'events_links',     label: 'Events (links)' },
+		{ key: 'events_count',     label: 'Event count' },
+		{ key: 'events_dates',     label: 'Event dates' },
+		{ key: 'next_event_title', label: 'Next event title' },
+		{ key: 'next_event_date',  label: 'Next event date' },
+		{ key: 'next_event_time',  label: 'Next event time' },
+	];
+
+	function makeGetFieldsList( fieldsList ) {
+		return function() {
+			return fieldsList.map( function( field ) {
+				return {
+					args:  { key: field.key },
+					label: field.label,
+					type:  'string',
+				};
+			} );
+		};
+	}
+
+	blocks.registerBlockBindingsSource( {
+		name: 'events-speakers/event-field',
+		label: 'Event Fields',
+		usesContext: [ 'postId', 'postType' ],
+		getValues: makeGetValues( 'event-field' ),
+		getFieldsList: makeGetFieldsList( EVENT_FIELDS_LIST ),
+		canUserEditValue: function() { return false; },
+	} );
+
+	blocks.registerBlockBindingsSource( {
+		name: 'events-speakers/speaker-field',
+		label: 'Speaker Fields',
+		usesContext: [ 'postId', 'postType' ],
+		getValues: makeGetValues( 'speaker-field' ),
+		getFieldsList: makeGetFieldsList( SPEAKER_FIELDS_LIST ),
+		canUserEditValue: function() { return false; },
+	} );
+} )( window.wp.blocks, window.wp.apiFetch );
+JS;
 	}
 
 	private static function editor_script(): string {

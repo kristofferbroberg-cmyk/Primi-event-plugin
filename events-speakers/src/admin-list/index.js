@@ -2,7 +2,7 @@ import { DataViews } from '@wordpress/dataviews';
 import { useState, useEffect, useCallback, useMemo } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { __, sprintf } from '@wordpress/i18n';
-import { Button,
+import { Button, Notice,
 	__experimentalHStack as HStack,
 	__experimentalVStack as VStack,
 } from '@wordpress/components';
@@ -137,11 +137,13 @@ const SPEAKER_FIELDS = [
 
 function DeleteModal( { items, closeModal, onDeleted } ) {
 	const [ isDeleting, setIsDeleting ] = useState( false );
+	const [ deleteError, setDeleteError ] = useState( null );
 	const item = Array.isArray( items ) ? items[ 0 ] : items;
 	const name = item.title?.rendered || __( 'this item', 'events-speakers' );
 
 	async function handleDelete() {
 		setIsDeleting( true );
+		setDeleteError( null );
 		try {
 			await apiFetch( {
 				path:   `/wp/v2/${ postType }/${ item.id }`,
@@ -149,13 +151,19 @@ function DeleteModal( { items, closeModal, onDeleted } ) {
 			} );
 			onDeleted();
 			closeModal();
-		} catch {
+		} catch ( err ) {
 			setIsDeleting( false );
+			setDeleteError( err?.message ?? __( 'Delete failed.', 'events-speakers' ) );
 		}
 	}
 
 	return (
 		<VStack spacing={ 4 }>
+			{ deleteError && (
+				<Notice status="error" isDismissible={ false }>
+					{ deleteError }
+				</Notice>
+			) }
 			<p style={ { margin: 0 } }>
 				{ sprintf(
 					/* translators: %s: post title */

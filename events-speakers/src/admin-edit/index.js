@@ -355,6 +355,7 @@ function EditPage() {
 	}
 
 	function save() {
+		if ( saving ) return;
 		if ( ! item.title?.trim() ) {
 			setNotice( { type: 'error', text: isEvent
 				? __( 'Event title is required.', 'events-speakers' )

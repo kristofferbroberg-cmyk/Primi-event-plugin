@@ -60,97 +60,180 @@ class Events_Speakers_Block_Bindings {
 	}
 
 	/**
+	 * Registers the REST route the editor's client-side binding source uses
+	 * to resolve preview values (see class-blocks.php editor_script()).
+	 *
+	 * WordPress 7.0 requires block bindings sources to be registered with a
+	 * client-side `getValues` in addition to the PHP `get_value_callback` —
+	 * without it, the editor throws "getValues is not a function" whenever it
+	 * tries to preview a bound block. This endpoint lets the JS side reuse the
+	 * exact same PHP formatting logic instead of duplicating it in JS.
+	 */
+	public static function register_rest_routes(): void {
+		register_rest_route(
+			'events-speakers/v1',
+			'/binding-values',
+			array(
+				'methods'             => 'GET',
+				'callback'            => array( self::class, 'rest_get_binding_values' ),
+				'permission_callback' => function ( WP_REST_Request $request ) {
+					// Baseline: must be a backend user who can edit content at all.
+					if ( ! current_user_can( 'edit_posts' ) ) {
+						return false;
+					}
+					// Scope to the specific post being queried so a user who can
+					// edit their own posts can't read another author's draft or
+					// private event/speaker by passing an arbitrary post_id.
+					$post_id = absint( $request->get_param( 'post_id' ) );
+					if ( ! $post_id ) {
+						return true;
+					}
+					return current_user_can( 'read_post', $post_id );
+				},
+				'args'                => array(
+					'post_id' => array(
+						'type'              => 'integer',
+						'required'          => true,
+						'sanitize_callback' => 'absint',
+					),
+					'source'  => array(
+						'type'     => 'string',
+						'required' => true,
+						'enum'     => array( 'event-field', 'speaker-field' ),
+					),
+					'keys'    => array(
+						'type'              => 'string',
+						'required'          => true,
+						'sanitize_callback' => function ( $value ) {
+							return implode( ',', array_map( 'sanitize_key', explode( ',', (string) $value ) ) );
+						},
+					),
+				),
+			)
+		);
+	}
+
+	public static function rest_get_binding_values( WP_REST_Request $request ): WP_REST_Response {
+		$post_id = absint( $request->get_param( 'post_id' ) );
+		$source  = (string) $request->get_param( 'source' );
+		$keys    = array_filter( explode( ',', (string) $request->get_param( 'keys' ) ) );
+
+		$values = array();
+		foreach ( $keys as $key ) {
+			$values[ $key ] = 'speaker-field' === $source
+				? self::compute_speaker_field( $post_id, $key )
+				: self::compute_event_field( $post_id, $key );
+		}
+
+		return rest_ensure_response( array( 'values' => $values ) );
+	}
+
+	/**
 	 * @param array    $source_args     Args from the block binding: { "key": "..." }
 	 * @param WP_Block $block_instance  The bound block instance (has ->context['postId']).
 	 * @param string   $attribute_name  The block attribute being bound.
 	 */
-	public static function get_event_field( array $source_args, WP_Block $block_instance, string $attribute_name ): ?string {
+	public static function get_event_field( array $source_args, WP_Block $block_instance, string $attribute_name ): string {
 		$post_id = absint( $block_instance->context['postId'] ?? get_the_ID() );
+		$key     = sanitize_key( $source_args['key'] ?? '' );
 
+		return self::compute_event_field( $post_id, $key );
+	}
+
+	public static function get_speaker_field( array $source_args, WP_Block $block_instance, string $attribute_name ): string {
+		$post_id = absint( $block_instance->context['postId'] ?? get_the_ID() );
+		$key     = sanitize_key( $source_args['key'] ?? '' );
+
+		return self::compute_speaker_field( $post_id, $key );
+	}
+
+	/**
+	 * Core lookup shared by the PHP get_value_callback (frontend + classic
+	 * preview) and the REST endpoint (editor's client-side getValues).
+	 */
+	public static function compute_event_field( int $post_id, string $key ): string {
 		if ( ! $post_id || 'event' !== get_post_type( $post_id ) ) {
-			return null;
+			return '';
 		}
 
-		$key = sanitize_key( $source_args['key'] ?? '' );
-
-		switch ( $key ) {
+		switch ( sanitize_key( $key ) ) {
 			case 'date':
-				return self::format_date( get_post_meta( $post_id, 'event_date', true ) );
+				return self::format_date( (string) get_post_meta( $post_id, 'event_date', true ) );
 
 			case 'date_raw':
-				return get_post_meta( $post_id, 'event_date', true ) ?: null;
+				return (string) get_post_meta( $post_id, 'event_date', true );
 
 			case 'start_time':
-				return self::format_time( get_post_meta( $post_id, 'event_start_time', true ) );
+				return self::format_time( (string) get_post_meta( $post_id, 'event_start_time', true ) );
 
 			case 'end_time':
-				return self::format_time( get_post_meta( $post_id, 'event_end_time', true ) );
+				return self::format_time( (string) get_post_meta( $post_id, 'event_end_time', true ) );
 
 			case 'start_time_raw':
-				return get_post_meta( $post_id, 'event_start_time', true ) ?: null;
+				return (string) get_post_meta( $post_id, 'event_start_time', true );
 
 			case 'end_time_raw':
-				return get_post_meta( $post_id, 'event_end_time', true ) ?: null;
+				return (string) get_post_meta( $post_id, 'event_end_time', true );
 
 			case 'speakers_list':
 			case 'event_speakers': // Alias: catch direct meta-key bindings.
-				return self::get_speakers_list( $post_id );
+				return self::get_speakers_list( $post_id ) ?? '';
 
 			case 'speakers_links':
-				return self::get_speakers_links( $post_id );
+				return self::get_speakers_links( $post_id ) ?? '';
 
 			case 'speakers_count':
 				$ids = self::get_speaker_ids( $post_id );
 				return (string) count( $ids );
 
 			default:
-				return null;
+				return '';
 		}
 	}
 
-	public static function get_speaker_field( array $source_args, WP_Block $block_instance, string $attribute_name ): ?string {
-		$post_id = absint( $block_instance->context['postId'] ?? get_the_ID() );
-
+	/**
+	 * Core lookup shared by the PHP get_value_callback (frontend + classic
+	 * preview) and the REST endpoint (editor's client-side getValues).
+	 */
+	public static function compute_speaker_field( int $post_id, string $key ): string {
 		if ( ! $post_id || 'speaker' !== get_post_type( $post_id ) ) {
-			return null;
+			return '';
 		}
 
-		$key = sanitize_key( $source_args['key'] ?? '' );
-
-		switch ( $key ) {
+		switch ( sanitize_key( $key ) ) {
 			case 'title':
-				return get_post_meta( $post_id, 'speaker_title', true ) ?: null;
+				return (string) get_post_meta( $post_id, 'speaker_title', true );
 
 			case 'events_list':
-				return self::get_speaker_events_list( $post_id );
+				return self::get_speaker_events_list( $post_id ) ?? '';
 
 			case 'events_links':
-				return self::get_speaker_events_links( $post_id );
+				return self::get_speaker_events_links( $post_id ) ?? '';
 
 			case 'events_count':
 				return (string) count( self::get_speaker_event_ids( $post_id ) );
 
 			case 'events_dates':
-				return self::get_speaker_events_dates( $post_id );
+				return self::get_speaker_events_dates( $post_id ) ?? '';
 
 			case 'next_event_title':
 				$ev = self::get_speaker_next_event( $post_id );
-				return $ev ? get_the_title( $ev ) : null;
+				return $ev ? (string) get_the_title( $ev ) : '';
 
 			case 'next_event_date':
 				$ev = self::get_speaker_next_event( $post_id );
-				return $ev ? self::format_date( get_post_meta( $ev, 'event_date', true ) ) : null;
+				return $ev ? self::format_date( (string) get_post_meta( $ev, 'event_date', true ) ) : '';
 
 			case 'next_event_time':
 				$ev = self::get_speaker_next_event( $post_id );
-				if ( ! $ev ) return null;
-				$start = self::format_time( get_post_meta( $ev, 'event_start_time', true ) );
-				$end   = self::format_time( get_post_meta( $ev, 'event_end_time', true ) );
+				if ( ! $ev ) return '';
+				$start = self::format_time( (string) get_post_meta( $ev, 'event_start_time', true ) );
+				$end   = self::format_time( (string) get_post_meta( $ev, 'event_end_time', true ) );
 				if ( $start && $end ) return $start . '–' . $end;
-				return $start ?: $end ?: null;
+				return $start ?: $end ?: '';
 
 			default:
-				return null;
+				return '';
 		}
 	}
 
@@ -158,9 +241,9 @@ class Events_Speakers_Block_Bindings {
 	// Helpers
 	// -------------------------------------------------------------------------
 
-	private static function format_date( string $raw ): ?string {
+	private static function format_date( string $raw ): string {
 		if ( '' === $raw ) {
-			return null;
+			return '';
 		}
 
 		$timestamp = strtotime( $raw );
@@ -171,13 +254,15 @@ class Events_Speakers_Block_Bindings {
 		return esc_html( date_i18n( get_option( 'date_format' ), $timestamp ) );
 	}
 
-	private static function format_time( string $raw ): ?string {
+	private static function format_time( string $raw ): string {
 		if ( '' === $raw ) {
-			return null;
+			return '';
 		}
 
-		// Prepend a fixed date so strtotime can parse a bare "H:i" string.
-		$timestamp = strtotime( '1970-01-01 ' . $raw );
+		// Append UTC so strtotime treats the bare "H:i" as UTC rather than the
+		// server's local timezone. Without this, servers west of UTC would resolve
+		// early-morning times before the Unix epoch, producing 1969 output.
+		$timestamp = strtotime( '1970-01-01 ' . $raw . ' UTC' );
 		if ( false === $timestamp ) {
 			return esc_html( $raw );
 		}
@@ -218,6 +303,8 @@ class Events_Speakers_Block_Bindings {
 	/**
 	 * Returns a meta_query clause that matches a speaker ID stored as a JSON integer
 	 * in any position within the event_speakers array, e.g. [42], [42,1], [1,42], [1,42,2].
+	 *
+	 * NOTE: an identical copy of this method exists in Events_Speakers_Blocks — keep in sync.
 	 */
 	private static function speaker_meta_query( int $id ): array {
 		return array(
@@ -265,7 +352,7 @@ class Events_Speakers_Block_Bindings {
 
 		$dates = array();
 		foreach ( $ids as $event_id ) {
-			$formatted = self::format_date( get_post_meta( $event_id, 'event_date', true ) );
+			$formatted = self::format_date( (string) get_post_meta( $event_id, 'event_date', true ) );
 			if ( $formatted ) {
 				$dates[] = $formatted;
 			}
@@ -284,7 +371,8 @@ class Events_Speakers_Block_Bindings {
 			return null;
 		}
 
-		$today = date( 'Y-m-d' );
+		// Use wp_date() so the boundary respects the WP site timezone, not the server's.
+		$today  = wp_date( 'Y-m-d' );
 		$future = array();
 		$past   = array();
 
